@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Keys · Thickfreakness / Rubber Factory · Tone Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#060606; --deep:#0c0b09; --card:#111009; --border:#252010; --border-hi:#3a3018;
+    --gold:#c9a227; --gold-dim:#7a5f10; --gold-glow:rgba(201,162,39,0.12); --gold-faint:rgba(201,162,39,0.05);
+    --bone:#d8cdb0; --bone-dim:#7a7060; --red:#9b2a1a; --red-lit:#d04020;
+    --green-lit:#2a8035; --white:#f0e8d0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--black);color:var(--bone);font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;min-height:100vh;}
+
+  /* grain + scratched texture */
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.06;pointer-events:none;z-index:999;}
+
+  .page{max-width:900px;margin:0 auto;padding:44px 20px 80px;}
+
+  /* HEADER */
+  header{border-bottom:2px solid var(--gold-dim);padding-bottom:28px;margin-bottom:32px;}
+  .eyebrow{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  h1{font-family:'Oswald',sans-serif;font-size:clamp(40px,8vw,82px);line-height:0.9;color:var(--white);text-transform:uppercase;letter-spacing:0.02em;font-weight:700;}
+  h1 em{font-style:normal;color:var(--gold);}
+  .header-sub{font-family:'Special Elite',serif;font-size:14px;color:var(--bone-dim);margin-top:10px;letter-spacing:0.05em;}
+  .rig-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px;}
+  .rig-tag{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:3px 9px;}
+  .rig-tag.dim{color:var(--bone-dim);border-color:var(--border-hi);}
+
+  /* SECTION LABELS */
+  .section-label{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin:32px 0 12px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border-hi);}
+  .sub-section{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--bone-dim);border-top:1px solid var(--border);padding-top:10px;margin:14px 0 10px;}
+
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold-dim);padding:16px 20px;margin-bottom:2px;}
+  .card:hover{border-color:var(--border-hi);border-left-color:var(--gold);}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .card-name{font-family:'Oswald',sans-serif;font-size:19px;color:var(--white);text-transform:uppercase;letter-spacing:0.04em;line-height:1;font-weight:600;}
+  .card-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:2px 8px;align-self:center;white-space:nowrap;}
+  .card-role{font-size:11px;color:var(--bone-dim);font-style:italic;margin-bottom:14px;line-height:1.7;}
+
+  /* KNOBS */
+  .knob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin-bottom:10px;}
+  .knob{background:var(--deep);border:1px solid var(--border);padding:9px 11px;}
+  .knob-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:3px;}
+  .knob-val{font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:0.04em;color:var(--gold);line-height:1;text-transform:uppercase;font-weight:600;}
+  .knob-sub{font-size:9px;color:var(--bone-dim);margin-top:3px;line-height:1.4;}
+  .knob.dim .knob-val{color:var(--bone-dim);}
+  .knob.off .knob-val{color:var(--red-lit);}
+  .knob.on .knob-val{color:var(--green-lit);}
+
+  /* CLOCK */
+  .clock-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .clock-knob{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:72px;}
+  .clock-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--bone-dim);text-align:center;}
+  .clock-pos{font-family:'Oswald',sans-serif;font-size:12px;color:var(--gold);letter-spacing:0.04em;text-align:center;line-height:1;text-transform:uppercase;font-weight:600;}
+  .clock-sub{font-size:9px;color:var(--bone-dim);text-align:center;line-height:1.3;max-width:72px;}
+
+  /* TOGGLES */
+  .toggle-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+  .toggle-item{background:var(--deep);border:1px solid var(--border);padding:7px 11px;flex:1;min-width:120px;}
+  .toggle-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:2px;}
+  .toggle-state{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;}
+  .toggle-state.on{color:var(--green-lit);}
+  .toggle-state.off{color:var(--red-lit);}
+  .toggle-state.neutral{color:var(--bone-dim);}
+
+  /* TIP */
+  .tip{border:1px solid var(--border);border-left:2px solid var(--gold-dim);background:var(--gold-faint);padding:9px 13px;font-size:11px;color:var(--bone-dim);margin-top:10px;font-style:italic;line-height:1.7;}
+  .tip strong{color:var(--gold);font-style:normal;font-weight:400;}
+
+  /* CHAIN */
+  .chain-wrap{background:var(--card);border:1px solid var(--border);padding:14px 17px;margin-bottom:6px;}
+  .chain-flow{display:flex;align-items:center;flex-wrap:wrap;gap:2px;}
+  .chain-box{font-size:9px;letter-spacing:0.08em;padding:5px 9px;border:1px solid var(--border-hi);color:var(--bone-dim);background:var(--deep);white-space:nowrap;text-transform:uppercase;}
+  .chain-box.active{border-color:var(--gold-dim);color:var(--bone);background:var(--gold-faint);}
+  .chain-box.key{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
+  .chain-arrow{color:var(--border-hi);font-size:10px;padding:0 2px;}
+  .chain-note{font-size:10px;color:var(--bone-dim);font-style:italic;margin-top:7px;}
+
+  /* EB-10 */
+  .eb10-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:10px;}
+  .eb10-band{background:var(--deep);border:1px solid var(--border);padding:11px 13px;}
+  .eb10-band-title{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}
+  .eb10-toggle-row{display:flex;gap:3px;margin-bottom:9px;}
+  .eb10-btn{flex:1;text-align:center;padding:3px 0;font-size:9px;letter-spacing:0.1em;border:1px solid var(--border);color:var(--bone-dim);background:var(--card);}
+  .eb10-btn.selected-boost{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
+  .eb10-btn.selected-cut{border-color:var(--red-lit);color:var(--red-lit);background:rgba(208,64,32,0.08);}
+  .eb10-btn.selected-neutral{border-color:var(--bone-dim);color:var(--bone-dim);}
+  .eb10-knob-track{position:relative;height:5px;background:var(--border);border-radius:3px;margin-bottom:5px;}
+  .eb10-knob-fill{position:absolute;top:0;left:0;height:100%;border-radius:3px;}
+  .eb10-knob-fill.boost{background:var(--gold);}
+  .eb10-knob-fill.cut{background:var(--red-lit);}
+  .eb10-knob-fill.neutral{background:var(--bone-dim);}
+  .eb10-knob-val{font-family:'Oswald',sans-serif;font-size:20px;color:var(--gold);line-height:1;font-weight:600;}
+  .eb10-knob-val.cut{color:var(--red-lit);}
+  .eb10-knob-val.neutral{color:var(--bone-dim);}
+  .eb10-freq{font-size:9px;color:var(--bone-dim);margin-top:3px;}
+  .eb10-note{font-size:10px;color:var(--bone-dim);font-style:italic;margin-top:5px;line-height:1.5;}
+
+  /* ERA TABS */
+  .era-tabs{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;}
+  .era-tab{padding:14px 18px;background:var(--deep);border:1px solid var(--border);cursor:pointer;user-select:none;transition:all 0.15s;}
+  .era-tab.active{background:var(--gold-glow);border-color:var(--gold-dim);}
+  .era-tab-year{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:3px;}
+  .era-tab.active .era-tab-year{color:var(--gold);}
+  .era-tab-name{font-family:'Oswald',sans-serif;font-size:20px;color:var(--border-hi);text-transform:uppercase;line-height:1;font-weight:700;}
+  .era-tab.active .era-tab-name{color:var(--white);}
+  .era-tab-desc{font-size:10px;color:var(--bone-dim);margin-top:4px;}
+  .era-panel{display:none;}
+  .era-panel.active{display:block;}
+
+  /* SOURCE / PHILOSOPHY */
+  .source-note{font-size:10px;color:var(--bone-dim);font-style:italic;padding:9px 13px;border:1px solid var(--border);background:var(--deep);margin-bottom:2px;}
+  .source-note strong{color:var(--gold);font-style:normal;font-weight:400;}
+  .philosophy{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);padding:16px 20px;margin-bottom:2px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .philosophy-col h4{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+  .philosophy-col p{font-size:11px;color:var(--bone-dim);line-height:1.7;font-style:italic;}
+
+  /* PICKUP DIAGRAM */
+  .pickup-map{display:flex;gap:2px;margin:10px 0;}
+  .pickup-pos{flex:1;text-align:center;padding:8px 4px;background:var(--deep);border:1px solid var(--border);font-size:10px;}
+  .pickup-pos.selected{border-color:var(--gold);background:var(--gold-glow);color:var(--gold);}
+  .pickup-pos-label{font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:3px;}
+  .pickup-pos-name{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--bone-dim);}
+  .pickup-pos.selected .pickup-pos-name{color:var(--gold);}
+
+  footer{border-top:1px solid var(--border-hi);padding-top:16px;margin-top:36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer div{font-size:9px;letter-spacing:0.12em;opacity:0.4;text-transform:uppercase;}
+  footer .f-right{color:var(--gold);}
+
+  @media(max-width:640px){
+    .era-tabs,.philosophy{grid-template-columns:1fr;}
+    .eb10-wrap{grid-template-columns:1fr;}
+    .knob-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div class="eyebrow">Tone Reference · Bryce</div>
+  <h1>THE<br><em>BLACK KEYS</em></h1>
+  <div class="header-sub">Thickfreakness · Rubber Factory — 2003–2004</div>
+  <div class="rig-tags">
+    <span class="rig-tag">Postmodern Telecaster</span>
+    <span class="rig-tag">Frost Clapp 15</span>
+    <span class="rig-tag">Swollen Pickle</span>
+    <span class="rig-tag">BD-2</span>
+    <span class="rig-tag dim">+ GD-1 · 385 MKII</span>
+  </div>
+</header>
+
+<!-- SOURCE NOTE -->
+<div class="source-note"><strong>Source:</strong> Auerbach used an EHX Big Muff Pi on both Thickfreakness and Rubber Factory — confirmed as the pedal of that era before the Shin-ei Companion took over for Brothers and later. His amps were lo-fi workhorses: Magnatone, Fender Musicmaster bass amp, Victoria Dual Deluxe. The defining character of both records is a cranked, slightly saggy amp with a fuzz smeared across everything — raw, mid-scooped, bloomy, and unpolished. Recorded in a rehearsal space (Thickfreakness) and an abandoned rubber factory (Rubber Factory). The lo-fi aesthetic IS the tone.</div>
+
+<!-- PHILOSOPHY -->
+<div class="section-label">Tone Character</div>
+<div class="philosophy">
+  <div class="philosophy-col">
+    <h4>What It Is</h4>
+    <p>Big Muff through a small, slightly saggy amp at medium-high volume. Mid-scooped fuzz bloom. Notes hang and sustain into each other. The guitar fills all the sonic space the bass would normally occupy in a band — you're a two-piece. The tone has to be enormous.</p>
+  </div>
+  <div class="philosophy-col">
+    <h4>What to Avoid</h4>
+    <p>Too much high-end crunch, tight modern distortion, clean headroom. This tone should feel like it's slightly about to fall apart. The Clapp 15 pushed with a Swollen Pickle should get naturally compressed and slightly saggy — if it sounds polished, it's wrong.</p>
+  </div>
+</div>
+
+<!-- ERA SELECTOR -->
+<div class="section-label">Era</div>
+<div class="era-tabs">
+  <div class="era-tab active" onclick="switchEra('thick',event)">
+    <div class="era-tab-year">2003</div>
+    <div class="era-tab-name">Thickfreakness</div>
+    <div class="era-tab-desc">Rawer · More scooped · Fuzz-forward · Recorded in a day</div>
+  </div>
+  <div class="era-tab" onclick="switchEra('rubber',event)">
+    <div class="era-tab-year">2004</div>
+    <div class="era-tab-name">Rubber Factory</div>
+    <div class="era-tab-desc">More textured · Slightly more mid · Second guitar layers · More dynamics</div>
+  </div>
+</div>
+
+<!-- ═══ THICKFREAKNESS ═══ -->
+<div class="era-panel active" id="era-thick">
+
+  <div class="section-label">Signal Chain · Thickfreakness</div>
+  <div class="chain-wrap">
+    <div class="chain-flow">
+      <div class="chain-box active">Postmodern Tele</div><div class="chain-arrow">→</div>
+      <div class="chain-box">Tuner</div><div class="chain-arrow">→</div>
+      <div class="chain-box active">BD-2</div><div class="chain-arrow">→</div>
+      <div class="chain-box key">Swollen Pickle</div><div class="chain-arrow">→</div>
+      <div class="chain-box key">Clapp 15</div><div class="chain-arrow">→</div>
+      <div class="chain-box">FX Loop Send</div><div class="chain-arrow">→</div>
+      <div class="chain-box active">EB-10</div><div class="chain-arrow">→</div>
+      <div class="chain-box active">Starlight</div><div class="chain-arrow">→</div>
+      <div class="chain-box">FX Loop Return</div>
+    </div>
+    <div class="chain-note">BD-2 before Pickle: tightens the front edge of the fuzz and adds definition to the attack. No chorus, no reverb — completely dry except for a very short slapback. The Swollen Pickle is the primary sound.</div>
+  </div>
+
+  <!-- GUITAR — THICKFREAKNESS -->
+  <div class="section-label">Guitar · Postmodern Telecaster</div>
+  <div class="card" style="border-left-color:var(--gold)">
+    <div class="card-header">
+      <div class="card-name">Postmodern Telecaster</div>
+      <div class="card-badge">Bridge Nocaster · Full Tele Attack</div>
+    </div>
+    <div class="card-role">Bridge pickup — the '51 Nocaster single-coil. Tight low end, clear mids, enough bite and twang to cut through a scooped fuzz. The CuNiFe humbucker in the neck position is too warm and thick for Thickfreakness — the single-coil bridge pickup feeds the fuzz harder and responds with the raw, aggressive snap this tone needs. Unmarked dials — clock positions.</div>
+
+    <div class="pickup-map">
+      <div class="pickup-pos">
+        <div class="pickup-pos-label">Pos 3</div>
+        <div class="pickup-pos-name">Neck CuNiFe</div>
+      </div>
+      <div class="pickup-pos">
+        <div class="pickup-pos-label">Pos 2</div>
+        <div class="pickup-pos-name">Both</div>
+      </div>
+      <div class="pickup-pos selected">
+        <div class="pickup-pos-label">Pos 1 ← Use This</div>
+        <div class="pickup-pos-name">Bridge Nocaster</div>
+      </div>
+    </div>
+
+    <div class="clock-grid">
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(90 28 28)"/></svg>
+        <div class="clock-label">Volume</div>
+        <div class="clock-pos">5 O'CLK</div>
+        <div class="clock-sub">Fully open — let the Pickle breathe</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+        <div class="clock-label">Tone</div>
+        <div class="clock-pos">11 O'CLK</div>
+        <div class="clock-sub">Rolled back slightly — tame Nocaster bridge bite before fuzz</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Nocaster into fuzz:</strong> The '51 Nocaster bridge pickup has tight low end and clear mid-range that survives the Big Muff's mid scoop better than a humbucker would. Keep the tone rolled slightly — at fully open the Nocaster can get brittle feeding a Muff-style fuzz. The guitar volume at full lets the fuzz sustain bloom properly.</div>
+  </div>
+
+  <!-- BD-2 — THICKFREAKNESS -->
+  <div class="section-label">Drive · Boss BD-2</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">Boss BD-2</div>
+      <div class="card-badge">Pre-Fuzz · Always On · Low Gain</div>
+    </div>
+    <div class="card-role">Always-on mild push before the Swollen Pickle. Low Gain — this isn't a dirt pedal here, it's a signal conditioner. Tightens the attack of the fuzz, sharpens the front edge of notes, adds a tiny bit of compression. Level slightly above unity so the Pickle sees a hotter signal. The tone of Thickfreakness is the Swollen Pickle — the BD-2 just makes it behave better.</div>
+    <div class="clock-grid">
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-120 28 28)"/></svg>
+        <div class="clock-label">Gain</div>
+        <div class="clock-pos">8 O'CLK</div>
+        <div class="clock-sub">Very low — just sharpening the signal</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+        <div class="clock-label">Level</div>
+        <div class="clock-pos">1 O'CLK</div>
+        <div class="clock-sub">Slightly above unity into the Pickle</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+        <div class="clock-label">Tone</div>
+        <div class="clock-pos">12 O'CLK</div>
+        <div class="clock-sub">Flat — let the Pickle EQ do the work</div>
+      </div>
+    </div>
+    <div class="tip"><strong>BD-2 before a fuzz:</strong> Stacking a mild drive before a Muff-style fuzz is a classic trick — it cleans up the fuzz's flubby low end and makes individual notes articulate more inside the sustain. If anything, use the BD-2 alone (Pickle off) for lighter passages where you want grit without full fuzz commitment.</div>
+  </div>
+
+  <!-- SWOLLEN PICKLE — THICKFREAKNESS -->
+  <div class="section-label">Fuzz · Way Huge Swollen Pickle</div>
+  <div class="card" style="border-left-color:var(--gold)">
+    <div class="card-header">
+      <div class="card-name">Swollen Pickle MkIIS</div>
+      <div class="card-badge">Loudness · Sustain · Filter · Scoop · Crunch</div>
+    </div>
+    <div class="card-role">Five external knobs — Loudness, Sustain, Filter, Scoop, Crunch. Two internal trim pots — Voice (sets Scoop intensity) and Clip (clipping diode character). For Thickfreakness: Scoop toward CCW for classic mid-scoop (Big Muff territory). High Sustain. Filter in the woolly-dark zone. This is the biggest, most scooped fuzz setting of the two eras. All clock positions.</div>
+
+    <div class="clock-grid">
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(60 28 28)"/></svg>
+        <div class="clock-label">Sustain</div>
+        <div class="clock-pos">2 O'CLK</div>
+        <div class="clock-sub">High — long bloom and sustain</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+        <div class="clock-label">Filter</div>
+        <div class="clock-pos">10 O'CLK</div>
+        <div class="clock-sub">Dark and woolly — rolled back</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+        <div class="clock-label">Loudness</div>
+        <div class="clock-pos">12 O'CLK</div>
+        <div class="clock-sub">Unity — Pickle can get very loud</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 28 28)"/></svg>
+        <div class="clock-label">Scoop</div>
+        <div class="clock-pos">9 O'CLK</div>
+        <div class="clock-sub">CCW = mid scooped — Big Muff character</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+        <div class="clock-label">Crunch</div>
+        <div class="clock-pos">10 O'CLK</div>
+        <div class="clock-sub">Low-medium — saggy, bloomy compression</div>
+      </div>
+    </div>
+
+    <div class="sub-section">Internal Trim Pots (open the pedal)</div>
+    <div class="knob-grid">
+      <div class="knob"><div class="knob-label">Voice (Scoop Intensity)</div><div class="knob-val">~3 O'CLK</div><div class="knob-sub">High — emphasises the mid-scoop the Scoop knob dials in</div></div>
+      <div class="knob"><div class="knob-label">Clip (Diode Character)</div><div class="knob-val">~9 O'CLK</div><div class="knob-sub">CCW = smoother, more open fuzz sustain — less gated</div></div>
+    </div>
+
+    <div class="tip"><strong>Scoop = CCW for Thickfreakness:</strong> The Scoop knob toward 9 o'clock with Voice at 3 o'clock gives you the deep, classic mid scoop of a Green Russian Big Muff — this is the sound. Crunch at 10 o'clock keeps the fuzz from gating and gives it that slightly saggy, velcro bloom. If the tone gets too woolly and undefined, nudge Filter CW slightly toward 11 o'clock.</div>
+  </div>
+
+  <!-- CLAPP 15 — THICKFREAKNESS -->
+  <div class="section-label">Amp · Frost Clapp 15</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">Frost Clapp 15</div>
+      <div class="card-badge">Pushed Hard · No EQ · No Tremolo</div>
+    </div>
+    <div class="card-role">No gain stage — volume and master control headroom only. Volume pushed high to generate natural preamp compression and slight sag when the Pickle hits. EQ defeat ON — EB-10 does the shaping. The amp should be borderline breaking up on its own when the fuzz is off, so that engaging the Pickle tips it into full saturation.</div>
+    <div class="knob-grid">
+      <div class="knob"><div class="knob-label">Volume (Pre)</div><div class="knob-val">9–10</div><div class="knob-sub">High — pushing natural amp sag and compression</div></div>
+      <div class="knob"><div class="knob-label">Master Volume</div><div class="knob-val">4–6</div><div class="knob-sub">To room — push it if you can</div></div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item"><div class="toggle-label">EQ Defeat</div><div class="toggle-state on">ON</div></div>
+      <div class="toggle-item"><div class="toggle-label">Bright Switch</div><div class="toggle-state off">OFF</div></div>
+      <div class="toggle-item"><div class="toggle-label">Tremolo</div><div class="toggle-state off">OFF</div></div>
+      <div class="toggle-item"><div class="toggle-label">Class Mode</div><div class="toggle-state neutral">Class A · 9W</div></div>
+    </div>
+    <div class="tip"><strong>Push the Clapp harder here:</strong> Auerbach's amps were small and cranked — a Fender Musicmaster bass amp or Victoria Dual Deluxe at high volume. The Clapp 15's Class A 9W output is closer to those amps than any large clean platform. At pre-volume 9–10 it should feel responsive and slightly strained — that's correct.</div>
+  </div>
+
+  <!-- EB-10 — THICKFREAKNESS -->
+  <div class="section-label">EQ · EB-10 · In FX Loop</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">EB-10 EQ</div>
+      <div class="card-badge">Post-Fuzz Shaping · Always On</div>
+    </div>
+    <div class="card-role">Each band: toggle sets direction (▲ boost / ▼ cut), knob (0, 3, 6, 9, 12) sets dB amount. The Swollen Pickle in mid-scoop mode removes mids and adds heavy low end. The EB-10 is used here to restore some low-mid body and tighten the low end — the Pickle alone can get flabby. High band cut to reduce Nocaster bridge bite that survives the fuzz.</div>
+    <div class="eb10-wrap">
+      <div class="eb10-band">
+        <div class="eb10-band-title">Low · ~100Hz</div>
+        <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn selected-cut">▼ CUT</div></div>
+        <div class="eb10-knob-track"><div class="eb10-knob-fill cut" style="width:25%"></div></div>
+        <div class="eb10-knob-val cut">3</div>
+        <div class="eb10-freq">Switch ▼ CUT · Knob at 3 · = −3dB</div>
+        <div class="eb10-note">Tighten the Pickle's sub-bass bloom. Without this the low end gets flabby and undefined through the Clapp.</div>
+      </div>
+      <div class="eb10-band">
+        <div class="eb10-band-title">Mid · ~800Hz</div>
+        <div class="eb10-toggle-row"><div class="eb10-btn selected-boost">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+        <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:25%"></div></div>
+        <div class="eb10-knob-val">3</div>
+        <div class="eb10-freq">Switch ▲ BOOST · Knob at 3 · = +3dB</div>
+        <div class="eb10-note">Restore some mids the Scoop setting removes. Keeps the guitar audible and cutting as a duo — you're carrying all the midrange.</div>
+      </div>
+      <div class="eb10-band">
+        <div class="eb10-band-title">High · ~3–5kHz</div>
+        <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn selected-cut">▼ CUT</div></div>
+        <div class="eb10-knob-track"><div class="eb10-knob-fill cut" style="width:25%"></div></div>
+        <div class="eb10-knob-val cut">3</div>
+        <div class="eb10-freq">Switch ▼ CUT · Knob at 3 · = −3dB</div>
+        <div class="eb10-note">Tame the Nocaster bridge pickup's upper-mid bite that can sound harsh after the fuzz.</div>
+      </div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item"><div class="toggle-label">Boost Switch</div><div class="toggle-state off">OFF</div></div>
+      <div class="toggle-item"><div class="toggle-label">Mid Trim (internal)</div><div class="toggle-state neutral">~800Hz — lower than Marshall setting</div></div>
+    </div>
+    <div class="tip"><strong>Low cut with the Pickle:</strong> Counterintuitive — but cutting the low band slightly (−3dB at 100Hz) when using a scooped Muff-style fuzz actually makes the bass feel bigger and tighter, not smaller. You're removing the uncontrolled sub-bass bloom that makes a Muff feel flabby. The mid boost compensates for what the Scoop knob removes.</div>
+  </div>
+
+  <!-- STARLIGHT SLAPBACK — THICKFREAKNESS -->
+  <div class="section-label">FX Loop · Starlight Slapback</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">UAFX Starlight</div>
+      <div class="card-badge">Tape EP-III · Short Slapback · Very Subtle</div>
+    </div>
+    <div class="card-role">The Thickfreakness recordings have a natural room sound from being recorded in a rehearsal space. A very short, barely audible slapback simulates this. Mix as low as possible — the goal is air, not delay. Can be bypassed and the tone still works perfectly.</div>
+    <div class="knob-grid">
+      <div class="knob"><div class="knob-label">Mode</div><div class="knob-val">EP-III</div><div class="knob-sub">Tape character</div></div>
+      <div class="knob"><div class="knob-label">Delay</div><div class="knob-val">~8 O'CLK</div><div class="knob-sub">~50–70ms — very short slapback</div></div>
+      <div class="knob"><div class="knob-label">Feedback</div><div class="knob-val">7 O'CLK</div><div class="knob-sub">Minimum — one repeat only</div></div>
+      <div class="knob"><div class="knob-label">Mix</div><div class="knob-val">7–8 O'CLK</div><div class="knob-sub">Barely there — room air only</div></div>
+      <div class="knob"><div class="knob-label">Color</div><div class="knob-val">1–2 O'CLK</div><div class="knob-sub">Heavy tape wear — lo-fi character</div></div>
+      <div class="knob"><div class="knob-label">Division</div><div class="knob-val">Free</div><div class="knob-sub">Not tempo-synced</div></div>
+    </div>
+  </div>
+
+</div><!-- end thickfreakness panel -->
+
+<!-- ═══ RUBBER FACTORY ═══ -->
+<div class="era-panel" id="era-rubber">
+
+  <div class="section-label">Signal Chain · Rubber Factory</div>
+  <div class="chain-wrap">
+    <div class="chain-flow">
+      <div class="chain-box active">Postmodern Tele</div><div class="chain-arrow">→</div>
+      <div class="chain-box">Tuner</div><div class="chain-arrow">→</div>
+      <div class="chain-box active">GD-1 / 385 MKII</div><div class="chain-arrow">→</div>
+      <div class="chain-box key">Swollen Pickle</div><div class="chain-arrow">→</div>
+      <div class="chain-box key">Clapp 15</div><div class="chain-arrow">→</div>
+      <div class="chain-box">FX Loop Send</div><div class="chain-arrow">→</div>
+      <div class="chain-box active">EB-10</div><div class="chain-arrow">→</div>
+      <div class="chain-box active">Starlight</div><div class="chain-arrow">→</div>
+      <div class="chain-box">FX Loop Return</div>
+    </div>
+    <div class="chain-note">GD-1 Mode 3 (Guv'nor) or 385 MKII before the Pickle — adds more mid character and crunch to differentiate from Thickfreakness. The Rubber Factory has more dynamic range and textural variety. Swollen Pickle Scoop pulled back slightly toward flat.</div>
+  </div>
+
+  <!-- GUITAR — RUBBER FACTORY -->
+  <div class="section-label">Guitar · Postmodern Telecaster</div>
+  <div class="card" style="border-left-color:var(--gold)">
+    <div class="card-header">
+      <div class="card-name">Postmodern Telecaster</div>
+      <div class="card-badge">Bridge Nocaster · or Both for Layers</div>
+    </div>
+    <div class="card-role">Bridge Nocaster remains primary. The Rubber Factory has more tonal variety than Thickfreakness — some passages benefit from the both-pickups position (Pos 2) to add warmth from the CuNiFe humbucker. The blended position gives a slightly hollower, less aggressive character useful for more melodic riffs. Unmarked dials — clock positions.</div>
+
+    <div class="pickup-map">
+      <div class="pickup-pos">
+        <div class="pickup-pos-label">Pos 3</div>
+        <div class="pickup-pos-name">Neck CuNiFe</div>
+      </div>
+      <div class="pickup-pos selected">
+        <div class="pickup-pos-label">Pos 2 — Try This Too</div>
+        <div class="pickup-pos-name">Both</div>
+      </div>
+      <div class="pickup-pos selected">
+        <div class="pickup-pos-label">Pos 1 — Primary</div>
+        <div class="pickup-pos-name">Bridge Nocaster</div>
+      </div>
+    </div>
+
+    <div class="clock-grid">
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(90 28 28)"/></svg>
+        <div class="clock-label">Volume</div>
+        <div class="clock-pos">5 O'CLK</div>
+        <div class="clock-sub">Fully open</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+        <div class="clock-label">Tone</div>
+        <div class="clock-pos">12 O'CLK</div>
+        <div class="clock-sub">Slightly more open than Thickfreakness setting</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRE-FUZZ DRIVE — RUBBER FACTORY -->
+  <div class="section-label">Pre-Fuzz Drive · Choose One</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">GD-1 Bonebreaker</div>
+      <div class="card-badge">Mode 3 Guv'nor · More Mid Character</div>
+    </div>
+    <div class="card-role">The Rubber Factory has a more layered, mid-forward crunch compared to Thickfreakness. The GD-1 in Mode 3 (Guv'nor — Marshall-voiced British crunch) before the Swollen Pickle adds mid character that survives the fuzz's mid scoop, making the result feel more structured and musical. Body at 2 o'clock (toward CW/flat) for mid presence. Unmarked dials — clock positions.</div>
+    <div class="clock-grid">
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 28 28)"/></svg>
+        <div class="clock-label">Gain</div>
+        <div class="clock-pos">9 O'CLK</div>
+        <div class="clock-sub">Low — mid character, not heavy drive</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+        <div class="clock-label">Tone</div>
+        <div class="clock-pos">12 O'CLK</div>
+        <div class="clock-sub">Flat</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+        <div class="clock-label">Volume</div>
+        <div class="clock-pos">1 O'CLK</div>
+        <div class="clock-sub">Above unity — push the Pickle harder</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(60 28 28)"/></svg>
+        <div class="clock-label">Body</div>
+        <div class="clock-pos">2 O'CLK</div>
+        <div class="clock-sub">Toward flat — mid-forward</div>
+      </div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item"><div class="toggle-label">Mode Switch</div><div class="toggle-state on">3 · Guv'nor</div></div>
+    </div>
+    <div class="tip"><strong>Alternative — 385 MKII:</strong> If you prefer a warmer, more amp-like push before the Pickle, use the 385 MKII Side A at 10 o'clock gain with 385+ ON. The GD-1 gives more British mid crunch (better for riff-heavy Rubber Factory tracks like "10 A.M. Automatic"). The 385 gives warmer, less characterful push (better for the bluesier tracks like "Stack Shot Billy").</div>
+  </div>
+
+  <!-- SWOLLEN PICKLE — RUBBER FACTORY -->
+  <div class="section-label">Fuzz · Swollen Pickle · Rubber Factory Setting</div>
+  <div class="card" style="border-left-color:var(--gold)">
+    <div class="card-header">
+      <div class="card-name">Swollen Pickle MkIIS</div>
+      <div class="card-badge">Scoop Pulled Back · More Mid · More Dynamic</div>
+    </div>
+    <div class="card-role">Same pedal, different setting. Scoop pulled slightly CW (toward flat mids) compared to Thickfreakness — the Rubber Factory fuzz has more mid presence, more tonal variety, more dynamic range. Crunch nudged up slightly for more definition. The overall result should feel slightly more structured than Thickfreakness without losing the fuzz character. All clock positions.</div>
+    <div class="clock-grid">
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+        <div class="clock-label">Sustain</div>
+        <div class="clock-pos">1 O'CLK</div>
+        <div class="clock-sub">Slightly less than Thickfreakness</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+        <div class="clock-label">Filter</div>
+        <div class="clock-pos">11 O'CLK</div>
+        <div class="clock-sub">Slightly brighter than Thickfreakness</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+        <div class="clock-label">Loudness</div>
+        <div class="clock-pos">12 O'CLK</div>
+        <div class="clock-sub">Unity</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+        <div class="clock-label">Scoop</div>
+        <div class="clock-pos">11 O'CLK</div>
+        <div class="clock-sub">Less scoop than Thickfreakness — more mid</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--gold-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+        <div class="clock-label">Crunch</div>
+        <div class="clock-pos">11 O'CLK</div>
+        <div class="clock-sub">Slightly more than Thickfreakness — more definition</div>
+      </div>
+    </div>
+    <div class="sub-section">Internal Trim Pots</div>
+    <div class="knob-grid">
+      <div class="knob"><div class="knob-label">Voice</div><div class="knob-val">~12 O'CLK</div><div class="knob-sub">Medium — less extreme Scoop intensity than Thickfreakness</div></div>
+      <div class="knob"><div class="knob-label">Clip</div><div class="knob-val">~12 O'CLK</div><div class="knob-sub">Mid-point — balanced smooth/open diode character</div></div>
+    </div>
+  </div>
+
+  <!-- CLAPP 15 — RUBBER FACTORY -->
+  <div class="section-label">Amp · Frost Clapp 15</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">Frost Clapp 15</div>
+      <div class="card-badge">Slightly Less Pushed Than Thickfreakness</div>
+    </div>
+    <div class="card-role">Still pushed hard, but backed off very slightly from Thickfreakness. The Rubber Factory has more dynamic range — the amp should have a little more headroom to breathe during the quieter passages.</div>
+    <div class="knob-grid">
+      <div class="knob"><div class="knob-label">Volume (Pre)</div><div class="knob-val">7–8</div><div class="knob-sub">Slightly lower than Thickfreakness — more headroom</div></div>
+      <div class="knob"><div class="knob-label">Master Volume</div><div class="knob-val">4–5</div><div class="knob-sub">Controls room output</div></div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item"><div class="toggle-label">EQ Defeat</div><div class="toggle-state on">ON</div></div>
+      <div class="toggle-item"><div class="toggle-label">Bright Switch</div><div class="toggle-state off">OFF</div></div>
+      <div class="toggle-item"><div class="toggle-label">Tremolo</div><div class="toggle-state off">OFF</div></div>
+    </div>
+  </div>
+
+  <!-- EB-10 — RUBBER FACTORY -->
+  <div class="section-label">EQ · EB-10 · Rubber Factory Setting</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">EB-10 EQ</div>
+      <div class="card-badge">More Mid · Less Low Cut</div>
+    </div>
+    <div class="card-role">Rubber Factory EQ is slightly different — less low cut (the Scoop knob setting is less extreme), and a stronger mid boost to give the fuzz more presence and character. The pre-fuzz drive (GD-1 or 385) also adds mid content that the EB-10 complements rather than fights.</div>
+    <div class="eb10-wrap">
+      <div class="eb10-band">
+        <div class="eb10-band-title">Low · ~100Hz</div>
+        <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+        <div class="eb10-knob-track"><div class="eb10-knob-fill neutral" style="width:0%"></div></div>
+        <div class="eb10-knob-val neutral">0</div>
+        <div class="eb10-freq">Knob at 0 · Switch direction irrelevant · = No effect</div>
+        <div class="eb10-note">Flat — no low shaping needed. The less-scooped Pickle setting doesn't generate the same flabby sub-bass as the Thickfreakness setting.</div>
+      </div>
+      <div class="eb10-band">
+        <div class="eb10-band-title">Mid · ~800–1kHz</div>
+        <div class="eb10-toggle-row"><div class="eb10-btn selected-boost">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+        <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:50%"></div></div>
+        <div class="eb10-knob-val">6</div>
+        <div class="eb10-freq">Switch ▲ BOOST · Knob at 6 · = +6dB</div>
+        <div class="eb10-note">Stronger mid boost than Thickfreakness — The Rubber Factory has more mid presence overall. Helps the guitar cut as a two-piece.</div>
+      </div>
+      <div class="eb10-band">
+        <div class="eb10-band-title">High · ~3–5kHz</div>
+        <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn selected-cut">▼ CUT</div></div>
+        <div class="eb10-knob-track"><div class="eb10-knob-fill cut" style="width:25%"></div></div>
+        <div class="eb10-knob-val cut">3</div>
+        <div class="eb10-freq">Switch ▼ CUT · Knob at 3 · = −3dB</div>
+        <div class="eb10-note">Same as Thickfreakness — tame high-end bite post-fuzz.</div>
+      </div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item"><div class="toggle-label">Boost Switch</div><div class="toggle-state off">OFF</div></div>
+      <div class="toggle-item"><div class="toggle-label">Mid Trim (internal)</div><div class="toggle-state neutral">~900Hz — between both settings</div></div>
+    </div>
+  </div>
+
+  <!-- STARLIGHT — RUBBER FACTORY -->
+  <div class="section-label">FX Loop · Starlight Slapback</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">UAFX Starlight</div>
+      <div class="card-badge">Tape · Slightly More Present Than Thickfreakness</div>
+    </div>
+    <div class="card-role">The Rubber Factory's acoustic space (abandoned factory) gives slightly more natural room sound than the rehearsal space of Thickfreakness. Slapback mix slightly more present, time slightly longer.</div>
+    <div class="knob-grid">
+      <div class="knob"><div class="knob-label">Mode</div><div class="knob-val">EP-III</div><div class="knob-sub">Tape</div></div>
+      <div class="knob"><div class="knob-label">Delay</div><div class="knob-val">~9 O'CLK</div><div class="knob-sub">~80–100ms — slightly longer</div></div>
+      <div class="knob"><div class="knob-label">Feedback</div><div class="knob-val">7 O'CLK</div><div class="knob-sub">Minimum — single repeat</div></div>
+      <div class="knob"><div class="knob-label">Mix</div><div class="knob-val">8–9 O'CLK</div><div class="knob-sub">Slightly more present than Thickfreakness</div></div>
+      <div class="knob"><div class="knob-label">Color</div><div class="knob-val">2 O'CLK</div><div class="knob-sub">Heavy tape wear — lo-fi</div></div>
+      <div class="knob"><div class="knob-label">Division</div><div class="knob-val">Free</div><div class="knob-sub">Not tempo-synced</div></div>
+    </div>
+  </div>
+
+</div><!-- end rubber factory panel -->
+
+<!-- TECHNIQUE — ALWAYS VISIBLE -->
+<div class="section-label">Playing Notes</div>
+<div class="card" style="border-left-color:var(--gold)">
+  <div class="card-header">
+    <div class="card-name">Technique</div>
+    <div class="card-badge">Blues · Two-Piece · Fills All Space</div>
+  </div>
+  <div class="card-role">As a two-piece, the guitar has to fill all the sonic space a bass, rhythm guitar, and lead would normally share. That's why the fuzz is so big — you need to occupy the room. Everything you play matters more because there's nowhere for weak notes to hide.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Pick Attack</div><div class="knob-val">Aggressive</div><div class="knob-sub">Dig in hard — the fuzz rewards heavy pick attack</div></div>
+    <div class="knob"><div class="knob-label">Riff Style</div><div class="knob-val">Sparse</div><div class="knob-sub">Leave space — the fuzz sustain does the work between notes</div></div>
+    <div class="knob"><div class="knob-label">Guitar Vol</div><div class="knob-val">Wide Open</div><div class="knob-sub">Full volume into the fuzz — let the Pickle react to the full signal</div></div>
+    <div class="knob"><div class="knob-label">Blues Feel</div><div class="knob-val">Mississippi</div><div class="knob-sub">Raw Delta and hill country blues — not polished Chicago style</div></div>
+    <div class="knob"><div class="knob-label">String Gauge</div><div class="knob-val">.010–.011s</div><div class="knob-sub">Heavier strings respond better to the aggressive attack and give the fuzz more to work with</div></div>
+  </div>
+  <div class="tip"><strong>The lo-fi aesthetic:</strong> Don't try to make this sound polished. Auerbach recorded Thickfreakness in one day on an 8-track reel-to-reel. If your tone sounds like it was produced in a professional studio — you've gone too far. The slightly broken, barely-held-together quality of the Swollen Pickle under a cranked Class A amp is exactly right.</div>
+</div>
+
+<footer>
+  <div>The Black Keys · Thickfreakness 2003 · Rubber Factory 2004</div>
+  <div class="f-right">Postmodern Telecaster · Frost Clapp 15 · Swollen Pickle</div>
+</footer>
+
+</div>
+
+<script>
+function switchEra(id,e){
+  document.querySelectorAll('.era-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.era-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('era-'+id).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>

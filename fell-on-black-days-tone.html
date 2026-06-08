@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fell on Black Days · Tone Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#080808; --deep:#0e0e0e; --card:#131313; --border:#222; --border-hi:#333;
+    --rust:#b84a1a; --rust-dim:#6b2a0e; --rust-glow:rgba(184,74,26,0.12); --rust-faint:rgba(184,74,26,0.05);
+    --slate:#c8c0b4; --slate-dim:#6e6860;
+    --green-lit:#2a8040; --red-lit:#b83030; --white:#ede8e0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--black);color:var(--slate);font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:999;}
+  .page{max-width:900px;margin:0 auto;padding:44px 20px 80px;}
+
+  /* HEADER */
+  header{border-bottom:1px solid var(--border);padding-bottom:28px;margin-bottom:32px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;}
+  .eyebrow{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--rust);margin-bottom:10px;}
+  h1{font-family:'Archivo Black',sans-serif;font-size:clamp(36px,7vw,70px);line-height:0.92;color:var(--white);text-transform:uppercase;letter-spacing:-0.01em;}
+  h1 em{font-style:normal;color:var(--rust);}
+  .header-meta{text-align:right;}
+  .album-tag{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--slate-dim);margin-bottom:5px;}
+  .album-name{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:var(--slate);}
+  .tuning-badge{display:inline-block;margin-top:8px;font-size:10px;letter-spacing:0.15em;color:var(--rust);border:1px solid var(--rust-dim);padding:3px 10px;}
+  .rig-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px;}
+  .rig-tag{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);border:1px solid var(--rust-dim);padding:3px 9px;}
+
+  /* LABELS */
+  .section-label{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--rust);margin:32px 0 12px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+  .sub-section{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--slate-dim);border-top:1px solid var(--border);padding-top:10px;margin:14px 0 10px;}
+
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--rust-dim);padding:16px 20px;margin-bottom:2px;animation:fadeUp 0.3s both;}
+  .card:hover{border-color:var(--border-hi);border-left-color:var(--rust);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .card-name{font-family:'Archivo Black',sans-serif;font-size:17px;color:var(--white);text-transform:uppercase;letter-spacing:0.03em;line-height:1;}
+  .card-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);border:1px solid var(--rust-dim);padding:2px 8px;align-self:center;white-space:nowrap;}
+  .card-role{font-size:11px;color:var(--slate-dim);font-style:italic;margin-bottom:14px;}
+
+  /* KNOBS */
+  .knob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin-bottom:10px;}
+  .knob{background:var(--deep);border:1px solid var(--border);padding:9px 11px;}
+  .knob-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--slate-dim);margin-bottom:3px;}
+  .knob-val{font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:0.02em;color:var(--rust);line-height:1;text-transform:uppercase;}
+  .knob-sub{font-size:9px;color:var(--slate-dim);margin-top:3px;line-height:1.4;}
+  .knob.dim .knob-val{color:var(--slate-dim);}
+  .knob.off .knob-val{color:var(--red-lit);}
+
+  /* CLOCK */
+  .clock-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .clock-knob{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:72px;}
+  .clock-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--slate-dim);text-align:center;}
+  .clock-pos{font-family:'Archivo Black',sans-serif;font-size:11px;color:var(--rust);letter-spacing:0.02em;text-align:center;line-height:1;text-transform:uppercase;}
+  .clock-sub{font-size:9px;color:var(--slate-dim);text-align:center;line-height:1.3;max-width:72px;}
+
+  /* TOGGLES */
+  .toggle-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+  .toggle-item{background:var(--deep);border:1px solid var(--border);padding:7px 11px;flex:1;min-width:120px;}
+  .toggle-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--slate-dim);margin-bottom:2px;}
+  .toggle-state{font-family:'Archivo Black',sans-serif;font-size:12px;letter-spacing:0.03em;text-transform:uppercase;}
+  .toggle-state.on{color:var(--green-lit);}
+  .toggle-state.off{color:var(--red-lit);}
+  .toggle-state.neutral{color:var(--slate-dim);}
+
+  /* TIP */
+  .tip{border:1px solid var(--border);border-left:2px solid var(--rust-dim);background:var(--rust-faint);padding:9px 13px;font-size:11px;color:var(--slate-dim);margin-top:10px;font-style:italic;line-height:1.7;}
+  .tip strong{color:var(--rust);font-style:normal;font-weight:400;}
+
+  /* CHAIN */
+  .chain-wrap{background:var(--card);border:1px solid var(--border);padding:14px 17px;margin-bottom:6px;}
+  .chain-flow{display:flex;align-items:center;flex-wrap:wrap;gap:2px;}
+  .chain-box{font-size:9px;letter-spacing:0.08em;padding:5px 9px;border:1px solid var(--border-hi);color:var(--slate-dim);background:var(--deep);white-space:nowrap;text-transform:uppercase;}
+  .chain-box.active{border-color:var(--rust-dim);color:var(--slate);background:var(--rust-faint);}
+  .chain-box.key{border-color:var(--rust);color:var(--rust);background:var(--rust-glow);}
+  .chain-arrow{color:var(--border-hi);font-size:10px;padding:0 2px;}
+  .chain-note{font-size:10px;color:var(--slate-dim);font-style:italic;margin-top:7px;}
+
+  /* EB-10 */
+  .eb10-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:10px;}
+  .eb10-band{background:var(--deep);border:1px solid var(--border);padding:11px 13px;}
+  .eb10-band-title{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);margin-bottom:9px;}
+  .eb10-toggle-row{display:flex;gap:3px;margin-bottom:9px;}
+  .eb10-btn{flex:1;text-align:center;padding:3px 0;font-size:9px;letter-spacing:0.1em;border:1px solid var(--border);color:var(--slate-dim);background:var(--card);}
+  .eb10-btn.selected-boost{border-color:var(--rust);color:var(--rust);background:var(--rust-glow);}
+  .eb10-btn.selected-cut{border-color:var(--red-lit);color:var(--red-lit);background:rgba(184,48,48,0.08);}
+  .eb10-knob-track{position:relative;height:5px;background:var(--border);border-radius:3px;margin-bottom:5px;}
+  .eb10-knob-fill{position:absolute;top:0;left:0;height:100%;border-radius:3px;}
+  .eb10-knob-fill.boost{background:var(--rust);}
+  .eb10-knob-fill.cut{background:var(--red-lit);}
+  .eb10-knob-val{font-family:'Archivo Black',sans-serif;font-size:19px;color:var(--rust);line-height:1;}
+  .eb10-knob-val.cut{color:var(--red-lit);}
+  .eb10-freq{font-size:9px;color:var(--slate-dim);margin-top:3px;}
+  .eb10-note{font-size:10px;color:var(--slate-dim);font-style:italic;margin-top:5px;line-height:1.5;}
+
+  /* DRIVE TABS */
+  .drive-tabs{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:2px;}
+  .drive-tab{padding:10px 13px;background:var(--deep);border:1px solid var(--border);cursor:pointer;user-select:none;transition:all 0.15s;flex:1;min-width:100px;}
+  .drive-tab.active{background:var(--rust-glow);border-color:var(--rust-dim);}
+  .drive-tab-sub{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--slate-dim);margin-bottom:2px;}
+  .drive-tab.active .drive-tab-sub{color:var(--rust);}
+  .drive-tab-name{font-family:'Archivo Black',sans-serif;font-size:12px;text-transform:uppercase;color:var(--border-hi);line-height:1;}
+  .drive-tab.active .drive-tab-name{color:var(--white);}
+  .drive-panel{display:none;}
+  .drive-panel.active{display:block;}
+
+  /* MISC */
+  .philosophy{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--rust);padding:16px 20px;margin-bottom:2px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .philosophy-col h4{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--rust);margin-bottom:7px;}
+  .philosophy-col p{font-size:11px;color:var(--slate-dim);line-height:1.7;font-style:italic;}
+  .source-note{font-size:10px;color:var(--slate-dim);font-style:italic;padding:9px 13px;border:1px solid var(--border);background:var(--deep);margin-bottom:2px;}
+  .source-note strong{color:var(--rust);font-style:normal;font-weight:400;}
+
+  footer{border-top:1px solid var(--border);padding-top:16px;margin-top:36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer div{font-size:9px;letter-spacing:0.12em;opacity:0.4;text-transform:uppercase;}
+  footer .f-right{color:var(--rust);}
+
+  @media(max-width:640px){
+    header{grid-template-columns:1fr;}
+    .header-meta{text-align:left;}
+    .philosophy{grid-template-columns:1fr;}
+    .eb10-wrap{grid-template-columns:1fr;}
+    .knob-grid{grid-template-columns:repeat(2,1fr);}
+    .drive-tabs{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="eyebrow">Tone Reference · Bryce</div>
+    <h1>FELL ON<br><em>BLACK DAYS</em></h1>
+    <div class="rig-tags">
+      <span class="rig-tag">Yamaha SA2200</span>
+      <span class="rig-tag">Frost Clapp 15</span>
+      <span class="rig-tag">5 Drive Options</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="album-tag">Album</div>
+    <div class="album-name">Superunknown, 1994</div>
+    <div class="tuning-badge">Standard E · Heavy Strings</div>
+    <div style="margin-top:9px;font-size:10px;color:var(--slate-dim);">Cornell · Jazzmaster<br>Marshall JMP + Mesa Dual Rec<br>Bi-amped · Neve preamps</div>
+  </div>
+</header>
+
+<!-- SOURCE NOTE -->
+<div class="source-note"><strong>Recording source:</strong> Producer Michael Beinhorn confirmed Cornell played rhythm guitar on a Fender Jazzmaster with heavy strings, bi-amped through a Marshall 50W JMP half-stack and a Mesa/Boogie Dual Rectifier — each cabinet mic'd with a Shure SM57 and a vintage RCA ribbon mic into Neve 1058 Germanium preamps. The tone is less gainy than it sounds. The bi-amp blend (Marshall mid-grit + Rectifier low-end weight) gives it density without excess saturation. Thayil has noted Superunknown tracks use less gain than most people assume.</div>
+
+<!-- TONE CHARACTER -->
+<div class="section-label">Tone Character</div>
+<div class="philosophy">
+  <div class="philosophy-col">
+    <h4>The Sound</h4>
+    <p>Dark, heavy clean with controlled push — not a saturated gain tone. Density comes from bi-amped weight, not distortion. Think sludge with articulation. The arpeggiated intro should feel like notes hanging in fog, not ringing clean. Chorus adds width but stays subtle — not Black Hole Sun.</p>
+  </div>
+  <div class="philosophy-col">
+    <h4>What to Aim For</h4>
+    <p>Mid-forward, compressed, slightly gritty. Low end present but not flabby. High end rolled — no sparkle. The 6/4 time means each note needs weight and space. Playing touch matters more than any setting: heavy pick attack, let strings thud against frets on the lower notes.</p>
+  </div>
+</div>
+
+<!-- SIGNAL CHAIN -->
+<div class="section-label">Signal Chain</div>
+<div class="chain-wrap">
+  <div class="chain-flow">
+    <div class="chain-box active">SA2200</div><div class="chain-arrow">→</div>
+    <div class="chain-box">Tuner</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Drive Pedal ↓</div><div class="chain-arrow">→</div>
+    <div class="chain-box key">Clapp 15</div><div class="chain-arrow">→</div>
+    <div class="chain-box">FX Loop Send</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">EB-10</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Brigade Chorus</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Starlight</div><div class="chain-arrow">→</div>
+    <div class="chain-box">FX Loop Return</div>
+  </div>
+  <div class="chain-note">No reverb on this tone — chorus and short slapback provide space without wash. Leave the Golden out of the chain entirely.</div>
+</div>
+
+<!-- GUITAR -->
+<div class="section-label">Guitar · Yamaha SA2200</div>
+<div class="card" style="border-left-color:var(--rust)">
+  <div class="card-header">
+    <div class="card-name">SA2200</div>
+    <div class="card-badge">Bridge · Full Humbucker</div>
+  </div>
+  <div class="card-role">Bridge pickup in full humbucker mode — tone pots pushed down, not split. Unlike the Portishead guide (middle position, both coils split), this tone needs the bridge humbucker's full output and density. The semi-hollow body gives natural bloom closer to Cornell's Jazzmaster character than a solid body would. Tone rolled back before the drive pedal to remove top-end edge. Unmarked dials — all clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(90 28 28)"/></svg>
+      <div class="clock-label">Bridge Vol</div>
+      <div class="clock-pos">5 O'CLK</div>
+      <div class="clock-sub">Fully open</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+      <div class="clock-label">Bridge Tone</div>
+      <div class="clock-pos">10 O'CLK</div>
+      <div class="clock-sub">Rolled — remove top-end edge</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-150 28 28)"/></svg>
+      <div class="clock-label">Neck Vol</div>
+      <div class="clock-pos">7 O'CLK</div>
+      <div class="clock-sub">Off — bridge only</div>
+    </div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">Selector</div><div class="toggle-state on">Bridge</div></div>
+    <div class="toggle-item"><div class="toggle-label">Coil Split</div><div class="toggle-state off">Both Pots Pushed Down</div></div>
+  </div>
+  <div class="tip"><strong>SA2200 vs Jazzmaster:</strong> Cornell's Jazzmaster has a distinctive bloom and midrange character from its floating tremolo and rhythm circuit. Compensate with the bridge humbucker at full output, tone rolled to 10 o'clock, and the semi-hollow cavity doing the resonant work. The EB-10 low boost and mid boost refine the rest.</div>
+</div>
+
+<!-- CLAPP 15 -->
+<div class="section-label">Amp · Frost Clapp 15</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Frost Clapp 15</div>
+    <div class="card-badge">Clean · Pushed Harder Than Portishead</div>
+  </div>
+  <div class="card-role">No gain stage — volume and master control clean headroom only. Volume set higher than the Portishead guide to give the preamp more working material from the drive pedal. EQ defeat ON — the EB-10 in the loop handles all tonal shaping, so the amp EQ is bypassed. Bright switch OFF. Tremolo OFF for this song entirely.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Volume (Pre)</div><div class="knob-val">7–8</div><div class="knob-sub">Higher than Portishead — push the preamp stage</div></div>
+    <div class="knob"><div class="knob-label">Master Volume</div><div class="knob-val">4–5</div><div class="knob-sub">Controls room output level</div></div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">EQ Defeat</div><div class="toggle-state on">ON · Bypassed</div></div>
+    <div class="toggle-item"><div class="toggle-label">Bright Switch</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Tremolo</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Class Mode</div><div class="toggle-state neutral">Class A · 9W</div></div>
+  </div>
+</div>
+
+<!-- DRIVE SELECTOR -->
+<div class="section-label">Drive Pedal</div>
+<div class="drive-tabs">
+  <div class="drive-tab active" onclick="switchDrive('385',event)"><div class="drive-tab-sub">Best Match</div><div class="drive-tab-name">Walrus 385 MKII</div></div>
+  <div class="drive-tab" onclick="switchDrive('tumnus',event)"><div class="drive-tab-sub">Transparent Push</div><div class="drive-tab-name">Tumnus Deluxe</div></div>
+  <div class="drive-tab" onclick="switchDrive('bd2',event)"><div class="drive-tab-sub">Gritty / Dynamic</div><div class="drive-tab-name">Boss BD-2</div></div>
+  <div class="drive-tab" onclick="switchDrive('gd1',event)"><div class="drive-tab-sub">Toolbox · Guv'nor</div><div class="drive-tab-name">GD-1 Bonebreaker</div></div>
+  <div class="drive-tab" onclick="switchDrive('mxr',event)"><div class="drive-tab-sub">Highest Gain</div><div class="drive-tab-name">MXR Super Badass</div></div>
+</div>
+
+<!-- 385 MKII -->
+<div class="drive-panel active" id="drive-385">
+  <div class="card">
+    <div class="card-header"><div class="card-name">Walrus 385 MKII</div><div class="card-badge">Side A · 385+ ON · Best Match</div></div>
+    <div class="card-role">Warmest, most amp-like option. Pushes the Clapp 15 into compressed, slightly grinding territory without obvious pedal character. Closest to the Marshall-JMP-being-pushed quality Beinhorn described. 385+ switch ON here — unlike the Portishead guide where it stays off. Unmarked dials — all clock positions.</div>
+    <div class="sub-section">Side A · Main Tone</div>
+    <div class="clock-grid">
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg><div class="clock-label">Gain A</div><div class="clock-pos">10 O'CLK</div><div class="clock-sub">More push than Portishead</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg><div class="clock-label">Volume A</div><div class="clock-pos">12 O'CLK</div><div class="clock-sub">Unity into Clapp</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg><div class="clock-label">Bass</div><div class="clock-pos">1 O'CLK</div><div class="clock-sub">Slight boost — add thud</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg><div class="clock-label">Treble</div><div class="clock-pos">11 O'CLK</div><div class="clock-sub">Rolled slightly dark</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(60 28 28)"/></svg><div class="clock-label">Gain B</div><div class="clock-pos">2 O'CLK</div><div class="clock-sub">Lead preset if needed</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg><div class="clock-label">Volume B</div><div class="clock-pos">12 O'CLK</div><div class="clock-sub">Match Side A</div></div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item"><div class="toggle-label">385+ Switch</div><div class="toggle-state on">ON · Engaged</div></div>
+      <div class="toggle-item"><div class="toggle-label">A/B Select</div><div class="toggle-state neutral">A Throughout</div></div>
+    </div>
+    <div class="tip"><strong>385+ ON:</strong> The extra gain stage simulates the Marshall JMP preamp being pushed — compressed and slightly grinding without tipping into fuzz. This is the key difference from the Portishead guide where 385+ stays off. Best all-round feel of the five options for this tone.</div>
+  </div>
+</div>
+
+<!-- TUMNUS DELUXE -->
+<div class="drive-panel" id="drive-tumnus">
+  <div class="card">
+    <div class="card-header"><div class="card-name">Wampler Tumnus Deluxe</div><div class="card-badge">Gain · Level · Bass · Mid · Treble · Hot Switch</div></div>
+    <div class="card-role">Klon Centaur-derived circuit with a full 3-band EQ (Bass, Mid, Treble) plus Hot switch for extra output and drive. Transparent mid-push character — adds harmonic richness without dramatically changing the amp's voice. More hi-fi and polished than the 385. Hot switch ON for this tone. Unmarked dials — all clock positions.</div>
+    <div class="clock-grid">
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg><div class="clock-label">Gain</div><div class="clock-pos">10 O'CLK</div><div class="clock-sub">Edge of breakup — Klon sweet spot</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg><div class="clock-label">Level</div><div class="clock-pos">12 O'CLK</div><div class="clock-sub">Unity or slightly above to push Clapp input</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg><div class="clock-label">Bass</div><div class="clock-pos">1 O'CLK</div><div class="clock-sub">Slight low-end add — Rectifier weight</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg><div class="clock-label">Mid</div><div class="clock-pos">1 O'CLK</div><div class="clock-sub">Modest mid push — the Klon character</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg><div class="clock-label">Treble</div><div class="clock-pos">11 O'CLK</div><div class="clock-sub">Rolled — Klon can be bright on humbuckers</div></div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item"><div class="toggle-label">Hot Switch</div><div class="toggle-state on">ON</div></div>
+      <div class="toggle-item"><div class="toggle-label">Buffer/Bypass</div><div class="toggle-state neutral">Buffered</div></div>
+    </div>
+    <div class="tip"><strong>Tumnus character:</strong> More transparent than the 385 — adds mid presence and harmonic richness without as much of its own pedal flavour. The EB-10 mid boost becomes more important with the Tumnus since the pedal alone won't provide Marshall mid grunt. More polished result; slightly less raw.</div>
+  </div>
+</div>
+
+<!-- BD-2 -->
+<div class="drive-panel" id="drive-bd2">
+  <div class="card">
+    <div class="card-header"><div class="card-name">Boss BD-2 Blues Driver</div><div class="card-badge">Gain · Level · Tone · 3 Knobs Only</div></div>
+    <div class="card-role">Three knobs only — Gain, Level, Tone. Asymmetric clipping, naturally open and touch-sensitive. Slightly bright by nature — Tone needs careful management with humbuckers or it gets harsh through the Clapp. At medium Gain it produces gritty, articulate crunch that responds strongly to pick attack: dig in hard on the verse riff and it opens up; back off and it cleans. Most dynamically responsive of the five. Level above unity pushes the Clapp preamp, adding compression the BD-2 alone doesn't provide.</div>
+    <div class="clock-grid">
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg><div class="clock-label">Gain</div><div class="clock-pos">11 O'CLK</div><div class="clock-sub">Medium — grits up without losing note clarity</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg><div class="clock-label">Level</div><div class="clock-pos">1 O'CLK</div><div class="clock-sub">Above unity — push Clapp preamp harder</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg><div class="clock-label">Tone</div><div class="clock-pos">10 O'CLK</div><div class="clock-sub">Rolled — tame BD-2 brightness on humbuckers</div></div>
+    </div>
+    <div class="tip"><strong>BD-2 with EB-10:</strong> The EB-10 high cut (−3dB, knob at 3) is critical with the BD-2 — without it the Tone control gets brittle through the Clapp. More aggressive and open than the 385 but less amp-like warmth. Best for the verse riff; intro arpeggios require a lighter right hand to keep the gain from getting untidy.</div>
+  </div>
+</div>
+
+<!-- GD-1 -->
+<div class="drive-panel" id="drive-gd1">
+  <div class="card">
+    <div class="card-header"><div class="card-name">Mozztronics GD-1 Bonebreaker</div><div class="card-badge">Gain · Tone · Volume · Body · 5-Way Mode</div></div>
+    <div class="card-role">Five controls — Gain, Tone, Volume, Body (mid voicing), and a 5-way Mode switch. Body knob: fully CCW = mid-scooped Muff-style, fully CW = flat TS-style. Made in Melbourne. Mode 3 (Guv'nor) gives the most accurate Marshall JMP character for this tone — aggressive, mid-forward British crunch. Mode 5 (Mozztronics AC30 special) is the alternative for more harmonic complexity. Unmarked dials — all clock positions.</div>
+    <div class="clock-grid">
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg><div class="clock-label">Gain</div><div class="clock-pos">11 O'CLK</div><div class="clock-sub">Medium — Mode 3 gets thick quickly</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg><div class="clock-label">Tone</div><div class="clock-pos">12 O'CLK</div><div class="clock-sub">Flat — EB-10 handles treble shaping</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg><div class="clock-label">Volume</div><div class="clock-pos">12 O'CLK</div><div class="clock-sub">Unity</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(60 28 28)"/></svg><div class="clock-label">Body</div><div class="clock-pos">2–3 O'CLK</div><div class="clock-sub">Toward CW/flat — mid-forward TS voicing</div></div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item"><div class="toggle-label">Mode Switch</div><div class="toggle-state on">3 · Guv'nor</div></div>
+      <div class="toggle-item"><div class="toggle-label">Alternative Mode</div><div class="toggle-state neutral">5 · AC30 Special</div></div>
+    </div>
+    <div class="tip"><strong>Mode guide:</strong> Mode 3 (Guv'nor) = Marshall-voiced British crunch, most accurate to JMP character. Mode 5 = more complex harmonic texture. Avoid Mode 1 (TS808) — its mid-hump adds nasal quality the EB-10 then has to fight. Body at 2–3 o'clock keeps mids present without getting boxy or honky.</div>
+  </div>
+</div>
+
+<!-- MXR SUPER BADASS -->
+<div class="drive-panel" id="drive-mxr">
+  <div class="card">
+    <div class="card-header"><div class="card-name">MXR Super Badass Distortion</div><div class="card-badge">Output · Distortion · Bass · Mid · Treble</div></div>
+    <div class="card-role">Five knobs — Output, Distortion, Bass, Mid, Treble. Active 3-band EQ with ±15dB range. Highest gain ceiling of the five but dial Distortion back significantly — this is not a metal tone. The onboard EQ is powerful enough that the EB-10 mid boost can be reduced: let the MXR Mid knob carry that work and avoid stacking two mid boosts. Most versatile raw gain shaping but least amp-like. Best for the verse riff; less nuanced on the intro arpeggios. Unmarked dials — all clock positions.</div>
+    <div class="clock-grid">
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg><div class="clock-label">Distortion</div><div class="clock-pos">11 O'CLK</div><div class="clock-sub">Much lower than the name implies — dense OD, not metal</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg><div class="clock-label">Output</div><div class="clock-pos">12 O'CLK</div><div class="clock-sub">Unity or slight push into Clapp</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg><div class="clock-label">Bass</div><div class="clock-pos">1 O'CLK</div><div class="clock-sub">Modest boost — Rectifier low-end weight</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg><div class="clock-label">Mid</div><div class="clock-pos">1–2 O'CLK</div><div class="clock-sub">Boost — replaces EB-10 mid boost for this pedal</div></div>
+      <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg><div class="clock-label">Treble</div><div class="clock-pos">11 O'CLK</div><div class="clock-sub">Rolled — match ribbon mic darkness</div></div>
+    </div>
+    <div class="tip"><strong>MXR + EB-10 overlap:</strong> With the MXR's EQ doing mid and treble shaping, set the EB-10 mid band switch to ▲ BOOST but knob at 0 to avoid stacking two mid boosts. Use the EB-10 low band boost only (+6dB, knob at 6). The MXR is the most rock-forward of the five — most useful on the verse riff, bluntest on the intro arpeggios.</div>
+  </div>
+</div>
+
+<!-- EB-10 -->
+<div class="section-label">EQ · Walrus EB-10 · In FX Loop</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">EB-10 Preamp / EQ</div>
+    <div class="card-badge">Always Engaged</div>
+  </div>
+  <div class="card-role">Each band has a toggle switch (▲ boost / ▼ cut) that sets direction, and a knob (0, 3, 6, 9, 12) that sets the amount in dB. 0 = no effect regardless of switch position. More aggressive mid boost than the Portishead guide — Cornell's tone is mid-forward and thick, the opposite of Portishead's scooped character. Note: if using MXR Super Badass, reduce EB-10 mid band to knob 0 and let the MXR Mid knob carry that work.</div>
+  <div class="eb10-wrap">
+    <div class="eb10-band">
+      <div class="eb10-band-title">Low · ~100Hz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn selected-boost">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:50%"></div></div>
+      <div class="eb10-knob-val">6</div>
+      <div class="eb10-freq">Switch ▲ BOOST · Knob at 6 · = +6dB</div>
+      <div class="eb10-note">Replicates the Dual Rectifier's low-end weight. More than the Portishead guide — this tone needs thud.</div>
+    </div>
+    <div class="eb10-band">
+      <div class="eb10-band-title">Mid · ~1kHz*</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn selected-boost">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:25%"></div></div>
+      <div class="eb10-knob-val">3</div>
+      <div class="eb10-freq">Switch ▲ BOOST · Knob at 3 · = +3dB</div>
+      <div class="eb10-note">Opposite to Portishead — modest mid boost for Marshall mid grunt. Internal trim pot to ~1kHz. Broad Q — gentle boost, not a spike.</div>
+    </div>
+    <div class="eb10-band">
+      <div class="eb10-band-title">High · ~3–5kHz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn selected-cut">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill cut" style="width:25%"></div></div>
+      <div class="eb10-knob-val cut">3</div>
+      <div class="eb10-freq">Switch ▼ CUT · Knob at 3 · = −3dB</div>
+      <div class="eb10-note">Same as Portishead — roll off pick attack and upper edge. Neve ribbon mics naturally darkened the original; this compensates.</div>
+    </div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">Boost Switch</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Mid Trim (internal)</div><div class="toggle-state neutral">~1kHz — higher than Portishead setting</div></div>
+    <div class="toggle-item"><div class="toggle-label">Mid Q (internal)</div><div class="toggle-state neutral">Broad — gentle boost, not a spike</div></div>
+  </div>
+</div>
+
+<!-- BRIGADE + STARLIGHT -->
+<div class="section-label">FX Loop · Chorus + Slapback</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">UA Brigade Chorus</div>
+    <div class="card-badge">CE-1 Mode · Subtle Width</div>
+  </div>
+  <div class="card-role">CE-1 style chorus — slow, wide, not watery. Adds the spatial dimension of the Superunknown recording without being obvious. More subtle than Black Hole Sun; present but never the feature. Unmarked dials — clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 28 28)"/></svg><div class="clock-label">Rate</div><div class="clock-pos">9 O'CLK</div><div class="clock-sub">Slow — wide and calm</div></div>
+    <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg><div class="clock-label">Depth</div><div class="clock-pos">10 O'CLK</div><div class="clock-sub">Restrained — not watery</div></div>
+    <div class="clock-knob"><svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--rust-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 28 28)"/></svg><div class="clock-label">Mix / Blend</div><div class="clock-pos">9 O'CLK</div><div class="clock-sub">Background width only</div></div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">CE-1 Mode</div><div class="toggle-state on">Chorus — not Vibrato</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">UAFX Starlight</div>
+    <div class="card-badge">Tape EP-III · Short Slapback · Optional</div>
+  </div>
+  <div class="card-role">Optional — adds a single short slapback simulating room depth from the Bad Animals Studio recording environment. Not a rhythmic delay. Keep mix very low. Can be bypassed entirely and the tone still works. If the Brigade chorus already provides enough space, skip the Starlight.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Mode</div><div class="knob-val">EP-III</div><div class="knob-sub">Tape character</div></div>
+    <div class="knob"><div class="knob-label">Delay</div><div class="knob-val">~8 O'CLK</div><div class="knob-sub">~60–80ms — slapback, not echo</div></div>
+    <div class="knob"><div class="knob-label">Feedback</div><div class="knob-val">7 O'CLK</div><div class="knob-sub">Minimum — single repeat only</div></div>
+    <div class="knob"><div class="knob-label">Mix</div><div class="knob-val">8 O'CLK</div><div class="knob-sub">Very subtle — almost inaudible in isolation</div></div>
+    <div class="knob"><div class="knob-label">Color</div><div class="knob-val">12 O'CLK</div><div class="knob-sub">Moderate tape wear</div></div>
+    <div class="knob"><div class="knob-label">Division</div><div class="knob-val">Free</div><div class="knob-sub">Not tempo-synced — room simulation</div></div>
+  </div>
+</div>
+
+<!-- TECHNIQUE -->
+<div class="section-label">Playing Notes</div>
+<div class="card" style="border-left-color:var(--rust)">
+  <div class="card-header">
+    <div class="card-name">Technique</div>
+    <div class="card-badge">6/4 Time · Heavy Strings</div>
+  </div>
+  <div class="card-role">The tone is half settings and half how you play it. Cornell used heavy strings and played with real authority — the strings need to resist slightly to get the right feel.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Intro Arpeggios</div><div class="knob-val">Light Touch</div><div class="knob-sub">Let notes ring and blur slightly into each other</div></div>
+    <div class="knob"><div class="knob-label">Verse Riff</div><div class="knob-val">Heavy Attack</div><div class="knob-sub">Dig in — strings should thud on lower notes</div></div>
+    <div class="knob"><div class="knob-label">Pick Position</div><div class="knob-val">Bridge Side</div><div class="knob-sub">Adds bite and definition to the attack</div></div>
+    <div class="knob"><div class="knob-label">String Gauge</div><div class="knob-val">.011s</div><div class="knob-sub">Beinhorn specifically requested heavy strings for the session</div></div>
+    <div class="knob"><div class="knob-label">Time Sig</div><div class="knob-val">6/4</div><div class="knob-sub">Feel it in 6 — give each beat its full weight</div></div>
+  </div>
+</div>
+
+<footer>
+  <div>Soundgarden · Fell on Black Days · Superunknown · 1994</div>
+  <div class="f-right">SA2200 · Frost Clapp 15 · 5 Drive Options</div>
+</footer>
+
+</div>
+
+<script>
+function switchDrive(id,e){
+  document.querySelectorAll('.drive-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.drive-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('drive-'+id).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>

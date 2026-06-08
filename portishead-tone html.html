@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portishead · Roseland NYC · Tone Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --deep: #111010;
+    --card: #161514;
+    --border: #2a2620;
+    --border-hi: #3d3830;
+    --amber: #c8891a;
+    --amber-dim: #7a5010;
+    --amber-glow: rgba(200,137,26,0.12);
+    --amber-faint: rgba(200,137,26,0.05);
+    --cream: #e8dfc8;
+    --cream-dim: #9a9080;
+    --red: #8b2020;
+    --red-lit: #c43030;
+    --green-lit: #28a040;
+    --white: #f0e8d8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .page { max-width: 860px; margin: 0 auto; padding: 48px 20px 80px; }
+
+  /* HEADER */
+  header { border-bottom: 1px solid var(--border); padding-bottom: 28px; margin-bottom: 36px; }
+  .eyebrow { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); margin-bottom: 10px; }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 9vw, 80px); letter-spacing: 0.04em; line-height: 0.9; color: var(--white); }
+  h1 span { color: var(--amber); }
+  .subtitle { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; color: var(--cream-dim); margin-top: 12px; }
+  .rig-tag { display: inline-block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); border: 1px solid var(--amber-dim); padding: 3px 9px; margin-top: 14px; margin-right: 5px; }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 14px; margin-top: 36px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* SIGNAL CHAIN */
+  .chain-wrap { background: var(--card); border: 1px solid var(--border); padding: 18px 20px; margin-bottom: 6px; }
+  .chain-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 2px; }
+  .chain-box { font-size: 10px; letter-spacing: 0.05em; padding: 5px 10px; border: 1px solid var(--border-hi); color: var(--cream-dim); background: var(--deep); white-space: nowrap; }
+  .chain-box.active { border-color: var(--amber-dim); color: var(--cream); background: var(--amber-faint); }
+  .chain-box.key { border-color: var(--amber); color: var(--amber); background: var(--amber-glow); }
+  .chain-arrow { color: var(--border-hi); font-size: 11px; padding: 0 3px; }
+  .chain-note { font-size: 10px; color: var(--cream-dim); font-style: italic; margin-top: 8px; }
+  .chain-note.warn { color: var(--amber-dim); }
+
+  /* CARDS */
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--amber-dim); padding: 20px 22px;
+    margin-bottom: 2px;
+    animation: fadeUp 0.35s both;
+  }
+  .card:hover { border-left-color: var(--amber); border-color: var(--border-hi); }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .card-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.06em; color: var(--white); line-height: 1; }
+  .card-badge { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--amber); border: 1px solid var(--amber-dim); padding: 2px 8px; align-self: center; white-space: nowrap; }
+  .card-role { font-size: 11px; color: var(--cream-dim); font-style: italic; margin-bottom: 16px; }
+
+  /* KNOB GRID */
+  .knob-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .knob { background: var(--deep); border: 1px solid var(--border); padding: 10px 12px; }
+  .knob-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 3px; }
+  .knob-val { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; color: var(--amber); line-height: 1; }
+  .knob-sub { font-size: 9px; color: var(--cream-dim); margin-top: 2px; line-height: 1.4; }
+  .knob.cut .knob-val { color: var(--red-lit); }
+  .knob.neutral .knob-val { color: var(--cream-dim); }
+
+  /* TOGGLE ROW */
+  .toggle-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .toggle-item { background: var(--deep); border: 1px solid var(--border); padding: 8px 14px; display: flex; align-items: center; gap: 10px; flex: 1; min-width: 140px; }
+  .toggle-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); }
+  .toggle-state { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.06em; }
+  .toggle-state.on { color: var(--amber); }
+  .toggle-state.off { color: var(--red-lit); }
+  .toggle-state.neutral { color: var(--cream-dim); }
+
+  /* LED */
+  .led { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .led.on { background: var(--green-lit); box-shadow: 0 0 5px var(--green-lit); }
+  .led.off { background: var(--red); box-shadow: 0 0 4px var(--red); }
+  .led.amber { background: var(--amber); box-shadow: 0 0 5px var(--amber); }
+
+  /* TIP BOX */
+  .tip { border: 1px solid var(--border); border-left: 2px solid var(--amber-dim); background: var(--amber-faint); padding: 10px 14px; font-size: 11px; color: var(--cream-dim); margin-top: 12px; font-style: italic; }
+  .tip strong { color: var(--amber); font-style: normal; font-weight: 400; }
+
+  /* EB-10 VISUAL */
+  .eb10-wrap { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-bottom: 12px; }
+  .eb10-band { background: var(--deep); border: 1px solid var(--border); padding: 14px 14px 10px; }
+  .eb10-band-title { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 10px; }
+  .eb10-toggle-row { display: flex; gap: 4px; margin-bottom: 10px; }
+  .eb10-btn { flex: 1; text-align: center; padding: 4px 0; font-size: 10px; letter-spacing: 0.1em; border: 1px solid var(--border); color: var(--cream-dim); background: var(--deep); }
+  .eb10-btn.selected-boost { border-color: var(--amber); color: var(--amber); background: var(--amber-glow); }
+  .eb10-btn.selected-cut { border-color: var(--red-lit); color: var(--red-lit); background: rgba(139,32,32,0.1); }
+  .eb10-knob-track { position: relative; height: 6px; background: var(--border); border-radius: 3px; margin-bottom: 6px; }
+  .eb10-knob-fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 3px; }
+  .eb10-knob-fill.boost { background: var(--amber); }
+  .eb10-knob-fill.cut { background: var(--red-lit); }
+  .eb10-knob-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--amber); line-height: 1; }
+  .eb10-knob-val.cut { color: var(--red-lit); }
+  .eb10-freq { font-size: 9px; color: var(--cream-dim); margin-top: 3px; }
+  .eb10-note { font-size: 10px; color: var(--cream-dim); font-style: italic; margin-top: 4px; }
+
+  /* TREMOLO SECTION */
+  .trem-visual { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: var(--deep); border: 1px solid var(--border); margin-bottom: 10px; flex-wrap: wrap; }
+  .wave-svg { opacity: 0.7; }
+  .trem-params { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; min-width: 200px; }
+
+  /* TRACKS */
+  .track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .track { background: var(--card); border: 1px solid var(--border); padding: 14px 16px; display: flex; gap: 12px; }
+  .track-num { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--border-hi); line-height: 1; flex-shrink: 0; width: 26px; }
+  .track-name { font-size: 12px; color: var(--cream); margin-bottom: 3px; }
+  .track-detail { font-size: 10px; color: var(--amber); }
+  .track-note { font-size: 10px; color: var(--cream-dim); font-style: italic; margin-top: 2px; }
+
+  /* FALLBACK */
+  .fallback { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--cream-dim); padding: 18px 22px; margin-bottom: 2px; }
+  .fallback-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--cream-dim); letter-spacing: 0.06em; margin-bottom: 10px; }
+
+  /* CLOCK KNOBS */
+  .clock-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .clock-knob { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 80px; }
+  .clock-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-dim); text-align: center; }
+  .clock-pos { font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: var(--amber); letter-spacing: 0.05em; text-align: center; line-height: 1; }
+  .clock-sub { font-size: 9px; color: var(--cream-dim); text-align: center; line-height: 1.3; max-width: 80px; }
+
+  footer { border-top: 1px solid var(--border); padding-top: 18px; margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  footer div { font-size: 10px; letter-spacing: 0.1em; opacity: 0.4; }
+  footer .f-right { color: var(--amber); }
+
+  @media (max-width: 600px) {
+    .eb10-wrap { grid-template-columns: 1fr; }
+    .track-grid { grid-template-columns: 1fr; }
+    .knob-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="eyebrow">Tone Reference · Bryce</div>
+    <h1>PORTISHEAD<br><span>ROSELAND NYC</span></h1>
+    <div class="subtitle">Adrian Utley · Warm, dark semi-hollow through tube tremolo, tape echo & plate reverb</div>
+    <div>
+      <span class="rig-tag">SA2200 · Middle · Split</span>
+      <span class="rig-tag">Frost Clapp 15</span>
+      <span class="rig-tag">Walrus 385 MKII</span>
+      <span class="rig-tag">EB-10 EQ</span>
+      <span class="rig-tag">UAFX Starlight</span>
+      <span class="rig-tag">UAFX Golden</span>
+    </div>
+  </header>
+
+  <!-- SIGNAL CHAIN -->
+  <div class="section-label">Signal Chain</div>
+  <div class="chain-wrap">
+    <div class="chain-flow">
+      <div class="chain-box">SA2200</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box">Tuner</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box active">385 MKII</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box key">Clapp 15 Input</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box">FX Loop Send</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box active">EB-10</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box active">Starlight</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box active">Golden</div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box">FX Loop Return</div>
+    </div>
+    <div class="chain-note">Tube tremolo runs inside the Clapp 15 — engaged via front panel switch or footswitch, post preamp</div>
+    <div class="chain-note warn">→ EB-10 in FX loop = EQ after preamp, before time-based effects. Correct order.</div>
+  </div>
+
+  <!-- GUITAR -->
+  <div class="section-label">Guitar · SA2200</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">Yamaha SA2200</div>
+      <div class="card-badge">Middle · Both Coils Split</div>
+    </div>
+    <div class="card-role">3-way selector to middle position (both pickups), both tone pots pulled up to engage coil split. Neck humbucker + bridge single-coil — airier, more open, closer in character to Utley's Gretsch Filter'Trons than either humbucker alone.</div>
+    <div class="knob-grid">
+      <div class="knob">
+        <div class="knob-label">Selector Switch</div>
+        <div class="knob-val">MIDDLE</div>
+        <div class="knob-sub">Both pickups — not neck-only</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Coil Split</div>
+        <div class="knob-val">BOTH UP</div>
+        <div class="knob-sub">Pull both tone pots — splits both humbuckers to single coils</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Volume (Neck)</div>
+        <div class="knob-val">~8 O'CLK</div>
+        <div class="knob-sub">Rolled back — controls 385 break-up dynamically</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Volume (Bridge)</div>
+        <div class="knob-val">~7 O'CLK</div>
+        <div class="knob-sub">Slightly less than neck — balance the blend</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Tone (Neck)</div>
+        <div class="knob-val">~9 O'CLK</div>
+        <div class="knob-sub">Rolled — removes single-coil brightness</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Tone (Bridge)</div>
+        <div class="knob-val">~8 O'CLK</div>
+        <div class="knob-sub">Rolled further — tame bridge single-coil edge</div>
+      </div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">Solos / climax</div>
+          <div class="toggle-state neutral">Neck only · Full humbucker · Roll bridge vol to zero</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>Why middle + split:</strong> Utley's Filter'Trons are lower-output, airier, and more single-coil-like than full humbuckers. Splitting both SA2200 pickups and running the middle position gets you closest — the neck split carries warmth, the bridge split adds definition without mud. Roll both volumes back to ~8 o'clock so the 385 stays on the warm edge rather than pushing into drive. Open to fully on for Glory Box solo.</div>
+  </div>
+
+  <!-- 385 MKII -->
+  <div class="section-label">Drive · Walrus 385 MKII</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">Walrus 385 MKII</div>
+      <div class="card-badge">Side A — Always On</div>
+    </div>
+    <div class="card-role">Preamp colour — not overdrive. Adds warmth, gentle compression, and low-end body. Unmarked dials — all positions described as clock face.</div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--amber); margin-bottom:10px;">Side A · Clean / Warm</div>
+    <div class="clock-grid">
+      <div class="clock-knob">
+        <svg viewBox="0 0 60 60" width="60" height="60">
+          <circle cx="30" cy="30" r="26" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/>
+          <circle cx="30" cy="30" r="2" fill="var(--amber-dim)"/>
+          <!-- 8 o'clock hand: -60deg from 12 = pointing to 8 -->
+          <line x1="30" y1="30" x2="30" y2="8" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"
+            transform="rotate(-60 30 30)"/>
+          <text x="30" y="55" text-anchor="middle" font-size="6" fill="var(--cream-dim)" font-family="DM Mono, monospace">7–8</text>
+        </svg>
+        <div class="clock-label">Gain A</div>
+        <div class="clock-pos">7–8 o'clock</div>
+        <div class="clock-sub">Barely breaking up</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 60 60" width="60" height="60">
+          <circle cx="30" cy="30" r="26" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/>
+          <circle cx="30" cy="30" r="2" fill="var(--amber-dim)"/>
+          <!-- 12 o'clock = straight up -->
+          <line x1="30" y1="30" x2="30" y2="8" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"
+            transform="rotate(0 30 30)"/>
+        </svg>
+        <div class="clock-label">Volume A</div>
+        <div class="clock-pos">12 o'clock</div>
+        <div class="clock-sub">Unity into Clapp</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 60 60" width="60" height="60">
+          <circle cx="30" cy="30" r="26" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/>
+          <circle cx="30" cy="30" r="2" fill="var(--amber-dim)"/>
+          <!-- 12 o'clock = flat/unity -->
+          <line x1="30" y1="30" x2="30" y2="8" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"
+            transform="rotate(0 30 30)"/>
+        </svg>
+        <div class="clock-label">Bass</div>
+        <div class="clock-pos">12 o'clock</div>
+        <div class="clock-sub">Flat — EB-10 shapes low end</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 60 60" width="60" height="60">
+          <circle cx="30" cy="30" r="26" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/>
+          <circle cx="30" cy="30" r="2" fill="var(--amber-dim)"/>
+          <!-- 10 o'clock = -60deg -->
+          <line x1="30" y1="30" x2="30" y2="8" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"
+            transform="rotate(-60 30 30)"/>
+        </svg>
+        <div class="clock-label">Treble</div>
+        <div class="clock-pos">10 o'clock</div>
+        <div class="clock-sub">Rolled — darken before amp</div>
+      </div>
+    </div>
+
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--cream-dim); margin:14px 0 10px; border-top: 1px solid var(--border); padding-top:12px;">Side B · Drive / Solos</div>
+    <div class="clock-grid">
+      <div class="clock-knob">
+        <svg viewBox="0 0 60 60" width="60" height="60">
+          <circle cx="30" cy="30" r="26" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/>
+          <circle cx="30" cy="30" r="2" fill="var(--amber-dim)"/>
+          <!-- 2 o'clock = +60deg -->
+          <line x1="30" y1="30" x2="30" y2="8" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"
+            transform="rotate(60 30 30)"/>
+        </svg>
+        <div class="clock-label">Gain B</div>
+        <div class="clock-pos">2 o'clock</div>
+        <div class="clock-sub">Push into drive for solos</div>
+      </div>
+      <div class="clock-knob">
+        <svg viewBox="0 0 60 60" width="60" height="60">
+          <circle cx="30" cy="30" r="26" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/>
+          <circle cx="30" cy="30" r="2" fill="var(--amber-dim)"/>
+          <!-- 12 o'clock -->
+          <line x1="30" y1="30" x2="30" y2="8" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"
+            transform="rotate(0 30 30)"/>
+        </svg>
+        <div class="clock-label">Volume B</div>
+        <div class="clock-pos">12 o'clock</div>
+        <div class="clock-sub">Match Side A or push slightly</div>
+      </div>
+    </div>
+
+    <div class="toggle-row" style="margin-top:14px;">
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">385+ Switch</div>
+          <div class="toggle-state off">OFF · Side A</div>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">385+ Switch</div>
+          <div class="toggle-state on">ON · Side B / solos</div>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">A/B Footswitch</div>
+          <div class="toggle-state neutral">Stomp for climax moments</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>Side B + 385+:</strong> Glory Box solo, Sour Times climax. Gritty, pushed-projector distortion — musical and mid-forward, not fuzz. Keep treble rolled or it gets harsh through the Clapp.</div>
+  </div>
+
+  <!-- CLAPP 15 -->
+  <div class="section-label">Amp · Frost Clapp 15</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">Frost Clapp 15</div>
+      <div class="card-badge">Class A · Clean Platform</div>
+    </div>
+    <div class="card-role">No gain stage — volume and master control clean headroom only. The 385 provides all the drive. Amp EQ defeat engaged (bypassed) — EB-10 in the loop does the tonal shaping.</div>
+
+    <div class="knob-grid">
+      <div class="knob">
+        <div class="knob-label">Volume (Pre)</div>
+        <div class="knob-val">5–6</div>
+        <div class="knob-sub">Drives the preamp cleanly — no breakup</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Master Volume</div>
+        <div class="knob-val">4–5</div>
+        <div class="knob-sub">Controls output level to room</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Bass</div>
+        <div class="knob-val">6</div>
+        <div class="knob-sub">Only if EQ defeat OFF — otherwise irrelevant</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Mid</div>
+        <div class="knob-val">6</div>
+        <div class="knob-sub">Only if EQ defeat OFF</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Treble</div>
+        <div class="knob-val">6</div>
+        <div class="knob-sub">Only if EQ defeat OFF</div>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">EQ Defeat</div>
+          <div class="toggle-state on">ON (EQ bypassed)</div>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">Bright Switch</div>
+          <div class="toggle-state off">OFF</div>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">Class Mode</div>
+          <div class="toggle-state on">Class A (9W)</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>EQ Defeat ON:</strong> With the EB-10 in the loop doing all tonal shaping, bypassing the amp EQ gives you a cleaner, more open signal path. The amp just amplifies — the EB-10 sculpts. If you want to use the amp EQ instead, see fallback section below.</div>
+  </div>
+
+  <!-- TREMOLO -->
+  <div class="section-label">Tremolo · Frost Clapp 15 (Onboard Tube)</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">Tube Tremolo</div>
+      <div class="card-badge">Sour Times · All Mine</div>
+    </div>
+    <div class="card-role">Tube-driven onboard tremolo — vintage wobble character. Utley's Sour Times and All Mine tones are built around a slow, deep tremolo. Engage via front panel switch or footswitch.</div>
+
+    <div class="trem-visual">
+      <svg class="wave-svg" width="120" height="40" viewBox="0 0 120 40">
+        <path d="M0,20 C10,20 15,5 20,5 C25,5 30,35 35,35 C40,35 45,5 50,5 C55,5 60,35 65,35 C70,35 75,5 80,5 C85,5 90,35 95,35 C100,35 105,5 110,5 C115,5 118,20 120,20"
+          fill="none" stroke="#c8891a" stroke-width="1.5" opacity="0.6"/>
+      </svg>
+      <div class="trem-params">
+        <div class="knob">
+          <div class="knob-label">Speed</div>
+          <div class="knob-val">3–4</div>
+          <div class="knob-sub">Slow — vintage lurch, not flutter</div>
+        </div>
+        <div class="knob">
+          <div class="knob-label">Depth</div>
+          <div class="knob-val">5–6</div>
+          <div class="knob-sub">Moderate — present but not choppy</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">Sour Times</div>
+          <div class="toggle-state on">ON · Speed 3 · Depth 6</div>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">All Mine</div>
+          <div class="toggle-state on">ON · Speed 4 · Depth 5</div>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">Glory Box / Roads / Numb</div>
+          <div class="toggle-state off">OFF</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>Portishead tremolo character:</strong> Slow and deep — it should feel like the note is breathing, not stuttering. Think spy-film, not surf rock. The tube circuit gives it natural ramp rather than square-wave chop, which is exactly right for this sound.</div>
+  </div>
+
+  <!-- EB-10 -->
+  <div class="section-label">EQ · Walrus EB-10 · In FX Loop</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">EB-10 Preamp / EQ</div>
+      <div class="card-badge">Always Engaged</div>
+    </div>
+    <div class="card-role">Each band has a toggle switch (▲ boost / ▼ cut) that sets direction, and a knob (0, 3, 6, 9, 12) that sets the amount. 0 = no effect, 12 = full 12dB — in whichever direction the switch is set. The two work together: switch first, then dial in amount.</div>
+
+    <div class="eb10-wrap">
+      <!-- LOW BAND -->
+      <div class="eb10-band">
+        <div class="eb10-band-title">Low Band · ~100Hz</div>
+        <div class="eb10-toggle-row">
+          <div class="eb10-btn selected-boost">▲ BOOST</div>
+          <div class="eb10-btn">▼ CUT</div>
+        </div>
+        <div class="eb10-knob-track">
+          <div class="eb10-knob-fill boost" style="width: 25%"></div>
+        </div>
+        <div class="eb10-knob-val">3</div>
+        <div class="eb10-freq">Switch ▲ BOOST · Knob at 3 · = +3dB</div>
+        <div class="eb10-note">Modest low-end warmth and body. Semi-hollow already has natural resonance — don't overdo it.</div>
+      </div>
+
+      <!-- MID BAND -->
+      <div class="eb10-band">
+        <div class="eb10-band-title">Mid Band · ~800Hz*</div>
+        <div class="eb10-toggle-row">
+          <div class="eb10-btn">▲ BOOST</div>
+          <div class="eb10-btn selected-cut">▼ CUT</div>
+        </div>
+        <div class="eb10-knob-track">
+          <div class="eb10-knob-fill cut" style="width: 50%"></div>
+        </div>
+        <div class="eb10-knob-val cut">6</div>
+        <div class="eb10-freq">Switch ▼ CUT · Knob at 6 · = −6dB</div>
+        <div class="eb10-note">The most important setting. Portishead tone is famously mid-recessed — this hollow, scooped quality is what separates it from a generic clean tone.</div>
+      </div>
+
+      <!-- HIGH BAND -->
+      <div class="eb10-band">
+        <div class="eb10-band-title">High Band · ~3–5kHz</div>
+        <div class="eb10-toggle-row">
+          <div class="eb10-btn">▲ BOOST</div>
+          <div class="eb10-btn selected-cut">▼ CUT</div>
+        </div>
+        <div class="eb10-knob-track">
+          <div class="eb10-knob-fill cut" style="width: 25%"></div>
+        </div>
+        <div class="eb10-knob-val cut">3</div>
+        <div class="eb10-freq">Switch ▼ CUT · Knob at 3 · = −3dB</div>
+        <div class="eb10-note">Tames pick attack and upper-mid edge from the split coils. Vintage air rather than sparkle — don't overcut or the tone loses definition.</div>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">Boost Switch</div>
+          <div class="toggle-state off">OFF</div>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">Mid Trim Pot (internal)</div>
+          <div class="toggle-state neutral">Set to ~800Hz</div>
+        </div>
+      </div>
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-label">Mid Q Trim Pot (internal)</div>
+          <div class="toggle-state neutral">Medium Q — broad cut</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>Mid trim pots:</strong> Open the pedal and set the mid centre frequency trim pot to approx 800Hz (middle of its range tends to land around there — tune by ear, sweeping for the nasal honk frequency and cutting it). Set Q trim to medium — you want a broad, musical cut, not a surgical notch. <br><br><strong>*Note:</strong> If you want a slightly more modern Portishead character (Third-era), shift mid cut toward 1kHz and tighten the Q slightly.</div>
+  </div>
+
+  <!-- STARLIGHT -->
+  <div class="section-label">Delay · UAFX Starlight Echo Station</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">UAFX Starlight</div>
+      <div class="card-badge">Tape EP-III · Always On</div>
+    </div>
+    <div class="card-role">Space Echo / Echoplex character. Utley ran his signal through a Roland Space Echo preamp throughout Dummy. Tape wear and modulation are part of the tone — not an afterthought. Six knobs: top row Delay / Feedback / Mix, bottom row Division / Color / Mod.</div>
+    <div class="knob-grid">
+      <div class="knob">
+        <div class="knob-label">Mode</div>
+        <div class="knob-val">EP-III</div>
+        <div class="knob-sub">Tape — not Analog DMM or Precision</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Delay</div>
+        <div class="knob-val">~10–11 O'CLK</div>
+        <div class="knob-sub">~380ms — or use tap tempo to lock to feel</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Feedback</div>
+        <div class="knob-val">9–10 O'CLK</div>
+        <div class="knob-sub">1–2 audible repeats — not washing out</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Mix</div>
+        <div class="knob-val">9 O'CLK</div>
+        <div class="knob-sub">Subtle — effect supports note, doesn't lead it</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Division</div>
+        <div class="knob-val">♩ QUARTER</div>
+        <div class="knob-sub">Quarter note — or dotted-8th if tap tempo is in use</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Color</div>
+        <div class="knob-val">2–3 O'CLK</div>
+        <div class="knob-sub">Heavy tape saturation — warm, degraded repeats</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Mod</div>
+        <div class="knob-val">8–9 O'CLK</div>
+        <div class="knob-sub">Low wow and flutter — subtle tape movement, not chorus</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Tape wear is the tone:</strong> Color/Wear at 2–3 o'clock is what makes this sound right. The repeats should feel warm and slightly degraded — not hi-fi digital echoes. Mysterons: push Feedback to 2–3 o'clock and Time slightly higher for a more ambient, wash-heavy sound.</div>
+  </div>
+
+  <!-- GOLDEN -->
+  <div class="section-label">Reverb · UAFX Golden Reverberator</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-name">UAFX Golden</div>
+      <div class="card-badge">Plate 140 · Always On</div>
+    </div>
+    <div class="card-role">Studio plate reverb — dense, smooth, controlled. Portishead live reverb is present but not cavernous. Plate 140 over Hall 224. Delay feeds into reverb — echoes bloom into tails. Six knobs: top row Decay / Predelay / Mix, bottom row Bass / Treble / Mod.</div>
+    <div class="knob-grid">
+      <div class="knob">
+        <div class="knob-label">Mode</div>
+        <div class="knob-val">PLATE 140</div>
+        <div class="knob-sub">Not Spring 65 or Hall 224</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Decay</div>
+        <div class="knob-val">10–11 O'CLK</div>
+        <div class="knob-sub">~1.5–2.0 sec — musical, not ambient</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Predelay</div>
+        <div class="knob-val">8–9 O'CLK</div>
+        <div class="knob-sub">Short — just enough to separate dry from wash</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Mix</div>
+        <div class="knob-val">9 O'CLK</div>
+        <div class="knob-sub">Restrained — supports the delay tails, doesn't dominate</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Bass</div>
+        <div class="knob-val">12 O'CLK</div>
+        <div class="knob-sub">Flat — preserve warmth in the reverb tail</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Treble</div>
+        <div class="knob-val">10 O'CLK</div>
+        <div class="knob-sub">Slightly rolled — darken the reverb tail to match the tone</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Mod</div>
+        <div class="knob-val">7 O'CLK</div>
+        <div class="knob-sub">Fully off — plate needs no shimmer or wobble</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Ordering note:</strong> Starlight → Golden is correct. Tape echo feeds the plate reverb — the echoes decay into reverb tails. Reversing this order (reverb into delay) creates a smeared, less defined sound that doesn't sit right in a mix.</div>
+  </div>
+
+  <!-- TRACK BY TRACK -->
+  <div class="section-label">Track Variations</div>
+  <div class="track-grid">
+    <div class="track">
+      <div class="track-num">01</div>
+      <div>
+        <div class="track-name">Glory Box</div>
+        <div class="track-detail">Tremolo OFF · 385 Side A clean intro → Side B + 385+ for solo</div>
+        <div class="track-note">Guitar vol 7 for verse, 10 for solo. Slow, deliberate picking.</div>
+      </div>
+    </div>
+    <div class="track">
+      <div class="track-num">02</div>
+      <div>
+        <div class="track-name">Sour Times</div>
+        <div class="track-detail">Tremolo ON · Speed 3 · Depth 6 · 385 Side A</div>
+        <div class="track-note">Tremolo is the defining element. Spy-film, slow wobble throughout.</div>
+      </div>
+    </div>
+    <div class="track">
+      <div class="track-num">03</div>
+      <div>
+        <div class="track-name">Numb</div>
+        <div class="track-detail">Tremolo OFF · Guitar vol 6 · Delay mix up slightly</div>
+        <div class="track-note">Very clean and spacious. Let the delay breathe — wide open.</div>
+      </div>
+    </div>
+    <div class="track">
+      <div class="track-num">04</div>
+      <div>
+        <div class="track-name">Mysterons</div>
+        <div class="track-detail">Tremolo OFF · Starlight Feedback 7–8 · Time ~500ms</div>
+        <div class="track-note">Longest delay and most reverb of any track. Atmospheric.</div>
+      </div>
+    </div>
+    <div class="track">
+      <div class="track-num">05</div>
+      <div>
+        <div class="track-name">Roads</div>
+        <div class="track-detail">Tremolo OFF · Delay mix 2 · Reverb mix 2</div>
+        <div class="track-note">Minimal everything. Space between notes does the work.</div>
+      </div>
+    </div>
+    <div class="track">
+      <div class="track-num">06</div>
+      <div>
+        <div class="track-name">All Mine</div>
+        <div class="track-detail">Tremolo ON · Speed 4 · Depth 5 · 385 Side B rhythm drive</div>
+        <div class="track-note">More rhythmic drive. EB-10 mid cut slightly less aggressive (~3).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FALLBACK -->
+  <div class="section-label">Fallback · No EB-10 Available</div>
+  <div class="fallback">
+    <div class="fallback-title">Amp EQ Only (EQ Defeat OFF)</div>
+    <div class="knob-grid">
+      <div class="knob">
+        <div class="knob-label">Bass</div>
+        <div class="knob-val">7</div>
+        <div class="knob-sub">Above flat — compensates for no EB-10 low boost</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Mid</div>
+        <div class="knob-val">3</div>
+        <div class="knob-sub">Scooped — approximates 800Hz cut</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Treble</div>
+        <div class="knob-val">3</div>
+        <div class="knob-sub">Rolled — dark platform</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">385 Treble</div>
+        <div class="knob-val">3</div>
+        <div class="knob-sub">Roll off more at pedal to compensate</div>
+      </div>
+      <div class="knob">
+        <div class="knob-label">Guitar Tone</div>
+        <div class="knob-val">5</div>
+        <div class="knob-sub">Roll back further than EB-10 path</div>
+      </div>
+      <div class="knob neutral">
+        <div class="knob-label">Bright Switch</div>
+        <div class="knob-val">OFF</div>
+        <div class="knob-sub">Always off for this tone</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Amp EQ limitation:</strong> Without the EB-10 you lose precision at 800Hz and can't independently control low boost vs mid cut. The amp EQ's mid control is a broad scoop — it works but it's blunter. Roll treble and guitar tone further to compensate.</div>
+  </div>
+
+  <footer>
+    <div>SA2200 · Frost Clapp 15 · Walrus 385 MKII · EB-10 · UAFX Starlight · UAFX Golden</div>
+    <div class="f-right">Portishead · Roseland NYC · 1997</div>
+  </footer>
+
+</div>
+</body>
+</html>

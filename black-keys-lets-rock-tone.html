@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Keys · Let's Rock · Tone Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#050507; --deep:#0b0b0f; --card:#101015; --border:#1e1e28; --border-hi:#2e2e3e;
+    --blue:#3a5a9b; --blue-dim:#22336b; --blue-glow:rgba(58,90,155,0.14); --blue-faint:rgba(58,90,155,0.05);
+    --cream:#d4cfc4; --cream-dim:#7a7570; --red-lit:#c03828; --green-lit:#28803a;
+    --amber:#c8891a; --white:#ece8df;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--black);color:var(--cream);font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:999;}
+  .page{max-width:900px;margin:0 auto;padding:44px 20px 80px;}
+
+  /* HEADER */
+  header{border-bottom:1px solid var(--border-hi);padding-bottom:28px;margin-bottom:32px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;}
+  .eyebrow{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
+  h1{font-family:'Oswald',sans-serif;font-size:clamp(38px,7.5vw,76px);line-height:0.9;color:var(--white);text-transform:uppercase;letter-spacing:0.02em;font-weight:700;}
+  h1 em{font-style:normal;color:var(--blue);}
+  .header-meta{text-align:right;}
+  .album-tag{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:5px;}
+  .album-name{font-family:'Special Elite',serif;font-size:15px;color:var(--cream);}
+  .header-detail{font-size:10px;color:var(--cream-dim);margin-top:9px;line-height:1.6;}
+  .rig-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px;}
+  .rig-tag{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue-dim);padding:3px 9px;}
+  .rig-tag.dim{color:var(--cream-dim);border-color:var(--border-hi);}
+
+  /* LABELS */
+  .section-label{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue);margin:32px 0 12px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border-hi);}
+  .sub-section{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--cream-dim);border-top:1px solid var(--border);padding-top:10px;margin:14px 0 10px;}
+
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--blue-dim);padding:16px 20px;margin-bottom:2px;animation:fadeUp 0.3s both;}
+  .card:hover{border-color:var(--border-hi);border-left-color:var(--blue);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .card-name{font-family:'Oswald',sans-serif;font-size:19px;color:var(--white);text-transform:uppercase;letter-spacing:0.04em;line-height:1;font-weight:600;}
+  .card-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue-dim);padding:2px 8px;align-self:center;white-space:nowrap;}
+  .card-badge.amber{color:var(--amber);border-color:rgba(200,137,26,0.4);}
+  .card-role{font-size:11px;color:var(--cream-dim);font-style:italic;margin-bottom:14px;line-height:1.7;}
+
+  /* KNOBS */
+  .knob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin-bottom:10px;}
+  .knob{background:var(--deep);border:1px solid var(--border);padding:9px 11px;}
+  .knob-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:3px;}
+  .knob-val{font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:0.04em;color:var(--blue);line-height:1;text-transform:uppercase;font-weight:600;}
+  .knob-sub{font-size:9px;color:var(--cream-dim);margin-top:3px;line-height:1.4;}
+  .knob.dim .knob-val{color:var(--cream-dim);}
+  .knob.off .knob-val{color:var(--red-lit);}
+  .knob.on .knob-val{color:var(--green-lit);}
+  .knob.amber .knob-val{color:var(--amber);}
+
+  /* CLOCK */
+  .clock-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .clock-knob{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:72px;}
+  .clock-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream-dim);text-align:center;}
+  .clock-pos{font-family:'Oswald',sans-serif;font-size:12px;color:var(--blue);letter-spacing:0.04em;text-align:center;line-height:1;text-transform:uppercase;font-weight:600;}
+  .clock-sub{font-size:9px;color:var(--cream-dim);text-align:center;line-height:1.3;max-width:76px;}
+
+  /* TOGGLES */
+  .toggle-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+  .toggle-item{background:var(--deep);border:1px solid var(--border);padding:7px 11px;flex:1;min-width:120px;}
+  .toggle-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:2px;}
+  .toggle-state{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;}
+  .toggle-state.on{color:var(--green-lit);}
+  .toggle-state.off{color:var(--red-lit);}
+  .toggle-state.neutral{color:var(--cream-dim);}
+  .toggle-state.amber{color:var(--amber);}
+
+  /* TIP */
+  .tip{border:1px solid var(--border);border-left:2px solid var(--blue-dim);background:var(--blue-faint);padding:9px 13px;font-size:11px;color:var(--cream-dim);margin-top:10px;font-style:italic;line-height:1.7;}
+  .tip strong{color:var(--blue);font-style:normal;font-weight:400;}
+  .tip strong.amber{color:var(--amber);}
+
+  /* CHAIN */
+  .chain-wrap{background:var(--card);border:1px solid var(--border);padding:14px 17px;margin-bottom:6px;}
+  .chain-flow{display:flex;align-items:center;flex-wrap:wrap;gap:2px;}
+  .chain-box{font-size:9px;letter-spacing:0.08em;padding:5px 9px;border:1px solid var(--border-hi);color:var(--cream-dim);background:var(--deep);white-space:nowrap;text-transform:uppercase;}
+  .chain-box.active{border-color:var(--blue-dim);color:var(--cream);background:var(--blue-faint);}
+  .chain-box.key{border-color:var(--blue);color:var(--blue);background:var(--blue-glow);}
+  .chain-box.amber{border-color:rgba(200,137,26,0.5);color:var(--amber);background:rgba(200,137,26,0.06);}
+  .chain-arrow{color:var(--border-hi);font-size:10px;padding:0 2px;}
+  .chain-note{font-size:10px;color:var(--cream-dim);font-style:italic;margin-top:7px;}
+
+  /* EB-10 */
+  .eb10-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:10px;}
+  .eb10-band{background:var(--deep);border:1px solid var(--border);padding:11px 13px;}
+  .eb10-band-title{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:9px;}
+  .eb10-toggle-row{display:flex;gap:3px;margin-bottom:9px;}
+  .eb10-btn{flex:1;text-align:center;padding:3px 0;font-size:9px;letter-spacing:0.1em;border:1px solid var(--border);color:var(--cream-dim);background:var(--card);}
+  .eb10-btn.selected-boost{border-color:var(--blue);color:var(--blue);background:var(--blue-glow);}
+  .eb10-btn.selected-cut{border-color:var(--red-lit);color:var(--red-lit);background:rgba(192,56,40,0.08);}
+  .eb10-knob-track{position:relative;height:5px;background:var(--border);border-radius:3px;margin-bottom:5px;}
+  .eb10-knob-fill{position:absolute;top:0;left:0;height:100%;border-radius:3px;}
+  .eb10-knob-fill.boost{background:var(--blue);}
+  .eb10-knob-fill.cut{background:var(--red-lit);}
+  .eb10-knob-val{font-family:'Oswald',sans-serif;font-size:20px;color:var(--blue);line-height:1;font-weight:600;}
+  .eb10-knob-val.cut{color:var(--red-lit);}
+  .eb10-knob-val.neutral{color:var(--cream-dim);}
+  .eb10-freq{font-size:9px;color:var(--cream-dim);margin-top:3px;}
+  .eb10-note{font-size:10px;color:var(--cream-dim);font-style:italic;margin-top:5px;line-height:1.5;}
+
+  /* PICKUP MAP */
+  .pickup-map{display:flex;gap:2px;margin:10px 0;}
+  .pickup-pos{flex:1;text-align:center;padding:8px 4px;background:var(--deep);border:1px solid var(--border);}
+  .pickup-pos.selected{border-color:var(--blue);background:var(--blue-glow);}
+  .pickup-pos.alt{border-color:rgba(200,137,26,0.4);background:rgba(200,137,26,0.05);}
+  .pickup-pos-label{font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:3px;}
+  .pickup-pos-name{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--cream-dim);}
+  .pickup-pos.selected .pickup-pos-name{color:var(--blue);}
+  .pickup-pos.alt .pickup-pos-name{color:var(--amber);}
+
+  /* SONG GRID */
+  .song-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;}
+  .song-card{background:var(--card);border:1px solid var(--border);padding:13px 16px;display:flex;gap:12px;}
+  .song-num{font-family:'Oswald',sans-serif;font-size:24px;color:var(--border-hi);line-height:1;flex-shrink:0;width:24px;font-weight:700;}
+  .song-name{font-family:'Oswald',sans-serif;font-size:13px;color:var(--white);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:3px;font-weight:600;}
+  .song-pickup{font-size:10px;color:var(--blue);}
+  .song-notes{font-size:10px;color:var(--cream-dim);font-style:italic;margin-top:2px;}
+
+  /* PHILOSOPHY */
+  .philosophy{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--blue);padding:16px 20px;margin-bottom:2px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .philosophy-col h4{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--blue);margin-bottom:7px;}
+  .philosophy-col p{font-size:11px;color:var(--cream-dim);line-height:1.7;font-style:italic;}
+
+  /* SOURCE */
+  .source-note{font-size:10px;color:var(--cream-dim);font-style:italic;padding:9px 13px;border:1px solid var(--border);background:var(--deep);margin-bottom:2px;}
+  .source-note strong{color:var(--blue);font-style:normal;font-weight:400;}
+
+  /* GUITAR CHOICE BANNER */
+  .guitar-choice{background:var(--card);border:1px solid var(--border-hi);border-left:3px solid var(--blue);padding:14px 18px;margin-bottom:2px;display:flex;align-items:flex-start;gap:16px;}
+  .guitar-choice-badge{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue-dim);padding:3px 8px;white-space:nowrap;margin-top:2px;}
+  .guitar-choice-name{font-family:'Oswald',sans-serif;font-size:22px;color:var(--white);text-transform:uppercase;font-weight:700;line-height:1;}
+  .guitar-choice-reason{font-size:11px;color:var(--cream-dim);font-style:italic;margin-top:5px;line-height:1.6;}
+  .guitar-alt{background:var(--deep);border:1px solid var(--border);border-left:2px solid rgba(200,137,26,0.5);padding:10px 14px;margin-top:2px;}
+  .guitar-alt-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);margin-bottom:3px;}
+  .guitar-alt-text{font-size:11px;color:var(--cream-dim);font-style:italic;}
+
+  footer{border-top:1px solid var(--border-hi);padding-top:16px;margin-top:36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer div{font-size:9px;letter-spacing:0.12em;opacity:0.4;text-transform:uppercase;}
+  footer .f-right{color:var(--blue);}
+
+  @media(max-width:640px){
+    header{grid-template-columns:1fr;}.header-meta{text-align:left;}
+    .philosophy{grid-template-columns:1fr;}
+    .eb10-wrap{grid-template-columns:1fr;}
+    .song-grid{grid-template-columns:1fr;}
+    .knob-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="eyebrow">Tone Reference · Bryce</div>
+    <h1>THE BLACK KEYS<br><em>LET'S ROCK</em></h1>
+    <div class="rig-tags">
+      <span class="rig-tag">Postmodern Telecaster</span>
+      <span class="rig-tag">Frost Clapp 15</span>
+      <span class="rig-tag">Tumnus Deluxe</span>
+      <span class="rig-tag">Swollen Pickle</span>
+      <span class="rig-tag">BD-2</span>
+      <span class="rig-tag dim">Starlight · Golden</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="album-tag">Album</div>
+    <div class="album-name">Let's Rock, 2019</div>
+    <div class="header-detail">
+      Auerbach · Guild Starfire III · Gretsch Chet Atkins<br>
+      Flot-A-Tone · Tweed Deluxe · Silverface Deluxe Reverb<br>
+      Marshall Supa Fuzz · Ibanez Standard Fuzz<br>
+      Catalinbread Belle Epoch · Uni-Vibe
+    </div>
+  </div>
+</header>
+
+<!-- SOURCE NOTE -->
+<div class="source-note"><strong>Source:</strong> Auerbach confirmed in 2019 Guitar World and MusicRadar interviews that Let's Rock was recorded primarily with a 1964 Guild Starfire III (mini-humbuckers) and a Gretsch Chet Atkins ("Rudy") through a Flot-A-Tone, a tweed Deluxe copy, and a silverface Deluxe Reverb. Fuzzes were a Marshall Supa Fuzz and an Ibanez Standard Fuzz — single-transistor character, not Big Muff. A Prescription Electronics Face Lift (octave channel), Uni-Vibe, and Catalinbread Belle Epoch delay rounded out the board. The tone is fundamentally cleaner, more dynamic, and spring-reverb-forward compared to the early records. The tremolo is a featured element on several tracks.</div>
+
+<!-- TONE CHARACTER -->
+<div class="section-label">Tone Character</div>
+<div class="philosophy">
+  <div class="philosophy-col">
+    <h4>What Changed From Early Records</h4>
+    <p>Let's Rock is not a Big Muff record. The fuzz is smaller, spikier, more single-transistor — treble booster territory rather than wall-of-sludge. The amps are cleaner and have natural spring reverb. The guitar changes frequently between songs. Much more dynamic range across the album.</p>
+  </div>
+  <div class="philosophy-col">
+    <h4>The New Character</h4>
+    <p>Think Gretsch-into-tweed-Deluxe-with-spring-reverb meets AC/DC chunk chords. Power and clarity simultaneously. Treble-boosted fuzz that bites rather than blooms. Some tracks are nearly clean. The tremolo wobble on tracks like Go is a defining feature, not background texture.</p>
+  </div>
+</div>
+
+<!-- GUITAR CHOICE -->
+<div class="section-label">Guitar Choice</div>
+<div class="guitar-choice">
+  <div class="guitar-choice-badge">Primary</div>
+  <div>
+    <div class="guitar-choice-name">Postmodern Telecaster</div>
+    <div class="guitar-choice-reason">The CuNiFe Wide-Range humbucker in the neck position is the closest pickup in your collection to the Guild Starfire III's mini-humbucker character — open, uncompressed, clear in the midrange, less dark than a PAF. The both-pickups position (Pos 2) adds the Nocaster single-coil bite to create an airy, articulate blend that approximates the Guild mini-humbucker sound more closely than either humbucker-heavy guitar. The Telecaster's natural attack and clarity also suit the treble-boosted, snappy fuzz character of Let's Rock better than the SA2200 or McCarty.</div>
+  </div>
+</div>
+<div class="guitar-alt">
+  <div class="guitar-alt-label">Alternative · Power Chord Tracks Only</div>
+  <div class="guitar-alt-text">Heritage H150 with SD '59s — closer to the Gretsch Chet Atkins ("Rudy") humbucker density for Shine a Little Light and Eagle Birds. Use bridge pickup, full open volume. The mahogany density suits those AC/DC-adjacent chunk chord riffs better than the Telecaster. Swap back to the Tele for everything else.</div>
+</div>
+
+<!-- SIGNAL CHAIN -->
+<div class="section-label">Signal Chain</div>
+<div class="chain-wrap">
+  <div class="chain-flow">
+    <div class="chain-box active">Postmodern Tele</div><div class="chain-arrow">→</div>
+    <div class="chain-box">Tuner</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Tumnus Deluxe</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Swollen Pickle</div><div class="chain-arrow">→</div>
+    <div class="chain-box key">Clapp 15</div><div class="chain-arrow">→</div>
+    <div class="chain-box">FX Loop Send</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">EB-10</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Starlight</div><div class="chain-arrow">→</div>
+    <div class="chain-box amber">Golden</div><div class="chain-arrow">→</div>
+    <div class="chain-box">FX Loop Return</div>
+  </div>
+  <div class="chain-note">Tumnus Deluxe = treble booster role — always on, very low gain. Swollen Pickle = engaged for fuzz tracks, bypassed for cleaner songs. Golden reverb now in the chain — unlike the earlier records. Tremolo on Clapp 15 used for specific tracks.</div>
+</div>
+
+<!-- GUITAR SETUP -->
+<div class="section-label">Guitar · Postmodern Telecaster</div>
+<div class="card" style="border-left-color:var(--blue)">
+  <div class="card-header">
+    <div class="card-name">Postmodern Telecaster</div>
+    <div class="card-badge">Both Pickups · Primary Position</div>
+  </div>
+  <div class="card-role">The both-pickups position (Pos 2) blends the CuNiFe WR humbucker warmth with the Nocaster single-coil snap — approximating the Guild Starfire III's mini-humbucker openness. This is the default position for most of the album. Switch to bridge only (Pos 1) for sharper, spikier fuzz tones. Tone slightly more open than the earlier guides — Let's Rock has more high-frequency clarity.</div>
+
+  <div class="pickup-map">
+    <div class="pickup-pos">
+      <div class="pickup-pos-label">Pos 3</div>
+      <div class="pickup-pos-name">Neck CuNiFe</div>
+    </div>
+    <div class="pickup-pos selected">
+      <div class="pickup-pos-label">Pos 2 ← Primary</div>
+      <div class="pickup-pos-name">Both</div>
+    </div>
+    <div class="pickup-pos alt">
+      <div class="pickup-pos-label">Pos 1 ← Fuzz tracks</div>
+      <div class="pickup-pos-name">Bridge Nocaster</div>
+    </div>
+  </div>
+
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(90 28 28)"/></svg>
+      <div class="clock-label">Volume</div>
+      <div class="clock-pos">5 O'CLK</div>
+      <div class="clock-sub">Fully open</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+      <div class="clock-label">Tone</div>
+      <div class="clock-pos">11 O'CLK</div>
+      <div class="clock-sub">Slightly open — more clarity than earlier guides</div>
+    </div>
+  </div>
+  <div class="tip"><strong>Why Both position:</strong> The Guild Starfire III's mini-humbuckers are lower output and more transparent than a full PAF. The both-pickups blend on the Postmodern Tele reduces output, opens up the high-end, and creates the airy, slightly hollow midrange character that's central to Let's Rock. Pure Nocaster bridge (Pos 1) is used for tracks where you want the Swollen Pickle to bite harder.</div>
+</div>
+
+<!-- TUMNUS DELUXE — TREBLE BOOSTER ROLE -->
+<div class="section-label">Always-On Drive · Wampler Tumnus Deluxe</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Tumnus Deluxe</div>
+    <div class="card-badge">Treble Booster Role · Always On</div>
+  </div>
+  <div class="card-role">Running as a treble booster — not an overdrive. Auerbach described "a single-transistor fuzz or maybe some sort of treble booster" as central to the Let's Rock snappy, explosive character. The Tumnus with low Gain, mid-to-high Level, and treble pushed does exactly this — adds presence, push, and harmonic shimmer into the Clapp's input without adding significant grit. Unmarked dials — all clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-120 28 28)"/></svg>
+      <div class="clock-label">Gain</div>
+      <div class="clock-pos">8 O'CLK</div>
+      <div class="clock-sub">Minimum — no grit, pure push</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(60 28 28)"/></svg>
+      <div class="clock-label">Level</div>
+      <div class="clock-pos">2 O'CLK</div>
+      <div class="clock-sub">Above unity — boost the Clapp input hard</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+      <div class="clock-label">Bass</div>
+      <div class="clock-pos">10 O'CLK</div>
+      <div class="clock-sub">Slightly rolled — keep it lean</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+      <div class="clock-label">Mid</div>
+      <div class="clock-pos">1 O'CLK</div>
+      <div class="clock-sub">Slight mid push — the Klon character</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+      <div class="clock-label">Treble</div>
+      <div class="clock-pos">1 O'CLK</div>
+      <div class="clock-sub">Above flat — this is the treble boost role</div>
+    </div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">Hot Switch</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Buffer</div><div class="toggle-state neutral">Buffered</div></div>
+    <div class="toggle-item"><div class="toggle-label">Always On</div><div class="toggle-state on">YES</div></div>
+  </div>
+  <div class="tip"><strong>Treble booster vs overdrive:</strong> The Tumnus in this role should be nearly invisible as grit — what it adds is harmonic presence and a hotter signal into the Clapp's preamp. The Clapp does the slight natural compression in response. This is what makes Auerbach's Let's Rock tone feel explosive even at moderate gain — the amp is being pushed hard by a clean boost, not a drive pedal.</div>
+</div>
+
+<!-- SWOLLEN PICKLE — LET'S ROCK -->
+<div class="section-label">Fuzz · Way Huge Swollen Pickle</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Swollen Pickle MkIIS</div>
+    <div class="card-badge">Single-Transistor Character · Not Always On</div>
+  </div>
+  <div class="card-role">Engaged only for fuzz tracks — not always on unlike the early records. Let's Rock fuzz is smaller and spikier than Thickfreakness: Scoop near flat (CW), Filter brighter, Sustain lower. This approximates the single-transistor fuzz character (Marshall Supa Fuzz / Ibanez Standard Fuzz) Auerbach actually used — biting and aggressive rather than bloomy and sustained. All clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Sustain</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Medium — less bloom than Thickfreakness</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Filter</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Brighter than early records — more bite</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Loudness</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Unity — Tumnus is already pushing the amp</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(60 28 28)"/></svg>
+      <div class="clock-label">Scoop</div>
+      <div class="clock-pos">2 O'CLK</div>
+      <div class="clock-sub">CW = flat mids — much less scoop than Thickfreakness</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+      <div class="clock-label">Crunch</div>
+      <div class="clock-pos">1 O'CLK</div>
+      <div class="clock-sub">Higher than Thickfreakness — more definition and attack</div>
+    </div>
+  </div>
+  <div class="sub-section">Internal Trim Pots</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Voice (Scoop Intensity)</div><div class="knob-val">~9 O'CLK</div><div class="knob-sub">Low — minimal scoop effect since Scoop is near CW/flat anyway</div></div>
+    <div class="knob"><div class="knob-label">Clip (Diode Character)</div><div class="knob-val">~2–3 O'CLK</div><div class="knob-sub">Higher — tighter, more aggressive clipping. Closer to single-transistor feel.</div></div>
+  </div>
+  <div class="tip"><strong>Single-transistor vs Big Muff:</strong> The Swollen Pickle can approximate single-transistor fuzz character with Scoop near flat (2 o'clock), Filter at 12 o'clock, lower Sustain, higher Crunch, and Clip trimmer toward maximum. The result is spikier, more aggressive, and less bloomy than the Thickfreakness setting — it bites rather than sustains. The BD-2 is a good alternative for tracks needing even less fuzz commitment — just medium Gain into the Clapp.</div>
+</div>
+
+<!-- BD-2 ALTERNATIVE -->
+<div class="card" style="border-left-color:var(--border-hi)">
+  <div class="card-header">
+    <div class="card-name">Boss BD-2</div>
+    <div class="card-badge amber">Alternative · Cleaner Grit Tracks</div>
+  </div>
+  <div class="card-role">Several Let's Rock tracks are nearly clean with just amp grit — not fuzz at all. Bypass the Swollen Pickle entirely and use the BD-2 at medium Gain for these moments. Or use BD-2 alone (Pickle off) instead of the Pickle for a grittier-but-not-fuzz character. Unmarked dials — clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+      <div class="clock-label">Gain</div>
+      <div class="clock-pos">11 O'CLK</div>
+      <div class="clock-sub">Medium crunch</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Level</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Unity — Tumnus already boosting</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+      <div class="clock-label">Tone</div>
+      <div class="clock-pos">11 O'CLK</div>
+      <div class="clock-sub">Slightly dark — don't let it get harsh</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLAPP 15 -->
+<div class="section-label">Amp · Frost Clapp 15</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Frost Clapp 15</div>
+    <div class="card-badge">Tremolo Featured · Spring Reverb Via Golden</div>
+  </div>
+  <div class="card-role">No gain stage — volume and master control headroom. The Tumnus Deluxe is pushing the input hard so preamp volume can sit slightly lower than the early records guide — the Tumnus is doing the pushing. EQ defeat ON. The big difference from the early records: tremolo is now a featured element, and spring reverb (via the Golden in the FX loop) is present on most tracks.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Volume (Pre)</div><div class="knob-val">6–7</div><div class="knob-sub">Lower than Thickfreakness — Tumnus does the pushing</div></div>
+    <div class="knob"><div class="knob-label">Master Volume</div><div class="knob-val">4–5</div><div class="knob-sub">Controls room output level</div></div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">EQ Defeat</div><div class="toggle-state on">ON · Bypassed</div></div>
+    <div class="toggle-item"><div class="toggle-label">Bright Switch</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Class Mode</div><div class="toggle-state neutral">Class A · 9W</div></div>
+  </div>
+
+  <div class="sub-section">Onboard Tremolo</div>
+  <div class="knob-grid">
+    <div class="knob on"><div class="knob-label">Tremolo</div><div class="knob-val">ON — Select Tracks</div><div class="knob-sub">Footswitchable — engage per song</div></div>
+    <div class="knob"><div class="knob-label">Speed · Go / Lo·Hi</div><div class="knob-val">3–4</div><div class="knob-sub">Medium-slow — loping, hypnotic</div></div>
+    <div class="knob"><div class="knob-label">Depth · Go / Lo·Hi</div><div class="knob-val">6–7</div><div class="knob-sub">Prominent — the tremolo is the feature</div></div>
+    <div class="knob"><div class="knob-label">Speed · Other Tracks</div><div class="knob-val">5–6</div><div class="knob-sub">Slightly faster where tremolo is subtler</div></div>
+    <div class="knob"><div class="knob-label">Depth · Other Tracks</div><div class="knob-val">4–5</div><div class="knob-sub">More background wobble</div></div>
+  </div>
+  <div class="tip"><strong>Tremolo is now a featured element:</strong> Unlike the early records where the Clapp tremolo stays off, Let's Rock uses it prominently on several tracks. Auerbach used a silverface Deluxe Reverb specifically because it has tube tremolo (vibrato circuit) with a distinctive loping character. The Clapp's tube tremolo delivers the same effect — engage via footswitch and let it breathe.</div>
+</div>
+
+<!-- EB-10 -->
+<div class="section-label">EQ · Walrus EB-10 · In FX Loop</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">EB-10 EQ</div>
+    <div class="card-badge">Brighter Than Early Records · Mid Presence</div>
+  </div>
+  <div class="card-role">Each band: toggle sets direction (▲ boost / ▼ cut), knob (0, 3, 6, 9, 12) sets dB. Let's Rock EQ is more open and present than the early records — the Swollen Pickle is no longer scooping aggressively, so the mid band is a more moderate boost. Low band left flat. High band cut is minimal — this record has clarity and presence that the early records deliberately avoided.</div>
+  <div class="eb10-wrap">
+    <div class="eb10-band">
+      <div class="eb10-band-title">Low · ~100Hz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:0%"></div></div>
+      <div class="eb10-knob-val neutral">0</div>
+      <div class="eb10-freq">Knob at 0 · No effect · Switch irrelevant</div>
+      <div class="eb10-note">Flat — no low shaping needed. The Pickle isn't scooping aggressively, so there's no flabby sub-bass to tighten.</div>
+    </div>
+    <div class="eb10-band">
+      <div class="eb10-band-title">Mid · ~1kHz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn selected-boost">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:25%"></div></div>
+      <div class="eb10-knob-val">3</div>
+      <div class="eb10-freq">Switch ▲ BOOST · Knob at 3 · = +3dB</div>
+      <div class="eb10-note">Moderate mid boost — gives presence and cut as a two-piece. Internal trim pot ~1kHz. Less aggressive than the Rubber Factory setting.</div>
+    </div>
+    <div class="eb10-band">
+      <div class="eb10-band-title">High · ~3–5kHz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn selected-cut">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill cut" style="width:16%"></div></div>
+      <div class="eb10-knob-val cut">0</div>
+      <div class="eb10-freq">Switch ▼ CUT · Knob at 0 · = No effect</div>
+      <div class="eb10-note">Flat — Let's Rock has high-frequency presence and clarity that shouldn't be removed. Don't dark this tone down the way the early records required.</div>
+    </div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">Boost Switch</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Mid Trim (internal)</div><div class="toggle-state neutral">~1kHz</div></div>
+    <div class="toggle-item"><div class="toggle-label">Mid Q (internal)</div><div class="toggle-state neutral">Broad — musical, not surgical</div></div>
+  </div>
+</div>
+
+<!-- STARLIGHT + GOLDEN -->
+<div class="section-label">FX Loop · Tape Echo + Spring Reverb</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">UAFX Starlight</div>
+    <div class="card-badge">Belle Epoch Role · Tape Echo · Subtle</div>
+  </div>
+  <div class="card-role">Auerbach used a Catalinbread Belle Epoch (tape echo) on Let's Rock. The Starlight in EP-III tape mode covers this. Longer and more present than the Thickfreakness slapback — a genuine musical delay that adds rhythm and space. Dotted-eighth feel for several tracks. All clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+      <div class="clock-label">Delay</div>
+      <div class="clock-pos">11 O'CLK</div>
+      <div class="clock-sub">~300–400ms — musical not slapback</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+      <div class="clock-label">Feedback</div>
+      <div class="clock-pos">10 O'CLK</div>
+      <div class="clock-sub">1–2 repeats — musical, not washing</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 28 28)"/></svg>
+      <div class="clock-label">Mix</div>
+      <div class="clock-pos">9 O'CLK</div>
+      <div class="clock-sub">Subtle — present but not leading</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+      <div class="clock-label">Color</div>
+      <div class="clock-pos">1 O'CLK</div>
+      <div class="clock-sub">Tape wear — warm repeats, not hi-fi</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+      <div class="clock-label">Mod</div>
+      <div class="clock-pos">10 O'CLK</div>
+      <div class="clock-sub">Low flutter — alive, not chorus</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Division</div>
+      <div class="clock-pos">♩ or ♪.</div>
+      <div class="clock-sub">Quarter or dotted-8th to feel</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="border-left-color:var(--border-hi)">
+  <div class="card-header">
+    <div class="card-name">UAFX Golden Reverberator</div>
+    <div class="card-badge amber">Spring 65 Mode · New to This Album</div>
+  </div>
+  <div class="card-role">Spring reverb is now present — Auerbach's silverface Deluxe Reverb has onboard spring reverb and it's audible on Let's Rock tracks. Unlike the early records (completely dry) and the Fell on Black Days guide (no reverb), the Golden is now in the chain. Use Spring 65 mode — not Plate. Short to medium decay, moderate mix. Adds the live, slightly splashy character of a small open-back combo's spring tank. UAFX Golden knobs — Decay, Predelay, Mix (top), Bass, Treble, Mod (bottom). All clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Mode</div>
+      <div class="clock-pos">Spring 65</div>
+      <div class="clock-sub">Not Plate 140</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 28 28)"/></svg>
+      <div class="clock-label">Decay</div>
+      <div class="clock-pos">9 O'CLK</div>
+      <div class="clock-sub">Short — small combo spring character</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 28 28)"/></svg>
+      <div class="clock-label">Predelay</div>
+      <div class="clock-pos">9 O'CLK</div>
+      <div class="clock-sub">Short — no gap, natural spring feel</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+      <div class="clock-label">Mix</div>
+      <div class="clock-pos">10 O'CLK</div>
+      <div class="clock-sub">Present — more than the early records' zero</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Bass</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Flat — preserve warmth in tail</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-30 28 28)"/></svg>
+      <div class="clock-label">Treble</div>
+      <div class="clock-pos">11 O'CLK</div>
+      <div class="clock-sub">Slightly rolled — spring, not room shimmer</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--blue-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" transform="rotate(-150 28 28)"/></svg>
+      <div class="clock-label">Mod</div>
+      <div class="clock-pos">7 O'CLK</div>
+      <div class="clock-sub">Off — spring doesn't need shimmer</div>
+    </div>
+  </div>
+  <div class="tip"><strong>Spring 65 vs Plate 140:</strong> Spring 65 has the drip and splash of a physical spring tank — the slight wobble on the tail is correct for this. Plate 140 is denser and smoother, better for studio recording. Use Spring 65 here — it matches the Deluxe Reverb's onboard spring character Auerbach was actually using.</div>
+</div>
+
+<!-- TRACK GUIDE -->
+<div class="section-label">Track-by-Track</div>
+<div class="song-grid">
+  <div class="song-card">
+    <div class="song-num">01</div>
+    <div>
+      <div class="song-name">Shine a Little Light</div>
+      <div class="song-pickup">Bridge Nocaster (Pos 1) or H150</div>
+      <div class="song-notes">Big AC/DC-style power chords. Pickle ON, Scoop flat, high Crunch. No tremolo. Heavy picking.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">02</div>
+    <div>
+      <div class="song-name">Lo/Hi</div>
+      <div class="song-pickup">Both (Pos 2)</div>
+      <div class="song-notes">Driving riff. Pickle ON. Tremolo OFF. Starlight delay in. Mix of heavy and light passages.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">03</div>
+    <div>
+      <div class="song-name">Eagle Birds</div>
+      <div class="song-pickup">Bridge Nocaster (Pos 1)</div>
+      <div class="song-notes">Choppy, rhythmic. Pickle ON, spiky setting. No tremolo. Sharp pick attack.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">04</div>
+    <div>
+      <div class="song-name">Go</div>
+      <div class="song-pickup">Both (Pos 2)</div>
+      <div class="song-notes">Tremolo ON — Speed 3, Depth 7. Defining track for tremolo use. Pickle OFF or very light.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">05</div>
+    <div>
+      <div class="song-name">Every Little Thing</div>
+      <div class="song-pickup">Both (Pos 2)</div>
+      <div class="song-notes">Auerbach used the Guild here. Both position Tele is ideal. Light-touch intro, BD-2 for grit. Starlight prominent.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">06</div>
+    <div>
+      <div class="song-name">Get Yourself Together</div>
+      <div class="song-pickup">Both (Pos 2)</div>
+      <div class="song-notes">Mid-tempo groove. Pickle light setting. Tremolo OFF. Golden reverb more present.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">07</div>
+    <div>
+      <div class="song-name">Sit Around and Miss You</div>
+      <div class="song-pickup">Neck CuNiFe (Pos 3)</div>
+      <div class="song-notes">Slower and bluesier. Neck humbucker. Pickle OFF — BD-2 only. Golden reverb prominent.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">08</div>
+    <div>
+      <div class="song-name">Walk Across the Water</div>
+      <div class="song-pickup">Both (Pos 2)</div>
+      <div class="song-notes">Tremolo ON — Speed 4, Depth 5. More subtle than Go. Pickle OFF. Starlight + Golden both in.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TECHNIQUE -->
+<div class="section-label">Playing Notes</div>
+<div class="card" style="border-left-color:var(--blue)">
+  <div class="card-header">
+    <div class="card-name">Technique</div>
+    <div class="card-badge">More Dynamic · More Explosive · More Variable</div>
+  </div>
+  <div class="card-role">Let's Rock is a more sophisticated album tonally than the early records. Dynamic range matters — the quiet passages need to be genuinely quiet so the loud ones land hard.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Pick Attack</div><div class="knob-val">Variable</div><div class="knob-sub">Light touch when needed — the treble boost makes even light picking explosive</div></div>
+    <div class="knob"><div class="knob-label">Power Chords</div><div class="knob-val">Dig In</div><div class="knob-sub">Shine a Little Light, Eagle Birds — heavy pick attack, chunk rhythm</div></div>
+    <div class="knob"><div class="knob-label">Tremolo Feel</div><div class="knob-val">Let It Breathe</div><div class="knob-sub">Don't fight the wobble — play to it, not through it</div></div>
+    <div class="knob"><div class="knob-label">String Gauge</div><div class="knob-val">.010s</div><div class="knob-sub">Lighter than early records — the Telecaster and treble boost reward lighter strings</div></div>
+    <div class="knob"><div class="knob-label">Guitar Vol</div><div class="knob-val">Fully Open</div><div class="knob-sub">Let the Tumnus boost do the work — don't choke the signal at the guitar</div></div>
+  </div>
+  <div class="tip"><strong>The Tumnus as treble booster:</strong> With the Tumnus always on at 8 o'clock Gain and 2 o'clock Level, even a light pick touch hits the Clapp's input hard. This is what Auerbach means when he says "touch the strings really light, but have the tone be explosive." The boost does the volume work — your dynamics control the character.</div>
+</div>
+
+<footer>
+  <div>The Black Keys · Let's Rock · 2019</div>
+  <div class="f-right">Postmodern Telecaster · Frost Clapp 15 · Tumnus Deluxe · Swollen Pickle</div>
+</footer>
+
+</div>
+</body>
+</html>

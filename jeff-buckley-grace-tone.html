@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeff Buckley · Grace · Tone Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#04040a; --deep:#09090f; --card:#0f0f18; --border:#1a1a28; --border-hi:#262636;
+    --indigo:#4a3a8a; --indigo-dim:#2a1e5a; --indigo-glow:rgba(74,58,138,0.16); --indigo-faint:rgba(74,58,138,0.06);
+    --lilac:#c8b8e8; --lilac-dim:#7a6898; --red-lit:#c04040; --green-lit:#28883a;
+    --amber:#c09030; --steel:#5a8aaa; --white:#f0ecf8;
+    --clean-col:#3a7a9a; --dirt-col:#8a4a2a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--black);color:var(--lilac);font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.05;pointer-events:none;z-index:999;}
+  .page{max-width:920px;margin:0 auto;padding:44px 20px 80px;}
+
+  /* HEADER */
+  header{border-bottom:1px solid var(--border-hi);padding-bottom:28px;margin-bottom:32px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;}
+  .eyebrow{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--indigo);margin-bottom:8px;opacity:.8;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,90px);line-height:0.88;color:var(--white);letter-spacing:-0.01em;font-style:italic;}
+  h1 span{font-style:normal;font-family:'Oswald',sans-serif;font-size:0.55em;letter-spacing:0.12em;text-transform:uppercase;color:var(--indigo);display:block;margin-bottom:6px;font-weight:400;}
+  .header-meta{text-align:right;}
+  .album-tag{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--lilac-dim);margin-bottom:5px;}
+  .album-name{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--lilac);}
+  .header-detail{font-size:10px;color:var(--lilac-dim);margin-top:9px;line-height:1.7;}
+  .rig-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px;}
+  .rig-tag{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--indigo);border:1px solid var(--indigo-dim);padding:3px 9px;opacity:.9;}
+  .rig-tag.steel{color:var(--steel);border-color:rgba(90,138,170,0.35);}
+  .rig-tag.amber{color:var(--amber);border-color:rgba(192,144,48,0.35);}
+
+  /* LABELS */
+  .section-label{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--indigo);margin:32px 0 12px;display:flex;align-items:center;gap:12px;opacity:.9;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border-hi);}
+  .sub-section{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--lilac-dim);border-top:1px solid var(--border);padding-top:10px;margin:14px 0 10px;}
+
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--indigo-dim);padding:16px 20px;margin-bottom:2px;animation:fadeUp 0.3s both;}
+  .card:hover{border-color:var(--border-hi);border-left-color:var(--indigo);}
+  .card.clean{border-left-color:rgba(58,122,154,0.6);}
+  .card.clean:hover{border-left-color:var(--clean-col);}
+  .card.dirt{border-left-color:rgba(138,74,42,0.6);}
+  .card.dirt:hover{border-left-color:var(--dirt-col);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .card-name{font-family:'Oswald',sans-serif;font-size:19px;color:var(--white);text-transform:uppercase;letter-spacing:0.04em;line-height:1;font-weight:600;}
+  .card-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--indigo);border:1px solid var(--indigo-dim);padding:2px 8px;align-self:center;white-space:nowrap;opacity:.9;}
+  .card-badge.clean{color:var(--clean-col);border-color:rgba(58,122,154,0.4);}
+  .card-badge.dirt{color:var(--dirt-col);border-color:rgba(138,74,42,0.4);}
+  .card-badge.amber{color:var(--amber);border-color:rgba(192,144,48,0.35);}
+  .card-role{font-size:11px;color:var(--lilac-dim);font-style:italic;margin-bottom:14px;line-height:1.7;}
+
+  /* KNOBS */
+  .knob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin-bottom:10px;}
+  .knob{background:var(--deep);border:1px solid var(--border);padding:9px 11px;}
+  .knob-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lilac-dim);margin-bottom:3px;}
+  .knob-val{font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:0.04em;color:var(--indigo);line-height:1;text-transform:uppercase;font-weight:600;}
+  .knob-sub{font-size:9px;color:var(--lilac-dim);margin-top:3px;line-height:1.4;}
+  .knob.clean .knob-val{color:var(--clean-col);}
+  .knob.dirt .knob-val{color:var(--dirt-col);}
+  .knob.amber .knob-val{color:var(--amber);}
+  .knob.dim .knob-val{color:var(--lilac-dim);}
+  .knob.on .knob-val{color:var(--green-lit);}
+  .knob.off .knob-val{color:var(--red-lit);}
+
+  /* CLOCK */
+  .clock-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .clock-knob{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:72px;}
+  .clock-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--lilac-dim);text-align:center;}
+  .clock-pos{font-family:'Oswald',sans-serif;font-size:12px;color:var(--indigo);letter-spacing:0.04em;text-align:center;line-height:1;text-transform:uppercase;font-weight:600;}
+  .clock-sub{font-size:9px;color:var(--lilac-dim);text-align:center;line-height:1.3;max-width:76px;}
+
+  /* TOGGLES */
+  .toggle-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+  .toggle-item{background:var(--deep);border:1px solid var(--border);padding:7px 11px;flex:1;min-width:120px;}
+  .toggle-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lilac-dim);margin-bottom:2px;}
+  .toggle-state{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;}
+  .toggle-state.on{color:var(--green-lit);}
+  .toggle-state.off{color:var(--red-lit);}
+  .toggle-state.neutral{color:var(--lilac-dim);}
+  .toggle-state.clean{color:var(--clean-col);}
+  .toggle-state.dirt{color:var(--dirt-col);}
+
+  /* TIP */
+  .tip{border:1px solid var(--border);border-left:2px solid var(--indigo-dim);background:var(--indigo-faint);padding:9px 13px;font-size:11px;color:var(--lilac-dim);margin-top:10px;font-style:italic;line-height:1.7;}
+  .tip strong{color:var(--indigo);font-style:normal;font-weight:400;}
+  .tip.clean strong{color:var(--clean-col);}
+  .tip.dirt strong{color:var(--dirt-col);}
+  .tip.amber{border-left-color:rgba(192,144,48,0.4);}
+  .tip.amber strong{color:var(--amber);}
+
+  /* RIG TABS */
+  .rig-tabs{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;}
+  .rig-tab{padding:14px 18px;background:var(--deep);border:1px solid var(--border);cursor:pointer;user-select:none;transition:all 0.15s;}
+  .rig-tab.clean-active{background:rgba(58,122,154,0.1);border-color:rgba(58,122,154,0.4);}
+  .rig-tab.dirt-active{background:rgba(138,74,42,0.1);border-color:rgba(138,74,42,0.4);}
+  .rig-tab-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--lilac-dim);margin-bottom:3px;}
+  .rig-tab.clean-active .rig-tab-label{color:var(--clean-col);}
+  .rig-tab.dirt-active .rig-tab-label{color:var(--dirt-col);}
+  .rig-tab-name{font-family:'Oswald',sans-serif;font-size:18px;color:var(--border-hi);text-transform:uppercase;line-height:1;font-weight:700;}
+  .rig-tab.clean-active .rig-tab-name,.rig-tab.dirt-active .rig-tab-name{color:var(--white);}
+  .rig-tab-sub{font-size:10px;color:var(--lilac-dim);margin-top:4px;}
+  .rig-panel{display:none;}
+  .rig-panel.active{display:block;}
+
+  /* CHAIN */
+  .chain-wrap{background:var(--card);border:1px solid var(--border);padding:14px 17px;margin-bottom:6px;}
+  .chain-flow{display:flex;align-items:center;flex-wrap:wrap;gap:2px;}
+  .chain-box{font-size:9px;letter-spacing:0.08em;padding:5px 9px;border:1px solid var(--border-hi);color:var(--lilac-dim);background:var(--deep);white-space:nowrap;text-transform:uppercase;}
+  .chain-box.active{border-color:var(--indigo-dim);color:var(--lilac);background:var(--indigo-faint);}
+  .chain-box.key{border-color:var(--indigo);color:var(--indigo);background:var(--indigo-glow);}
+  .chain-box.clean-key{border-color:rgba(58,122,154,0.8);color:var(--clean-col);background:rgba(58,122,154,0.08);}
+  .chain-box.dirt-key{border-color:rgba(138,74,42,0.8);color:var(--dirt-col);background:rgba(138,74,42,0.08);}
+  .chain-arrow{color:var(--border-hi);font-size:10px;padding:0 2px;}
+  .chain-note{font-size:10px;color:var(--lilac-dim);font-style:italic;margin-top:7px;}
+
+  /* SLOT STACK */
+  .slot-stack{display:grid;gap:2px;margin-bottom:10px;}
+  .slot{background:var(--deep);border:1px solid var(--border);padding:10px 14px;display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:start;}
+  .slot-id{font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;color:var(--lilac-dim);text-transform:uppercase;padding-top:2px;}
+  .slot-id.active{color:var(--indigo);}
+  .slot-name{font-family:'Oswald',sans-serif;font-size:14px;color:var(--white);text-transform:uppercase;font-weight:600;line-height:1;margin-bottom:3px;}
+  .slot-type{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--lilac-dim);margin-bottom:4px;}
+  .slot-detail{font-size:10px;color:var(--lilac-dim);font-style:italic;line-height:1.5;}
+  .slot-status{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;padding-top:2px;}
+  .slot-status.on{color:var(--green-lit);}
+  .slot-status.sw{color:var(--amber);}
+
+  /* PROFILE BOX */
+  .profile-box{background:var(--deep);border:1px solid var(--border);padding:11px 15px;margin-bottom:8px;}
+  .profile-box.clean{border-left:2px solid rgba(58,122,154,0.6);}
+  .profile-box.dirt{border-left:2px solid rgba(138,74,42,0.6);}
+  .profile-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;}
+  .profile-label.clean{color:var(--clean-col);}
+  .profile-label.dirt{color:var(--dirt-col);}
+  .profile-name{font-family:'Oswald',sans-serif;font-size:15px;color:var(--white);text-transform:uppercase;font-weight:600;}
+  .profile-sub{font-size:10px;color:var(--lilac-dim);margin-top:3px;line-height:1.5;}
+
+  /* PICKUP MAP */
+  .pickup-map{display:flex;gap:2px;margin:10px 0;}
+  .pickup-pos{flex:1;text-align:center;padding:8px 4px;background:var(--deep);border:1px solid var(--border);}
+  .pickup-pos.selected{border-color:var(--indigo);background:var(--indigo-glow);}
+  .pickup-pos.alt{border-color:rgba(192,144,48,0.4);background:rgba(192,144,48,0.04);}
+  .pickup-pos-label{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--lilac-dim);margin-bottom:3px;}
+  .pickup-pos-name{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;color:var(--lilac-dim);}
+  .pickup-pos.selected .pickup-pos-name{color:var(--indigo);}
+  .pickup-pos.alt .pickup-pos-name{color:var(--amber);}
+
+  /* SONG GRID */
+  .song-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+  .song-card{background:var(--card);border:1px solid var(--border);padding:12px 15px;display:flex;gap:11px;}
+  .song-num{font-family:'Oswald',sans-serif;font-size:22px;color:var(--border-hi);line-height:1;flex-shrink:0;width:22px;font-weight:700;}
+  .song-name{font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:var(--white);margin-bottom:3px;}
+  .song-rig{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;}
+  .song-rig.clean{color:var(--clean-col);}
+  .song-rig.dirt{color:var(--dirt-col);}
+  .song-rig.both{color:var(--amber);}
+  .song-notes{font-size:10px;color:var(--lilac-dim);font-style:italic;margin-top:2px;}
+
+  /* PHILOSOPHY */
+  .philosophy{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--indigo-dim);padding:16px 20px;margin-bottom:2px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .philosophy-col h4{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--indigo);margin-bottom:7px;opacity:.9;}
+  .philosophy-col p{font-size:11px;color:var(--lilac-dim);line-height:1.7;font-style:italic;}
+
+  .source-note{font-size:10px;color:var(--lilac-dim);font-style:italic;padding:9px 13px;border:1px solid var(--border);background:var(--deep);margin-bottom:2px;}
+  .source-note strong{color:var(--indigo);font-style:normal;font-weight:400;opacity:.9;}
+
+  footer{border-top:1px solid var(--border-hi);padding-top:16px;margin-top:36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer div{font-size:9px;letter-spacing:0.12em;opacity:0.35;text-transform:uppercase;}
+  footer .f-right{color:var(--indigo);}
+
+  @media(max-width:640px){
+    header{grid-template-columns:1fr;}.header-meta{text-align:left;}
+    .rig-tabs,.philosophy,.song-grid{grid-template-columns:1fr;}
+    .knob-grid{grid-template-columns:repeat(2,1fr);}
+    .slot{grid-template-columns:50px 1fr;}
+    .slot-status{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="eyebrow">Tone Reference · Bryce · Kemper / FR10</div>
+    <h1><span>Jeff Buckley</span>Grace</h1>
+    <div class="rig-tags">
+      <span class="rig-tag">Postmodern Telecaster</span>
+      <span class="rig-tag amber">Heritage H150</span>
+      <span class="rig-tag steel">Kemper Player</span>
+      <span class="rig-tag steel">FR10 FRFR</span>
+      <span class="rig-tag">Two Rigs</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="album-tag">Album</div>
+    <div class="album-name">Grace, 1994</div>
+    <div class="header-detail">
+      1983 Fender Telecaster · '76 Gibson Les Paul Custom<br>
+      Fender Vibroverb '63 RI · Mesa Boogie Dual Rec Trem-O-Verb<br>
+      Alesis Quadraverb ("Taj Mahal" preset, modified)<br>
+      Dean Markley Blue Steel .010s
+    </div>
+  </div>
+</header>
+
+<!-- SOURCE NOTE -->
+<div class="source-note"><strong>Sources:</strong> Buckley's primary guitar throughout his career was a borrowed 1983 Fender Telecaster (top loader). He biamped live: Fender Vibroverb '63 RI for clean tones, Mesa Boogie Dual Rectifier Trem-O-Verb for overdrive. The Alesis Quadraverb rack unit was his primary and almost only effect — Hallelujah used a modified version of its "Taj Mahal" preset. The reverb on Grace is long-decay hall character with modulation — notes linger, stack, and create tension. Buckley used very few pedals; his tone was almost entirely guitar, amp, and the Quadraverb. Additional tools: DigiTech Whammy II, Boss Hyper Fuzz, EHX Hot Tubes, Marshall Drivemaster. He played Dean Markley Blue Steel strings.</div>
+
+<!-- TONE PHILOSOPHY -->
+<div class="section-label">Tone Character</div>
+<div class="philosophy">
+  <div class="philosophy-col">
+    <h4>The Two Sides</h4>
+    <p>Grace is a record of two emotional extremes: clear, articulate clean tones soaked in hall reverb (Hallelujah, Lover, Lilac Wine) and explosive, violent overdrive that breaks without warning (Mojo Pin, Eternal Life). Both sides are radical. The clean sounds impossibly pure; the dirt sounds genuinely dangerous.</p>
+  </div>
+  <div class="philosophy-col">
+    <h4>The Reverb Doctrine</h4>
+    <p>The Quadraverb hall reverb is not decoration — it is compositional. Buckley deliberately let notes overlap and dissonances linger. The reverb creates harmonic tension he never fully resolves. The decay should be long enough that each chord you play is still audible when the next one arrives. Notes stack, blur, and breathe.</p>
+  </div>
+</div>
+
+<!-- GUITAR SELECTION -->
+<div class="section-label">Guitar Selection</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Postmodern Telecaster</div>
+    <div class="card-badge clean">Primary · Clean Rig · Grace / Hallelujah</div>
+  </div>
+  <div class="card-role">Buckley's main guitar was a 1983 Fender Telecaster — essentially the same instrument. The Postmodern Tele with its '51 Nocaster bridge single-coil is the closest match in this collection. The CuNiFe WR neck humbucker gives a warmer option for Lover and Lilac Wine. Unmarked dials — clock positions.</div>
+
+  <div class="pickup-map">
+    <div class="pickup-pos">
+      <div class="pickup-pos-label">Pos 3</div>
+      <div class="pickup-pos-name">Neck CuNiFe</div>
+    </div>
+    <div class="pickup-pos alt">
+      <div class="pickup-pos-label">Pos 2 — Lover / Lilac</div>
+      <div class="pickup-pos-name">Both</div>
+    </div>
+    <div class="pickup-pos selected">
+      <div class="pickup-pos-label">Pos 1 ← Primary</div>
+      <div class="pickup-pos-name">Bridge Nocaster</div>
+    </div>
+  </div>
+
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--indigo-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" transform="rotate(90 28 28)"/></svg>
+      <div class="clock-label">Volume</div>
+      <div class="clock-pos">5 O'CLK</div>
+      <div class="clock-sub">Fully open — Buckley used guitar vol expressively</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--indigo-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Tone</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Flat — Tele brightness is part of the tone</div>
+    </div>
+  </div>
+  <div class="tip clean"><strong>Heritage H150 for overdrive tracks:</strong> Buckley used a black Les Paul Custom (later a '74 LP Custom reissue) for his heavier tones — Mojo Pin, Eternal Life, So Real, the heavy passages of Grace. The H150 with SD '59s is the right tool for these. More sustain, more density, the humbuckers drive the Mesa profile harder. Switch guitars between rig presets on the Kemper.</div>
+</div>
+
+<!-- RIG SELECTOR -->
+<div class="section-label">Kemper Rigs · Two Profiles</div>
+<div class="rig-tabs">
+  <div class="rig-tab clean-active" onclick="switchRig('clean',event)">
+    <div class="rig-tab-label">Rig 1 · Clean</div>
+    <div class="rig-tab-name">Fender Vibroverb</div>
+    <div class="rig-tab-sub">Hallelujah · Lover · Lilac Wine · Last Goodbye · Dream Brother</div>
+  </div>
+  <div class="rig-tab" id="dirt-tab" onclick="switchRig('dirt',event)">
+    <div class="rig-tab-label">Rig 2 · Overdrive</div>
+    <div class="rig-tab-name">Mesa Trem-O-Verb</div>
+    <div class="rig-tab-sub">Mojo Pin · Eternal Life · So Real · Grace · heavy passages</div>
+  </div>
+</div>
+
+<!-- ═══════ CLEAN RIG ═══════ -->
+<div class="rig-panel active" id="rig-clean">
+
+  <div class="section-label">Signal Chain · Clean Rig</div>
+  <div class="chain-wrap">
+    <div class="chain-flow">
+      <div class="chain-box active">Postmodern Tele</div><div class="chain-arrow">→</div>
+      <div class="chain-box">Tuner</div><div class="chain-arrow">→</div>
+      <div class="chain-box clean-key">Kemper Player</div><div class="chain-arrow">→</div>
+      <div class="chain-box active">FR10</div>
+    </div>
+    <div class="chain-note">All processing inside the Kemper. Stomp A–D: EQ, Chorus (optional), drive (very light). Delay. Reverb — the reverb is the centrepiece of this rig. Guitar volume knob used expressively for swells.</div>
+  </div>
+
+  <!-- CLEAN PROFILE -->
+  <div class="card clean">
+    <div class="card-header">
+      <div class="card-name">Profile · Fender Vibroverb '63</div>
+      <div class="card-badge clean">Merged Profile · Clean Platform</div>
+    </div>
+    <div class="card-role">Buckley's main amp for all clean tones. The '63 Vibroverb is a brownface Fender — slightly different voicing from the blackface Deluxe or Twin. Warmer in the midrange, less clinical, has onboard vibrato. Search Rig Manager for a Vibroverb or brownface Fender profile. If unavailable, a blackface Fender Deluxe Reverb or Princeton Reverb profile is the closest alternative.</div>
+
+    <div class="profile-box clean">
+      <div class="profile-label clean">Primary</div>
+      <div class="profile-name">Fender Vibroverb '63 — Brownface</div>
+      <div class="profile-sub">Search: "Vibroverb", "brownface Fender", "63 Fender" · Clean, warm, slightly mid-forward · Merged profile</div>
+    </div>
+    <div class="profile-box clean">
+      <div class="profile-label clean">Alternative</div>
+      <div class="profile-name">Fender '65 Princeton Reverb or Deluxe Reverb</div>
+      <div class="profile-sub">Search: "Princeton Reverb", "65 Deluxe", "blackface Fender" · Good clean substitute if no Vibroverb available · Merged</div>
+    </div>
+
+    <div class="sub-section">Kemper Amp Section</div>
+    <div class="knob-grid">
+      <div class="knob clean"><div class="knob-label">Gain</div><div class="knob-val">2–3</div><div class="knob-sub">Very low — clean headroom. Slight breakup only on heavy picking.</div></div>
+      <div class="knob clean"><div class="knob-label">Bass</div><div class="knob-val">4–5</div><div class="knob-sub">Slightly below flat — Telecaster bass is tight</div></div>
+      <div class="knob clean"><div class="knob-label">Middle</div><div class="knob-val">5–6</div><div class="knob-sub">Flat to slightly above — brownface warmth</div></div>
+      <div class="knob clean"><div class="knob-label">Treble</div><div class="knob-val">6</div><div class="knob-sub">Present — bright Telecaster character</div></div>
+      <div class="knob clean"><div class="knob-label">Presence</div><div class="knob-val">4–5</div><div class="knob-sub">Moderate — not harsh</div></div>
+    </div>
+    <div class="tip clean"><strong>FR10 output:</strong> Merged profile, cab sim ON in Kemper, FR10 flat. Don't use the Vibroverb's onboard reverb in the profile if it has one — the Kemper reverb slot does this job with full control.</div>
+  </div>
+
+  <!-- CLEAN FX SLOTS -->
+  <div class="section-label">Clean Rig FX Slots</div>
+  <div class="card clean">
+    <div class="card-header">
+      <div class="card-name">Six Slot Configuration · Clean</div>
+      <div class="card-badge clean">Stomp A–D · Delay · Reverb</div>
+    </div>
+
+    <div class="slot-stack">
+
+      <div class="slot">
+        <div class="slot-id active">STOMP A</div>
+        <div>
+          <div class="slot-name">Studio EQ</div>
+          <div class="slot-type">Tonal Shaping · Always On</div>
+          <div class="slot-detail">Mild mid boost (+2–3dB around 800Hz–1kHz) to add presence and cut. Low shelf cut (−2dB at 100Hz) to tighten the Tele's low end. Buckley's tone is articulate and focused — not bassy.</div>
+        </div>
+        <div class="slot-status on">ALWAYS ON</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id">STOMP B</div>
+        <div>
+          <div class="slot-name">Stereo Chorus</div>
+          <div class="slot-type">TC Electronics Stereo Chorus Substitute · Optional</div>
+          <div class="slot-detail">Buckley used a TC Electronic Stereo Chorus. Very slow rate, mild depth — adds shimmer and width on cleaner passages, especially Lover, You Should've Come Over. Not on every track.</div>
+        </div>
+        <div class="slot-status sw">SWITCHABLE</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id">STOMP C</div>
+        <div>
+          <div class="slot-name">Light Overdrive</div>
+          <div class="slot-type">EHX Hot Tubes / Marshall Drivemaster Role</div>
+          <div class="slot-detail">Kemper Transparent OD or Vintage Drive. Very low gain — adds harmonic texture and slight compression on the cleans without audible grit. Based on Buckley's EHX Hot Tubes approach. Optional — some clean songs don't need it.</div>
+        </div>
+        <div class="slot-status sw">OPTIONAL</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id">STOMP D</div>
+        <div>
+          <div class="slot-name">Empty / Whammy</div>
+          <div class="slot-type">DigiTech Whammy II Role if needed</div>
+          <div class="slot-detail">Buckley used a DigiTech Whammy II for specific effects. Use Kemper Pitch Shifter if needed for specific songs. Otherwise leave empty.</div>
+        </div>
+        <div class="slot-status sw">OPTIONAL</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id active">DELAY</div>
+        <div>
+          <div class="slot-name">Tape / Legacy Delay</div>
+          <div class="slot-type">Subtle · Quarter Note · Warm</div>
+          <div class="slot-detail">Subtle tape delay — adds depth and slight rhythmic texture but doesn't dominate. Mix low (15–20%). The reverb carries the atmospheric work; the delay adds a secondary layer. Quarter note at playing tempo.</div>
+        </div>
+        <div class="slot-status on">ALWAYS ON</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id active">REVERB ★</div>
+        <div>
+          <div class="slot-name">Hall Reverb — Quadraverb Character</div>
+          <div class="slot-type">Alesis Quadraverb "Taj Mahal" Substitute · THE Sound</div>
+          <div class="slot-detail">★ This is the most important element in this rig. Long-decay hall reverb with modulation. The Quadraverb's "Taj Mahal" preset is a large hall with a very long decay — notes must stack and linger. Mix high (40–50%). Kemper Hall reverb type with added modulation.</div>
+        </div>
+        <div class="slot-status on">ALWAYS ON</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- REVERB DETAIL -->
+  <div class="card clean">
+    <div class="card-header">
+      <div class="card-name">Hall Reverb · Quadraverb Settings</div>
+      <div class="card-badge clean">The Most Important Setting In This Guide</div>
+    </div>
+    <div class="card-role">The Alesis Quadraverb "Taj Mahal" preset is a large hall reverb with significant diffusion and very long decay — Buckley modified it slightly but kept the core character. This reverb is not a background effect. It is compositional. Notes must linger long enough to overlap with subsequent notes, creating internal dissonance that never fully resolves. The hall should feel like a cathedral, not a room.</div>
+    <div class="knob-grid">
+      <div class="knob clean"><div class="knob-label">Type</div><div class="knob-val">Hall Reverb</div><div class="knob-sub">Kemper Hall or Large Hall — not Spring or Plate</div></div>
+      <div class="knob clean"><div class="knob-label">Decay / Time</div><div class="knob-val">4.0–6.0 sec</div><div class="knob-sub">Very long — Hallelujah: 5–6 sec. Other clean songs: 3–4 sec.</div></div>
+      <div class="knob clean"><div class="knob-label">Mix</div><div class="knob-val">40–50%</div><div class="knob-sub">Prominent — significantly more than other guides</div></div>
+      <div class="knob clean"><div class="knob-label">Predelay</div><div class="knob-val">25–40ms</div><div class="knob-sub">Short gap before reverb bloom — clarity then wash</div></div>
+      <div class="knob clean"><div class="knob-label">Modulation</div><div class="knob-val">Low-Medium</div><div class="knob-sub">The Quadraverb had modulation in its reverb tails — adds shimmer and movement</div></div>
+      <div class="knob clean"><div class="knob-label">Diffusion</div><div class="knob-val">High</div><div class="knob-sub">Dense, smooth — not an echo. Notes blur into atmosphere.</div></div>
+      <div class="knob clean"><div class="knob-label">Bass EQ</div><div class="knob-val">Slightly Cut</div><div class="knob-sub">Prevent reverb muddying the low end</div></div>
+      <div class="knob clean"><div class="knob-label">Treble EQ</div><div class="knob-val">Slightly Cut</div><div class="knob-sub">Smooth the reverb shimmer — musical not harsh</div></div>
+    </div>
+    <div class="tip clean"><strong>The reverb philosophy:</strong> Set the decay so long that when you play a chord, the previous chord is still audible. This is deliberate — Buckley was composing with the reverb. On Hallelujah, the long decay under the melody is what creates the aching, unresolved quality. If the reverb isn't making individual notes feel like they're dissolving into each other, it's not long enough. Push the decay past your comfort zone.</div>
+  </div>
+
+  <!-- DELAY DETAIL -->
+  <div class="card clean" style="margin-bottom:0">
+    <div class="card-header">
+      <div class="card-name">Delay Slot · Clean Rig</div>
+      <div class="card-badge clean">Subtle · Background Depth</div>
+    </div>
+    <div class="knob-grid">
+      <div class="knob clean"><div class="knob-label">Type</div><div class="knob-val">Tape / Legacy</div><div class="knob-sub">Warm, organic</div></div>
+      <div class="knob clean"><div class="knob-label">Time</div><div class="knob-val">~350–500ms</div><div class="knob-sub">Quarter note — varies to tempo of song</div></div>
+      <div class="knob clean"><div class="knob-label">Feedback</div><div class="knob-val">15–20%</div><div class="knob-sub">1–2 repeats — subtle</div></div>
+      <div class="knob clean"><div class="knob-label">Mix</div><div class="knob-val">15–20%</div><div class="knob-sub">Background — the reverb dominates the space</div></div>
+    </div>
+  </div>
+
+</div><!-- end clean rig -->
+
+<!-- ═══════ OVERDRIVE RIG ═══════ -->
+<div class="rig-panel" id="rig-dirt">
+
+  <div class="section-label">Signal Chain · Overdrive Rig</div>
+  <div class="chain-wrap">
+    <div class="chain-flow">
+      <div class="chain-box active">Heritage H150</div><div class="chain-arrow">→</div>
+      <div class="chain-box">Tuner</div><div class="chain-arrow">→</div>
+      <div class="chain-box dirt-key">Kemper Player</div><div class="chain-arrow">→</div>
+      <div class="chain-box active">FR10</div>
+    </div>
+    <div class="chain-note">H150 preferred for overdrive tracks — closer to Buckley's Les Paul Custom character. Postmodern Tele can work with the Nocaster bridge pickup. Overdrive rig uses Mesa Trem-O-Verb profile: midrange crunch, natural compression, more aggressive decay on reverb.</div>
+  </div>
+
+  <!-- OVERDRIVE PROFILE -->
+  <div class="card dirt">
+    <div class="card-header">
+      <div class="card-name">Profile · Mesa Dual Rectifier Trem-O-Verb</div>
+      <div class="card-badge dirt">Merged Profile · Medium-High Gain</div>
+    </div>
+    <div class="card-role">Buckley's dirt amp. The Dual Rectifier Trem-O-Verb is a high-gain Mesa with onboard tremolo — very different from the Vibroverb. Rich, saturated, aggressive. The overdrive on Grace is not subtle — Mojo Pin and Eternal Life are genuinely heavy. Search for Dual Rectifier or Rectifier profiles in Rig Manager. Use Vintage or Modern channel.</div>
+
+    <div class="profile-box dirt">
+      <div class="profile-label dirt">Primary</div>
+      <div class="profile-name">Mesa Dual Rectifier — Vintage Channel</div>
+      <div class="profile-sub">Search: "Dual Rec", "Rectifier", "Mesa vintage" · Medium-high gain · Rich mids and low-end density · Merged profile</div>
+    </div>
+    <div class="profile-box dirt">
+      <div class="profile-label dirt">Alternative</div>
+      <div class="profile-name">Mesa Mark Series or Boogie Style</div>
+      <div class="profile-sub">Search: "Mesa Mark", "Boogie crunch" · Less aggressive than Rectifier — good for Grace's more controlled dirt passages</div>
+    </div>
+
+    <div class="sub-section">Kemper Amp Section · Overdrive</div>
+    <div class="knob-grid">
+      <div class="knob dirt"><div class="knob-label">Gain</div><div class="knob-val">5–7</div><div class="knob-sub">Medium-high — saturated but notes still articulate</div></div>
+      <div class="knob dirt"><div class="knob-label">Bass</div><div class="knob-val">5–6</div><div class="knob-sub">Slightly above flat — Rectifier low-end density</div></div>
+      <div class="knob dirt"><div class="knob-label">Middle</div><div class="knob-val">6</div><div class="knob-sub">Above flat — mid-forward crunch character</div></div>
+      <div class="knob dirt"><div class="knob-label">Treble</div><div class="knob-val">5</div><div class="knob-sub">Flat — controlled, not bright</div></div>
+      <div class="knob dirt"><div class="knob-label">Presence</div><div class="knob-val">4</div><div class="knob-sub">Moderate — Rectifier presence is powerful</div></div>
+    </div>
+  </div>
+
+  <!-- OVERDRIVE FX SLOTS -->
+  <div class="section-label">Overdrive Rig FX Slots</div>
+  <div class="card dirt">
+    <div class="card-header">
+      <div class="card-name">Six Slot Configuration · Overdrive</div>
+      <div class="card-badge dirt">Much Drier · More Dynamic</div>
+    </div>
+
+    <div class="slot-stack">
+
+      <div class="slot">
+        <div class="slot-id active">STOMP A</div>
+        <div>
+          <div class="slot-name">Boss Hyper Fuzz / Big Muff</div>
+          <div class="slot-type">Fuzz · Stomp In for Solos</div>
+          <div class="slot-detail">Buckley used a Boss Hyper Fuzz and EHX Big Muff Pi for additional saturation on solos — particularly Eternal Life. Kemper Muff Fuzz or Classic Fuzz type. Off by default, stomped in for solo passages.</div>
+        </div>
+        <div class="slot-status sw">STOMP IN</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id active">STOMP B</div>
+        <div>
+          <div class="slot-name">EQ — Mid Presence</div>
+          <div class="slot-type">Studio EQ · Always On</div>
+          <div class="slot-detail">Boost upper mids (+3dB at 1–2kHz) to cut through the Rectifier's density. Buckley's overdrive is aggressive but never muddy — the mid presence keeps notes articulate inside the gain.</div>
+        </div>
+        <div class="slot-status on">ALWAYS ON</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id">STOMP C</div>
+        <div>
+          <div class="slot-name">Boost / Drive Layer</div>
+          <div class="slot-type">Marshall Drivemaster Role · Optional</div>
+          <div class="slot-detail">Buckley used a Marshall Drivemaster as an additional gain layer. Kemper Vintage Drive or Transparent OD at medium gain — stacks with the Rectifier profile for extra saturation. Use on Eternal Life climax and Mojo Pin heavy sections.</div>
+        </div>
+        <div class="slot-status sw">OPTIONAL</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id">STOMP D</div>
+        <div>
+          <div class="slot-name">HF Flanger</div>
+          <div class="slot-type">Boss HF-2 Hi Band Flanger Role · Occasional</div>
+          <div class="slot-detail">Buckley listed a Boss HF-2 Hi Band Flanger among his gear. Kemper Flanger type, rate slow, depth medium. Used very sparingly for textural variation — not a constant effect.</div>
+        </div>
+        <div class="slot-status sw">OCCASIONAL</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id active">DELAY</div>
+        <div>
+          <div class="slot-name">Slapback Delay</div>
+          <div class="slot-type">Short · Tight · Adds Thickness</div>
+          <div class="slot-detail">Short slapback (~80–120ms) on overdrive adds thickness and depth without washing. Very low mix (10–15%). The overdrive rig is much drier than the clean rig.</div>
+        </div>
+        <div class="slot-status on">ALWAYS ON</div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-id active">REVERB</div>
+        <div>
+          <div class="slot-name">Medium Hall</div>
+          <div class="slot-type">Shorter Decay Than Clean Rig</div>
+          <div class="slot-detail">The overdrive rig uses a shorter reverb decay (1.5–2.5 sec) — the gain and sustain carry the tone, the reverb just provides air. Still hall character, but far more restrained than the clean rig.</div>
+        </div>
+        <div class="slot-status on">ALWAYS ON</div>
+      </div>
+
+    </div>
+
+    <div class="tip dirt"><strong>Overdrive rig philosophy:</strong> The Mesa Trem-O-Verb is aggressive — it does most of the tonal work. Don't over-effect the overdrive rig. Buckley's Eternal Life and Mojo Pin gain is primarily the amp, with the fuzz added only at peak moments. The reverb is shorter to let the distortion character breathe. If the overdrive rig sounds too wet or washy, pull the reverb mix back further.</div>
+  </div>
+
+</div><!-- end overdrive rig -->
+
+<!-- SONG GUIDE -->
+<div class="section-label">Song-by-Song Guide · Grace</div>
+<div class="song-grid">
+  <div class="song-card">
+    <div class="song-num">01</div>
+    <div>
+      <div class="song-name">Mojo Pin</div>
+      <div class="song-rig both">Starts clean → switches to overdrive</div>
+      <div class="song-notes">Clean Tele intro → H150 + Rectifier rig for the heavy sections. Aggressive. Fuzz stomp for peak intensity.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">02</div>
+    <div>
+      <div class="song-name">Grace</div>
+      <div class="song-rig both">Clean intro → overdrive heavy</div>
+      <div class="song-notes">Tele clean for the verse. H150 + Mesa for the chorus explosion. Reverb on both rigs prominent.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">03</div>
+    <div>
+      <div class="song-name">Last Goodbye</div>
+      <div class="song-rig clean">Clean rig · Open G tuning</div>
+      <div class="song-notes">Open G (D-G-D-G-B-D). Bridge Nocaster Tele. Vibroverb profile, chorus slot engaged. Medium reverb decay.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">04</div>
+    <div>
+      <div class="song-name">Lilac Wine</div>
+      <div class="song-rig clean">Clean rig · Neck + Both positions</div>
+      <div class="song-notes">Warmer tone — both pickup position (Pos 2) or neck CuNiFe. Very long reverb decay. Intimate, fragile.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">05</div>
+    <div>
+      <div class="song-name">So Real</div>
+      <div class="song-rig both">Clean verses → overdrive build</div>
+      <div class="song-notes">Starts clean, builds to medium overdrive. Chorus pedal slot engaged on clean sections.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">06</div>
+    <div>
+      <div class="song-name">Hallelujah</div>
+      <div class="song-rig clean">Clean rig · Capo 5th fret</div>
+      <div class="song-notes">Capo 5th (sounds in A). Bridge Nocaster Tele. Maximum reverb decay (5–6 sec). Taj Mahal hall. This is the tone guide centrepiece.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">07</div>
+    <div>
+      <div class="song-name">Lover, You Should've Come Over</div>
+      <div class="song-rig clean">Clean rig · Both pickups</div>
+      <div class="song-notes">Both position (Pos 2). Chorus slot engaged. Long reverb decay. Guitar volume used expressively for swells.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">08</div>
+    <div>
+      <div class="song-name">Corpus Christi Carol</div>
+      <div class="song-rig clean">Clean rig · Maximum reverb</div>
+      <div class="song-notes">Neck CuNiFe or Pos 2. Very long reverb, minimal playing — space is the texture. Most ambient track.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">09</div>
+    <div>
+      <div class="song-name">Eternal Life</div>
+      <div class="song-rig dirt">Overdrive rig · H150 · Fuzz</div>
+      <div class="song-notes">H150 + Mesa profile. Fuzz stomp engaged throughout. Most aggressive track. Flanger stomp optional.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">10</div>
+    <div>
+      <div class="song-name">Dream Brother</div>
+      <div class="song-rig both">Clean rig with drive layer</div>
+      <div class="song-notes">Clean Tele with the light drive stomp engaged (Stomp C). Medium reverb. Guitar builds tension through the song — watch the volume swells.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TECHNIQUE -->
+<div class="section-label">Playing Notes</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Technique</div>
+    <div class="card-badge">Dynamics · Volume Knob · Chord Voicings</div>
+  </div>
+  <div class="card-role">Buckley's tone was almost entirely in his hands. His guitar voicings — heavy use of 6th chords, suspended intervals, open strings against fretted notes — created harmonic tension the reverb then sustained. The guitar volume knob was a primary expressive tool.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Dynamics</div><div class="knob-val">Extreme Range</div><div class="knob-sub">From barely-there whispers to violent attack — the full range in one song</div></div>
+    <div class="knob"><div class="knob-label">Guitar Vol Knob</div><div class="knob-val">Use It</div><div class="knob-sub">Roll back before a note, pick, then open it — violin-style swell attack</div></div>
+    <div class="knob"><div class="knob-label">Chord Voicings</div><div class="knob-val">6ths + Suspensions</div><div class="knob-sub">Buckley favoured 6th chords (1-3-5-6) and suspended voicings — emotionally ambiguous</div></div>
+    <div class="knob"><div class="knob-label">String Gauge</div><div class="knob-val">.010s</div><div class="knob-sub">Dean Markley Blue Steel — light gauge for bending expressiveness</div></div>
+    <div class="knob"><div class="knob-label">Let Notes Decay</div><div class="knob-val">Don't Hurry</div><div class="knob-sub">With long reverb, pauses are as expressive as the notes. Silence into the reverb tail has texture.</div></div>
+    <div class="knob"><div class="knob-label">Vibrato</div><div class="knob-val">Wide + Slow</div><div class="knob-sub">Buckley's vibrato was vocal — wide pitch movement, deliberately paced</div></div>
+  </div>
+  <div class="tip amber"><strong>The reverb is not separate from the playing:</strong> Buckley composed with the reverb as a harmonic instrument. He would play a dissonant note knowing it would hang under the next chord, creating temporary tension. If you treat the reverb as background decoration and play as though it isn't there, you'll miss the entire technique. Slow down, let the reverb breathe, play into the decay.</div>
+</div>
+
+<footer>
+  <div>Jeff Buckley · Grace 1994 · Kemper Player · FR10</div>
+  <div class="f-right">Postmodern Telecaster · Heritage H150 · Two Rigs</div>
+</footer>
+
+</div>
+
+<script>
+function switchRig(id,e){
+  document.querySelectorAll('.rig-tab').forEach(t=>{
+    t.classList.remove('clean-active','dirt-active');
+  });
+  document.querySelectorAll('.rig-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('rig-'+id).classList.add('active');
+  if(id==='clean') e.currentTarget.classList.add('clean-active');
+  else e.currentTarget.classList.add('dirt-active');
+}
+// Init
+document.querySelector('.rig-tab').classList.add('clean-active');
+</script>
+</body>
+</html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Smiths · Johnny Marr · Tone Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#050506; --deep:#0a0a0c; --card:#0f0f13; --border:#1c1c22; --border-hi:#28283a;
+    --moss:#4a6a3a; --moss-dim:#2a3e22; --moss-glow:rgba(74,106,58,0.14); --moss-faint:rgba(74,106,58,0.05);
+    --parchment:#d8d0b8; --parchment-dim:#7a7268; --red-lit:#b83030; --green-lit:#308038;
+    --amber:#b88030; --rose:#8a4060; --white:#f0ede8;
+    --hsin:#8a6030; --hsin-glow:rgba(138,96,48,0.14); --hsin-faint:rgba(138,96,48,0.05);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--black);color:var(--parchment);font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.66' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:999;}
+  .page{max-width:900px;margin:0 auto;padding:44px 20px 80px;}
+
+  /* HEADER */
+  header{border-bottom:1px solid var(--border-hi);padding-bottom:28px;margin-bottom:32px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;}
+  .eyebrow{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--moss);margin-bottom:8px;}
+  h1{font-family:'Oswald',sans-serif;font-size:clamp(44px,8.5vw,86px);line-height:0.88;color:var(--white);text-transform:uppercase;letter-spacing:0.02em;font-weight:700;}
+  h1 em{font-style:normal;color:var(--moss);}
+  .header-meta{text-align:right;}
+  .album-tag{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--parchment-dim);margin-bottom:5px;}
+  .album-name{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:var(--parchment);}
+  .header-detail{font-size:10px;color:var(--parchment-dim);margin-top:9px;line-height:1.7;}
+  .rig-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px;}
+  .rig-tag{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);border:1px solid var(--moss-dim);padding:3px 9px;}
+  .rig-tag.amber{color:var(--amber);border-color:rgba(184,128,48,0.35);}
+  .rig-tag.rose{color:var(--rose);border-color:rgba(138,64,96,0.35);}
+
+  /* LABELS */
+  .section-label{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--moss);margin:32px 0 12px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border-hi);}
+  .section-label.hsin{color:var(--hsin);}
+  .section-label.hsin::after{background:var(--border-hi);}
+  .sub-section{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--parchment-dim);border-top:1px solid var(--border);padding-top:10px;margin:14px 0 10px;}
+
+  /* DIVIDER */
+  .era-divider{border:none;border-top:1px solid var(--border-hi);margin:36px 0;position:relative;}
+  .era-divider::after{content:'HOW SOON IS NOW';position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--black);padding:0 16px;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--hsin);white-space:nowrap;}
+
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--moss-dim);padding:16px 20px;margin-bottom:2px;animation:fadeUp 0.3s both;}
+  .card:hover{border-color:var(--border-hi);border-left-color:var(--moss);}
+  .card.hsin{border-left-color:rgba(138,96,48,0.5);}
+  .card.hsin:hover{border-left-color:var(--hsin);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .card-name{font-family:'Oswald',sans-serif;font-size:19px;color:var(--white);text-transform:uppercase;letter-spacing:0.04em;line-height:1;font-weight:600;}
+  .card-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);border:1px solid var(--moss-dim);padding:2px 8px;align-self:center;white-space:nowrap;}
+  .card-badge.hsin{color:var(--hsin);border-color:rgba(138,96,48,0.4);}
+  .card-badge.amber{color:var(--amber);border-color:rgba(184,128,48,0.35);}
+  .card-role{font-size:11px;color:var(--parchment-dim);font-style:italic;margin-bottom:14px;line-height:1.7;}
+
+  /* KNOBS */
+  .knob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin-bottom:10px;}
+  .knob{background:var(--deep);border:1px solid var(--border);padding:9px 11px;}
+  .knob-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--parchment-dim);margin-bottom:3px;}
+  .knob-val{font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:0.04em;color:var(--moss);line-height:1;text-transform:uppercase;font-weight:600;}
+  .knob-sub{font-size:9px;color:var(--parchment-dim);margin-top:3px;line-height:1.4;}
+  .knob.hsin .knob-val{color:var(--hsin);}
+  .knob.amber .knob-val{color:var(--amber);}
+  .knob.dim .knob-val{color:var(--parchment-dim);}
+  .knob.on .knob-val{color:var(--green-lit);}
+  .knob.off .knob-val{color:var(--red-lit);}
+
+  /* CLOCK */
+  .clock-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .clock-knob{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:72px;}
+  .clock-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--parchment-dim);text-align:center;}
+  .clock-pos{font-family:'Oswald',sans-serif;font-size:12px;color:var(--moss);letter-spacing:0.04em;text-align:center;line-height:1;text-transform:uppercase;font-weight:600;}
+  .clock-pos.hsin{color:var(--hsin);}
+  .clock-sub{font-size:9px;color:var(--parchment-dim);text-align:center;line-height:1.3;max-width:76px;}
+
+  /* TOGGLES */
+  .toggle-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+  .toggle-item{background:var(--deep);border:1px solid var(--border);padding:7px 11px;flex:1;min-width:120px;}
+  .toggle-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--parchment-dim);margin-bottom:2px;}
+  .toggle-state{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;}
+  .toggle-state.on{color:var(--green-lit);}
+  .toggle-state.off{color:var(--red-lit);}
+  .toggle-state.neutral{color:var(--parchment-dim);}
+  .toggle-state.hsin{color:var(--hsin);}
+
+  /* TIP */
+  .tip{border:1px solid var(--border);border-left:2px solid var(--moss-dim);background:var(--moss-faint);padding:9px 13px;font-size:11px;color:var(--parchment-dim);margin-top:10px;font-style:italic;line-height:1.7;}
+  .tip strong{color:var(--moss);font-style:normal;font-weight:400;}
+  .tip.hsin{border-left-color:rgba(138,96,48,0.5);background:var(--hsin-faint);}
+  .tip.hsin strong{color:var(--hsin);}
+
+  /* CHAIN */
+  .chain-wrap{background:var(--card);border:1px solid var(--border);padding:14px 17px;margin-bottom:6px;}
+  .chain-flow{display:flex;align-items:center;flex-wrap:wrap;gap:2px;}
+  .chain-box{font-size:9px;letter-spacing:0.08em;padding:5px 9px;border:1px solid var(--border-hi);color:var(--parchment-dim);background:var(--deep);white-space:nowrap;text-transform:uppercase;}
+  .chain-box.active{border-color:var(--moss-dim);color:var(--parchment);background:var(--moss-faint);}
+  .chain-box.key{border-color:var(--moss);color:var(--moss);background:var(--moss-glow);}
+  .chain-box.hsin-key{border-color:rgba(138,96,48,0.8);color:var(--hsin);background:var(--hsin-glow);}
+  .chain-arrow{color:var(--border-hi);font-size:10px;padding:0 2px;}
+  .chain-note{font-size:10px;color:var(--parchment-dim);font-style:italic;margin-top:7px;}
+  .chain-note.hsin{color:var(--hsin);}
+
+  /* EB-10 */
+  .eb10-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:10px;}
+  .eb10-band{background:var(--deep);border:1px solid var(--border);padding:11px 13px;}
+  .eb10-band-title{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--moss);margin-bottom:9px;}
+  .eb10-toggle-row{display:flex;gap:3px;margin-bottom:9px;}
+  .eb10-btn{flex:1;text-align:center;padding:3px 0;font-size:9px;letter-spacing:0.1em;border:1px solid var(--border);color:var(--parchment-dim);background:var(--card);}
+  .eb10-btn.selected-boost{border-color:var(--moss);color:var(--moss);background:var(--moss-glow);}
+  .eb10-btn.selected-cut{border-color:var(--red-lit);color:var(--red-lit);background:rgba(184,48,48,0.08);}
+  .eb10-knob-track{position:relative;height:5px;background:var(--border);border-radius:3px;margin-bottom:5px;}
+  .eb10-knob-fill{position:absolute;top:0;left:0;height:100%;border-radius:3px;}
+  .eb10-knob-fill.boost{background:var(--moss);}
+  .eb10-knob-fill.cut{background:var(--red-lit);}
+  .eb10-knob-val{font-family:'Oswald',sans-serif;font-size:20px;color:var(--moss);line-height:1;font-weight:600;}
+  .eb10-knob-val.cut{color:var(--red-lit);}
+  .eb10-knob-val.neutral{color:var(--parchment-dim);}
+  .eb10-freq{font-size:9px;color:var(--parchment-dim);margin-top:3px;}
+  .eb10-note{font-size:10px;color:var(--parchment-dim);font-style:italic;margin-top:5px;line-height:1.5;}
+
+  /* PICKUP MAP */
+  .pickup-map{display:flex;gap:2px;margin:10px 0;}
+  .pickup-pos{flex:1;text-align:center;padding:8px 4px;background:var(--deep);border:1px solid var(--border);}
+  .pickup-pos.selected{border-color:var(--moss);background:var(--moss-glow);}
+  .pickup-pos.alt{border-color:rgba(138,96,48,0.4);background:var(--hsin-faint);}
+  .pickup-pos-label{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--parchment-dim);margin-bottom:3px;}
+  .pickup-pos-name{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;color:var(--parchment-dim);}
+  .pickup-pos.selected .pickup-pos-name{color:var(--moss);}
+  .pickup-pos.alt .pickup-pos-name{color:var(--hsin);}
+
+  /* TREMOLO VISUAL */
+  .trem-compare{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:10px 0;}
+  .trem-rate{background:var(--deep);border:1px solid var(--border);padding:14px;text-align:center;}
+  .trem-rate.primary{border-color:rgba(138,96,48,0.5);}
+  .trem-rate-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--parchment-dim);margin-bottom:6px;}
+  .trem-rate.primary .trem-rate-label{color:var(--hsin);}
+  .trem-rate-bpm{font-family:'Oswald',sans-serif;font-size:36px;color:var(--parchment-dim);line-height:1;font-weight:700;}
+  .trem-rate.primary .trem-rate-bpm{color:var(--hsin);}
+  .trem-rate-desc{font-size:10px;color:var(--parchment-dim);margin-top:6px;font-style:italic;}
+  .trem-rate.primary .trem-rate-desc{color:var(--hsin);}
+
+  /* PHILOSOPHY */
+  .philosophy{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--moss-dim);padding:16px 20px;margin-bottom:2px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .philosophy-col h4{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--moss);margin-bottom:7px;}
+  .philosophy-col p{font-size:11px;color:var(--parchment-dim);line-height:1.7;font-style:italic;}
+
+  .source-note{font-size:10px;color:var(--parchment-dim);font-style:italic;padding:9px 13px;border:1px solid var(--border);background:var(--deep);margin-bottom:2px;}
+  .source-note strong{color:var(--moss);font-style:normal;font-weight:400;}
+
+  /* SONG GRID */
+  .song-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+  .song-card{background:var(--card);border:1px solid var(--border);padding:12px 15px;display:flex;gap:11px;}
+  .song-num{font-family:'Oswald',sans-serif;font-size:22px;color:var(--border-hi);line-height:1;flex-shrink:0;width:22px;font-weight:700;}
+  .song-name{font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:var(--white);margin-bottom:3px;}
+  .song-guitar{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);}
+  .song-notes{font-size:10px;color:var(--parchment-dim);font-style:italic;margin-top:2px;}
+
+  footer{border-top:1px solid var(--border-hi);padding-top:16px;margin-top:36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer div{font-size:9px;letter-spacing:0.12em;opacity:0.35;text-transform:uppercase;}
+  footer .f-right{color:var(--moss);}
+
+  @media(max-width:640px){
+    header{grid-template-columns:1fr;}.header-meta{text-align:left;}
+    .philosophy{grid-template-columns:1fr;}
+    .trem-compare{grid-template-columns:1fr;}
+    .eb10-wrap{grid-template-columns:1fr;}
+    .song-grid{grid-template-columns:1fr;}
+    .knob-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="eyebrow">Tone Reference · Bryce · Clapp 15</div>
+    <h1>THE<br><em>SMITHS</em></h1>
+    <div class="rig-tags">
+      <span class="rig-tag">Postmodern Telecaster</span>
+      <span class="rig-tag amber">SA2200 · How Soon Is Now</span>
+      <span class="rig-tag">Frost Clapp 15</span>
+      <span class="rig-tag rose">Clapp Tremolo · Featured</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="album-tag">Artist</div>
+    <div class="album-name">The Smiths · 1982–87</div>
+    <div class="header-detail">
+      Johnny Marr · Rickenbacker 330 · 1963 Epiphone Casino<br>
+      1954 / 1968 Fender Telecaster<br>
+      Fender Twin Reverb (×4 on How Soon Is Now)<br>
+      Roland JC-120 · Boss CE-2 Chorus<br>
+      Boss GE-6 EQ · Boss OD-2 Overdrive
+    </div>
+  </div>
+</header>
+
+<!-- SOURCE NOTE -->
+<div class="source-note"><strong>Sources:</strong> Marr's main live rig was Fender Twin Reverb + Roland JC-120 biamped, with Boss CE-2 Chorus as the primary effect. For the Smiths debut, a borrowed 1954 Fender Telecaster featured heavily. How Soon Is Now was recorded on a 1963 Epiphone Casino tuned to F# through a Twin Reverb (tremolo off for the initial tracking), then re-amped through four Fender Twin Reverbs all with tremolo engaged — tremolos set to 125bpm and 375bpm on separate stereo pairs. The slide was recorded on a 1955 Telecaster. Marr's jangle technique uses capos, open chord voicings with ringing strings, and layered guitar parts.</div>
+
+<!-- TONE PHILOSOPHY -->
+<div class="section-label">Tone Character</div>
+<div class="philosophy">
+  <div class="philosophy-col">
+    <h4>The Jangle</h4>
+    <p>Clean, bright, shimmering. Marr never used distortion for The Smiths — the JC-120's chorus and the Rickenbacker's high-output single-coils created texture without dirt. The capo raises the register, open strings ring against fretted notes, and the result is a chiming, almost twelve-string character from a six-string guitar.</p>
+  </div>
+  <div class="philosophy-col">
+    <h4>How Soon Is Now</h4>
+    <p>Entirely different animal. The tremolo IS the song — not a texture added to a tone but the rhythmic and emotional foundation. Marr's tremolo pulse is urgent, hypnotic, slightly unsettling. The Clapp 15's tube tremolo at high depth, and understanding the two interlocking rates (125bpm and 375bpm on the original), is the whole challenge.</p>
+  </div>
+</div>
+
+<!-- ═══════ JANGLE TONE ═══════ -->
+<div class="section-label">The Smiths Jangle Tone · General</div>
+
+<!-- SIGNAL CHAIN — JANGLE -->
+<div class="chain-wrap">
+  <div class="chain-flow">
+    <div class="chain-box active">Postmodern Tele</div><div class="chain-arrow">→</div>
+    <div class="chain-box">Tuner</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">BD-2 (light)</div><div class="chain-arrow">→</div>
+    <div class="chain-box key">Clapp 15</div><div class="chain-arrow">→</div>
+    <div class="chain-box">FX Loop Send</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">EB-10</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Brigade Chorus</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Starlight</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Golden</div><div class="chain-arrow">→</div>
+    <div class="chain-box">FX Loop Return</div>
+  </div>
+  <div class="chain-note">Tremolo OFF for jangle tone. BD-2 at minimum gain — just tonal colour and slight push into the Clapp. The chorus (Brigade) is the defining texture. EB-10 boosts treble and mid presence for the jangle character.</div>
+</div>
+
+<!-- GUITAR — JANGLE -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Postmodern Telecaster</div>
+    <div class="card-badge">Bridge Nocaster · Jangle Primary</div>
+  </div>
+  <div class="card-role">Marr used Telecasters on much of The Smiths' studio work and Rickenbackers for the live jangle. The Postmodern Tele's '51 Nocaster bridge single-coil is bright, articulate, and cuts — the closest match to the Tele character Marr deployed on This Charming Man, There Is a Light, and What Difference Does It Make. The both-pickups position (Pos 2) adds a touch of warmth. Capo is essential — Marr regularly capoed 2–5 to raise the register and increase open-string ringing. Unmarked dials — clock positions.</div>
+
+  <div class="pickup-map">
+    <div class="pickup-pos">
+      <div class="pickup-pos-label">Pos 3</div>
+      <div class="pickup-pos-name">Neck</div>
+    </div>
+    <div class="pickup-pos selected">
+      <div class="pickup-pos-label">Pos 2 — Warmer</div>
+      <div class="pickup-pos-name">Both</div>
+    </div>
+    <div class="pickup-pos selected">
+      <div class="pickup-pos-label">Pos 1 ← Primary</div>
+      <div class="pickup-pos-name">Bridge Nocaster</div>
+    </div>
+  </div>
+
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" transform="rotate(90 28 28)"/></svg>
+      <div class="clock-label">Volume</div>
+      <div class="clock-pos">5 O'CLK</div>
+      <div class="clock-sub">Fully open</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+      <div class="clock-label">Tone</div>
+      <div class="clock-pos">1 O'CLK</div>
+      <div class="clock-sub">Bright — let the Nocaster ring</div>
+    </div>
+  </div>
+
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Capo Use</div><div class="knob-val">Essential</div><div class="knob-sub">Marr regularly uses capo 2, 3, or 5 — raises pitch, increases open-string jangle</div></div>
+    <div class="knob"><div class="knob-label">Capo for This Charming Man</div><div class="knob-val">Capo 5</div><div class="knob-sub">Shapes sound in A major territory</div></div>
+    <div class="knob"><div class="knob-label">Capo for There Is A Light</div><div class="knob-val">Capo 2</div><div class="knob-sub">Higher register ringing quality</div></div>
+    <div class="knob"><div class="knob-label">Open Strings</div><div class="knob-val">Let Ring</div><div class="knob-sub">The jangle lives in open strings ringing against fretted notes</div></div>
+  </div>
+
+  <div class="tip"><strong>Capo is the jangle secret:</strong> A capo on frets 2–5 raises the pitch and forces you to play open chord shapes in higher registers. Marr's chiming quality comes from open strings buzzing and ringing against fretted notes — something that only happens at higher positions. Without a capo the voicings are too low and the jangle disappears. Try any major chord shape with a capo at 5 and hear the difference.</div>
+</div>
+
+<!-- CLAPP 15 — JANGLE -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Frost Clapp 15</div>
+    <div class="card-badge">Clean · High Headroom · Tremolo OFF</div>
+  </div>
+  <div class="card-role">Marr's Fender Twin Reverb is the closest reference point — a clean, high-headroom Fender with natural spring reverb. The Clapp 15 in Class A mode with pre-volume pushed for natural compression is the best approximation. EQ defeat ON — EB-10 does the shaping. Bright switch OFF. Tremolo OFF for the jangle tone.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Volume (Pre)</div><div class="knob-val">6–7</div><div class="knob-sub">Moderate push — some natural compression from preamp</div></div>
+    <div class="knob"><div class="knob-label">Master Volume</div><div class="knob-val">4–5</div><div class="knob-sub">Room output</div></div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">EQ Defeat</div><div class="toggle-state on">ON</div></div>
+    <div class="toggle-item"><div class="toggle-label">Bright Switch</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Tremolo</div><div class="toggle-state off">OFF (jangle)</div></div>
+    <div class="toggle-item"><div class="toggle-label">Class Mode</div><div class="toggle-state neutral">Class A · 9W</div></div>
+  </div>
+</div>
+
+<!-- BD-2 — JANGLE -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Boss BD-2</div>
+    <div class="card-badge">Boss OD-2 Substitute · Minimum Gain · Always On</div>
+  </div>
+  <div class="card-role">Marr used a Boss OD-2 Turbo Overdrive on his 1986 pedalboard, visible at the Nottingham gig. For the jangle tone it was used at minimum gain — a light push into the amp's input for compression and harmonic presence, not actual overdrive. The BD-2 at very low Gain and Tone near minimum serves the same function. Always on — barely audible as a drive effect. Unmarked dials — clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" transform="rotate(-120 28 28)"/></svg>
+      <div class="clock-label">Gain</div>
+      <div class="clock-pos">8 O'CLK</div>
+      <div class="clock-sub">Near minimum — harmonic colour only</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" transform="rotate(30 28 28)"/></svg>
+      <div class="clock-label">Level</div>
+      <div class="clock-pos">1 O'CLK</div>
+      <div class="clock-sub">Slightly above unity — push the Clapp input</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Tone</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Flat — don't darken the jangle</div>
+    </div>
+  </div>
+</div>
+
+<!-- EB-10 — JANGLE -->
+<div class="section-label">EQ · EB-10 · In FX Loop · Jangle Shaping</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">EB-10 EQ</div>
+    <div class="card-badge">Treble Boost · Mid Presence · Boss GE-6 Role</div>
+  </div>
+  <div class="card-role">Marr used a Boss GE-6 Graphic EQ on his pedalboard — primarily for boosting upper-mid presence and treble to enhance the jangle character. The EB-10 performs this role. Toggle sets direction, knob (0, 3, 6, 9, 12) sets dB. The jangle EQ is the opposite of most previous guides — treble boosted, not cut; high presence for articulation and shimmer.</div>
+  <div class="eb10-wrap">
+    <div class="eb10-band">
+      <div class="eb10-band-title">Low · ~100Hz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn selected-cut">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill cut" style="width:25%"></div></div>
+      <div class="eb10-knob-val cut">3</div>
+      <div class="eb10-freq">Switch ▼ CUT · Knob at 3 · = −3dB</div>
+      <div class="eb10-note">Tighten the low end — Marr's tone is mid and treble forward. Bass gets in the way of the jangle character.</div>
+    </div>
+    <div class="eb10-band">
+      <div class="eb10-band-title">Mid · ~1.5–2kHz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn selected-boost">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:25%"></div></div>
+      <div class="eb10-knob-val">3</div>
+      <div class="eb10-freq">Switch ▲ BOOST · Knob at 3 · = +3dB</div>
+      <div class="eb10-note">Upper mid presence — the chime lives here. Internal trim pot toward 1.5–2kHz (higher than other guides). This is the bell-like quality of the Rickenbacker character.</div>
+    </div>
+    <div class="eb10-band">
+      <div class="eb10-band-title">High · ~3–5kHz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn selected-boost">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:25%"></div></div>
+      <div class="eb10-knob-val">3</div>
+      <div class="eb10-freq">Switch ▲ BOOST · Knob at 3 · = +3dB</div>
+      <div class="eb10-note">Boost the treble — opposite to all previous guides. The jangle needs brightness and shimmer, not darkness. Don't overdo it or it gets harsh through the chorus.</div>
+    </div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">Boost Switch</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Mid Trim (internal)</div><div class="toggle-state neutral">~1.5–2kHz — higher than other guides</div></div>
+    <div class="toggle-item"><div class="toggle-label">Mid Q (internal)</div><div class="toggle-state neutral">Broad — gentle presence lift</div></div>
+  </div>
+  <div class="tip"><strong>The jangle EQ is reversed from all other guides:</strong> Every previous guide cuts the high band (−3dB). Here it's boosted (+3dB). Marr's Rickenbacker/Telecaster jangle requires treble presence and upper-mid chime that would be wrong on any other tone in this collection. The low cut (−3dB) is also crucial — Marr's tone is thin in the bass, full in the top. This is the deliberate inversion.</div>
+</div>
+
+<!-- BRIGADE CHORUS — JANGLE -->
+<div class="section-label">FX Loop · Chorus · Delay · Reverb</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">UA Brigade Chorus</div>
+    <div class="card-badge">Boss CE-2 Substitute · The Smiths Sound</div>
+  </div>
+  <div class="card-role">The Boss CE-2 is central to The Smiths' sound — Marr used it on the majority of sessions and live shows. The UA Brigade in CE-2 mode is the closest available substitute. Marr's chorus is lush, present, and slightly woozy — more audible than in the Portishead or Black Keys guides. This is a featured effect, not a texture. Unmarked dials — clock positions.</div>
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+      <div class="clock-label">Rate</div>
+      <div class="clock-pos">10 O'CLK</div>
+      <div class="clock-sub">Medium-slow — lush wobble</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Depth</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Full — the CE-2 is not subtle</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" transform="rotate(0 28 28)"/></svg>
+      <div class="clock-label">Mix / Blend</div>
+      <div class="clock-pos">12 O'CLK</div>
+      <div class="clock-sub">Present — this is a featured effect</div>
+    </div>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">Brigade Mode</div><div class="toggle-state on">CE-1 / CE-2 Chorus</div></div>
+    <div class="toggle-item"><div class="toggle-label">Always On</div><div class="toggle-state on">YES</div></div>
+  </div>
+  <div class="tip"><strong>The CE-2 character:</strong> The Boss CE-2 has a warm, slightly woozy chorus quality — not the pristine, transparent shimmer of modern chorus pedals. The Brigade's CE-1 or CE-2 mode captures this vintage character. If it sounds too clean or clinical, push the Depth knob to 1 o'clock. The chorus should add subtle movement and width to every strummed chord.</div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Starlight · Golden</div>
+    <div class="card-badge">Subtle · Spring Reverb · Light Slapback</div>
+  </div>
+  <div class="card-role">Marr used the Fender Twin's onboard spring reverb and the JC-120's natural ambience. For the jangle tone: Golden in Spring 65 mode with short decay and modest mix. Starlight as a short slapback (not rhythmic delay). Both subtle — the chorus is the primary effect, reverb and delay are air.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Golden Mode</div><div class="knob-val">Spring 65</div><div class="knob-sub">Short decay ~1 sec · Mix 9–10 o'clock</div></div>
+    <div class="knob"><div class="knob-label">Starlight Mode</div><div class="knob-val">EP-III Slapback</div><div class="knob-sub">~60–80ms · Feedback minimum · Mix 8–9 o'clock</div></div>
+    <div class="knob"><div class="knob-label">Reverb Level</div><div class="knob-val">Low-Medium</div><div class="knob-sub">Background air — the chorus dominates</div></div>
+  </div>
+</div>
+
+<!-- HOW SOON IS NOW SECTION -->
+<hr class="era-divider">
+
+<div class="section-label hsin">How Soon Is Now · Dedicated Setup</div>
+
+<div class="source-note" style="border-left:2px solid rgba(138,96,48,0.5)"><strong>Recording facts:</strong> Marr tracked the rhythm on a 1963 Epiphone Casino tuned up a whole step to F# through a Fender Twin Reverb with tremolo OFF. Producer John Porter then re-amped the track through four Fender Twin Reverbs with tremolo ON — two per stereo side — tremolos running at 125bpm and 375bpm. This created two interlocking tremolo pulses creating the hypnotic, slightly unstable wavering. The slide was a borrowed 1955 Telecaster. "How Soon Is Now" is in F# — play standard E shapes with a capo on the 2nd fret.</div>
+
+<!-- HSIN SIGNAL CHAIN -->
+<div class="chain-wrap">
+  <div class="chain-flow">
+    <div class="chain-box hsin-key">SA2200</div><div class="chain-arrow">→</div>
+    <div class="chain-box">Tuner</div><div class="chain-arrow">→</div>
+    <div class="chain-box hsin-key">Clapp 15</div><div class="chain-arrow">→</div>
+    <div class="chain-box">FX Loop Send</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">EB-10</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Starlight</div><div class="chain-arrow">→</div>
+    <div class="chain-box active">Golden</div><div class="chain-arrow">→</div>
+    <div class="chain-box">FX Loop Return</div>
+  </div>
+  <div class="chain-note hsin">BD-2 OUT of chain for this song. Brigade chorus OUT. Tremolo ON at Clapp 15. SA2200 semi-hollow approximates the Casino character. No chorus — the tremolo IS the modulation. Two reverb settings needed: one for the ambient wash, spring reverb character.</div>
+</div>
+
+<!-- SA2200 FOR HSIN -->
+<div class="card hsin">
+  <div class="card-header">
+    <div class="card-name">SA2200 · How Soon Is Now</div>
+    <div class="card-badge hsin">Semi-Hollow · Casino Substitute · F# / Capo 2</div>
+  </div>
+  <div class="card-role">Marr used a 1963 Epiphone Casino — a fully hollow-body guitar with P90-style pickups. The SA2200 semi-hollow with humbuckers is the closest in Bryce's collection to the Casino's resonant, slightly bloomy character. Full humbucker mode (both tone pots pushed down). Selector to neck humbucker for warmth. Tune up a whole step to F# — or use a capo at fret 2 and play standard E shapes. Unmarked dials — clock positions.</div>
+
+  <div class="pickup-map">
+    <div class="pickup-pos alt">
+      <div class="pickup-pos-label">← Use This</div>
+      <div class="pickup-pos-name">Neck Humbucker</div>
+    </div>
+    <div class="pickup-pos">
+      <div class="pickup-pos-label">Both</div>
+      <div class="pickup-pos-name">Blend</div>
+    </div>
+    <div class="pickup-pos">
+      <div class="pickup-pos-label">Bridge</div>
+      <div class="pickup-pos-name">Bridge HB</div>
+    </div>
+  </div>
+
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--hsin)" stroke-width="2" stroke-linecap="round" transform="rotate(90 28 28)"/></svg>
+      <div class="clock-label">Volume</div>
+      <div class="clock-pos hsin">5 O'CLK</div>
+      <div class="clock-sub">Fully open</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--moss-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--hsin)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+      <div class="clock-label">Tone (Neck)</div>
+      <div class="clock-pos hsin">10 O'CLK</div>
+      <div class="clock-sub">Rolled — semi-hollow warmth</div>
+    </div>
+  </div>
+
+  <div class="knob-grid">
+    <div class="knob hsin"><div class="knob-label">Tuning</div><div class="knob-val">F# Standard</div><div class="knob-sub">Tune all strings up 1 whole step: F#–B–E–A–C#–F#</div></div>
+    <div class="knob hsin"><div class="knob-label">Alternative</div><div class="knob-val">Capo Fret 2</div><div class="knob-sub">Standard E tuning + capo at fret 2 = same result. Easier on the guitar.</div></div>
+    <div class="knob"><div class="knob-label">Coil Split</div><div class="knob-val">Both Down</div><div class="knob-sub">Full humbuckers — P90-like Casino character needs body</div></div>
+  </div>
+  <div class="tip hsin"><strong>SA2200 vs Epiphone Casino:</strong> The Casino is fully hollow with P90 pickups — brighter and more resonant than the SA2200's humbuckers. To compensate: use the neck humbucker for warmth, roll the tone back to 10 o'clock, and let the semi-hollow body's natural resonance do work. The tremolo will mask a lot of the pickup character difference — the pulse is the thing, not the precise guitar tone.</div>
+</div>
+
+<!-- CLAPP 15 — HSIN TREMOLO -->
+<div class="card hsin">
+  <div class="card-header">
+    <div class="card-name">Frost Clapp 15 · Tremolo</div>
+    <div class="card-badge hsin">Tube Tremolo · The Centrepiece</div>
+  </div>
+  <div class="card-role">The Clapp 15's onboard tube tremolo is the reason this rig is the right tool for this song. Marr ran four Fender Twin Reverbs simultaneously at two different tremolo rates — 125bpm and 375bpm on separate pairs — creating an interacting, destabilised pulse. The Clapp 15 has a single tremolo with Speed and Depth controls. You cannot exactly replicate the dual-rate interlock with one amp, but a single well-set tremolo at the primary rate captures the spirit. Speed and Depth are the critical controls.</div>
+
+  <!-- TREMOLO RATE COMPARISON -->
+  <div class="trem-compare">
+    <div class="trem-rate primary">
+      <div class="trem-rate-label">Primary Rate — Use This</div>
+      <div class="trem-rate-bpm">125</div>
+      <div class="trem-rate-desc">BPM — the slower, driving pulse. The hypnotic heartbeat of the song. Set Clapp 15 Speed to this rate.</div>
+    </div>
+    <div class="trem-rate">
+      <div class="trem-rate-label">Secondary Rate (original recording)</div>
+      <div class="trem-rate-bpm">375</div>
+      <div class="trem-rate-desc">BPM — 3× the primary. Second amp pair in the studio. Not replicable with single amp — the interaction created the unstable shimmer.</div>
+    </div>
+  </div>
+
+  <div class="sub-section">Clapp 15 Tremolo Controls</div>
+  <div class="knob-grid">
+    <div class="knob hsin"><div class="knob-label">Tremolo</div><div class="knob-val">ON</div><div class="knob-sub">Engage via front panel or footswitch</div></div>
+    <div class="knob hsin"><div class="knob-label">Speed</div><div class="knob-val">~6–7</div><div class="knob-sub">Set to 125bpm — use a metronome to dial in. Should pulse in time with the song's quarter note.</div></div>
+    <div class="knob hsin"><div class="knob-label">Depth</div><div class="knob-val">8–9</div><div class="knob-sub">Deep — the tremolo should be dramatic. On the record it nearly cuts out at the bottom of the wave.</div></div>
+  </div>
+
+  <div class="sub-section">Clapp 15 Amp Settings — How Soon Is Now</div>
+  <div class="knob-grid">
+    <div class="knob hsin"><div class="knob-label">Volume (Pre)</div><div class="knob-val">6–7</div><div class="knob-sub">Moderate push — the tremolo works better into a pushed preamp</div></div>
+    <div class="knob hsin"><div class="knob-label">Master Volume</div><div class="knob-val">5–6</div><div class="knob-sub">Slightly higher than jangle — the pulse needs to breathe</div></div>
+  </div>
+
+  <div class="toggle-row">
+    <div class="toggle-item"><div class="toggle-label">EQ Defeat</div><div class="toggle-state on">ON</div></div>
+    <div class="toggle-item"><div class="toggle-label">Bright Switch</div><div class="toggle-state off">OFF</div></div>
+    <div class="toggle-item"><div class="toggle-label">Tremolo</div><div class="toggle-state hsin">ON — 125bpm</div></div>
+  </div>
+
+  <div class="tip hsin"><strong>Setting tremolo to 125bpm:</strong> How Soon Is Now has a tempo of approximately 125bpm. Set the Clapp 15's Speed control so the tremolo pulse aligns with the quarter note beat — one complete pulse cycle every 480ms. Use a metronome or play along with the track to dial it in. The tremolo should feel like a heartbeat: steady, urgent, and slightly suffocating. Depth at 8–9 means the amplitude dip is dramatic — you should clearly hear the volume drop on each trough.</div>
+</div>
+
+<!-- EB-10 — HSIN -->
+<div class="card hsin">
+  <div class="card-header">
+    <div class="card-name">EB-10 EQ · How Soon Is Now</div>
+    <div class="card-badge hsin">Different From Jangle Setting</div>
+  </div>
+  <div class="card-role">The How Soon Is Now EQ is different from the jangle setting. The tremolo creates rhythm through volume modulation — the tone itself needs warmth and body to carry the pulse between crests. Mid boost is the same but treble is pulled back (no need for jangle brightness here), and low band is flat rather than cut.</div>
+  <div class="eb10-wrap">
+    <div class="eb10-band">
+      <div class="eb10-band-title">Low · ~100Hz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:0%"></div></div>
+      <div class="eb10-knob-val neutral">0</div>
+      <div class="eb10-freq">Knob at 0 · Switch irrelevant · No effect</div>
+      <div class="eb10-note">Flat — unlike the jangle tone. The semi-hollow body and neck humbucker need the low-end body to pulse properly through the tremolo.</div>
+    </div>
+    <div class="eb10-band">
+      <div class="eb10-band-title">Mid · ~800Hz–1kHz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn selected-boost">▲ BOOST</div><div class="eb10-btn">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill boost" style="width:25%"></div></div>
+      <div class="eb10-knob-val">3</div>
+      <div class="eb10-freq">Switch ▲ BOOST · Knob at 3 · = +3dB</div>
+      <div class="eb10-note">Modest mid boost — gives presence and cut. Internal trim pot toward 800Hz–1kHz for the Casino character.</div>
+    </div>
+    <div class="eb10-band">
+      <div class="eb10-band-title">High · ~3–5kHz</div>
+      <div class="eb10-toggle-row"><div class="eb10-btn">▲ BOOST</div><div class="eb10-btn selected-cut">▼ CUT</div></div>
+      <div class="eb10-knob-track"><div class="eb10-knob-fill cut" style="width:16%"></div></div>
+      <div class="eb10-knob-val cut">0</div>
+      <div class="eb10-freq">Switch ▼ CUT · Knob at 0 · No effect</div>
+      <div class="eb10-note">Flat — unlike the jangle tone. No treble boost here. The neck humbucker + rolled tone + semi-hollow body are dark enough.</div>
+    </div>
+  </div>
+</div>
+
+<!-- REVERB / DELAY — HSIN -->
+<div class="card hsin">
+  <div class="card-header">
+    <div class="card-name">Starlight · Golden · How Soon Is Now</div>
+    <div class="card-badge hsin">Ambient Wash · Spring Reverb · No Chorus</div>
+  </div>
+  <div class="card-role">The original recording has significant reverb — the Twin Reverbs' built-in spring reverb combined with the re-amping process created a dense, ambient wash underneath the tremolo. No chorus (the tremolo replaces chorus as the modulation). Starlight provides light tape slapback for space. Golden in Spring 65 mode for the Fender spring character with moderate decay.</div>
+  <div class="knob-grid">
+    <div class="knob hsin"><div class="knob-label">Brigade Chorus</div><div class="knob-val">OFF</div><div class="knob-sub">Bypass entirely — tremolo is the modulation</div></div>
+    <div class="knob hsin"><div class="knob-label">Golden Mode</div><div class="knob-val">Spring 65</div><div class="knob-sub">Medium decay ~2 sec · Mix 10–11 o'clock — more present than jangle</div></div>
+    <div class="knob hsin"><div class="knob-label">Starlight</div><div class="knob-val">EP-III Slapback</div><div class="knob-sub">~100ms · Feedback minimum · Mix 9 o'clock — adds depth to the tremolo peaks</div></div>
+    <div class="knob hsin"><div class="knob-label">Golden Predelay</div><div class="knob-val">~20–30ms</div><div class="knob-sub">Short gap — separates dry signal from the reverb bloom</div></div>
+  </div>
+  <div class="tip hsin"><strong>No chorus on this song:</strong> Switching the Brigade chorus off is non-negotiable for How Soon Is Now. The tremolo and chorus fighting each other destroys the hypnotic quality of the pulse. The tremolo should be the only modulation — clean, rhythmic, and unavoidable. The spring reverb under the tremolo creates the ambient wash that gives the song its ominous atmosphere.</div>
+</div>
+
+<!-- SONG GUIDE -->
+<div class="section-label">Song Guide · Key Smiths Tracks</div>
+<div class="song-grid">
+  <div class="song-card">
+    <div class="song-num">01</div>
+    <div>
+      <div class="song-name">This Charming Man</div>
+      <div class="song-guitar">Postmodern Tele · Capo 5 · Bridge</div>
+      <div class="song-notes">The Rickenbacker jangle. Capo 5, bridge Nocaster. CE-2 chorus full. Arpeggiated picking, let strings ring.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">02</div>
+    <div>
+      <div class="song-name">How Soon Is Now</div>
+      <div class="song-guitar">SA2200 · Neck HB · F# / Capo 2 · Tremolo ON</div>
+      <div class="song-notes">Full HSIN setup. 125bpm tremolo, depth 8–9. No chorus. Spring reverb prominent. Straight E shapes at capo 2.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">03</div>
+    <div>
+      <div class="song-name">There Is A Light</div>
+      <div class="song-guitar">Postmodern Tele · Capo 2 · Both Pickups</div>
+      <div class="song-notes">Open and warm. Pos 2 (both pickups). Capo 2. CE-2 chorus medium. Bright but not harsh.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">04</div>
+    <div>
+      <div class="song-name">The Headmaster Ritual</div>
+      <div class="song-guitar">Postmodern Tele · Open D tuning</div>
+      <div class="song-notes">Open D (D-A-D-F#-A-D). Driving, aggressive for a Smiths track. Minimal chorus. Bridge pickup.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">05</div>
+    <div>
+      <div class="song-name">What Difference Does It Make</div>
+      <div class="song-guitar">Postmodern Tele · Bridge · Capo 3</div>
+      <div class="song-notes">Driving rhythm jangle. Capo 3, bridge Nocaster. CE-2 chorus. 16th note strumming, avoid bottom two strings.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">06</div>
+    <div>
+      <div class="song-name">Girlfriend In A Coma</div>
+      <div class="song-guitar">Postmodern Tele · Both Pickups · Capo 4</div>
+      <div class="song-notes">Lighter, more melodic. Pos 2 (both pickups). CE-2 chorus medium. Capo 4. More rhythmic than the heavier tracks.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">07</div>
+    <div>
+      <div class="song-name">Please Please Please</div>
+      <div class="song-guitar">Postmodern Tele · Both Pickups · No Capo</div>
+      <div class="song-notes">Sparse, melancholy arpeggios. Pos 2 (both pickups). Reverb prominent. Very little chorus — almost clean. Let notes breathe.</div>
+    </div>
+  </div>
+  <div class="song-card">
+    <div class="song-num">08</div>
+    <div>
+      <div class="song-name">Heaven Knows I'm Miserable</div>
+      <div class="song-guitar">Postmodern Tele · Bridge · Capo 2</div>
+      <div class="song-notes">Funky, jazzy staccato. Emaj7 chord voicings. CE-2 chorus. Capo 2. Nile Rodgers influence — palm-muted rhythmic precision.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TECHNIQUE -->
+<div class="section-label">Playing Notes</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Marr Technique</div>
+    <div class="card-badge">Jangle · Open Strings · Capo · Layering</div>
+  </div>
+  <div class="card-role">Marr's tone is 50% technique, 50% gear. The capo, open voicings, and picking style are inseparable from the sound.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Capo Position</div><div class="knob-val">Experiment</div><div class="knob-sub">Try capo at 2, 3, 5 on any chord progression — Marr treats capo as tonal colouring</div></div>
+    <div class="knob"><div class="knob-label">Open Strings</div><div class="knob-val">Let Ring</div><div class="knob-sub">Play chord shapes that let open strings ring against fretted notes — the jangle lives there</div></div>
+    <div class="knob"><div class="knob-label">Strumming Range</div><div class="knob-val">Middle Strings</div><div class="knob-sub">Avoid the lowest two strings in jangle playing — Marr's chords are bright, not bassy</div></div>
+    <div class="knob"><div class="knob-label">Picking Pattern</div><div class="knob-val">Arpeggiated</div><div class="knob-sub">Roll through chord shapes picking individual strings — not flat strumming</div></div>
+    <div class="knob"><div class="knob-label">Chord Voicings</div><div class="knob-val">6ths + 7ths</div><div class="knob-sub">Major 6th (1-3-5-6) and maj7 voicings give the jazzy, shimmering quality</div></div>
+    <div class="knob"><div class="knob-label">HSIN Rhythm</div><div class="knob-val">Steady Strum</div><div class="knob-sub">For How Soon Is Now: play a steady rhythm and let the tremolo create the pulse — don't fight it</div></div>
+  </div>
+  <div class="tip"><strong>The capo insight:</strong> Marr has said that using a capo is like playing a different guitar. At capo 5, a standard G chord shape produces notes in the register of a 12-string — open strings that were previously below the tonic now ring higher and more brilliantly. This is the core of the jangle character. Every song should be explored with a capo at different positions until the right brightness and register is found.</div>
+</div>
+
+<footer>
+  <div>The Smiths · Johnny Marr · Postmodern Telecaster · SA2200 · Frost Clapp 15</div>
+  <div class="f-right">CE-2 Chorus · How Soon Is Now · 125bpm Tremolo</div>
+</footer>
+
+</div>
+</body>
+</html>

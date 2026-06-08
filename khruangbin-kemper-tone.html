@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khruangbin · Kemper / FR10 · Tone Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#050508; --deep:#0b0b0f; --card:#101014; --border:#1c1c24; --border-hi:#2a2a36;
+    --teal:#2a7a6a; --teal-dim:#1a4a40; --teal-glow:rgba(42,122,106,0.14); --teal-faint:rgba(42,122,106,0.05);
+    --sand:#d4c9a8; --sand-dim:#7a7060; --red-lit:#c03828; --green-lit:#28803a;
+    --amber:#c89040; --blue:#4a7aaa; --white:#ece8df;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--black);color:var(--sand);font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:999;}
+  .page{max-width:900px;margin:0 auto;padding:44px 20px 80px;}
+
+  /* HEADER */
+  header{border-bottom:1px solid var(--border-hi);padding-bottom:28px;margin-bottom:32px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;}
+  .eyebrow{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+  h1{font-family:'Oswald',sans-serif;font-size:clamp(46px,8.5vw,88px);line-height:0.88;color:var(--white);text-transform:uppercase;letter-spacing:0.02em;font-weight:700;}
+  h1 em{font-style:normal;color:var(--teal);}
+  .header-meta{text-align:right;}
+  .album-tag{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--sand-dim);margin-bottom:5px;}
+  .album-name{font-family:'Special Elite',serif;font-size:14px;color:var(--sand);line-height:1.5;}
+  .header-detail{font-size:10px;color:var(--sand-dim);margin-top:9px;line-height:1.7;}
+  .rig-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px;}
+  .rig-tag{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal-dim);padding:3px 9px;}
+  .rig-tag.blue{color:var(--blue);border-color:rgba(74,122,170,0.4);}
+  .rig-tag.amber{color:var(--amber);border-color:rgba(200,144,64,0.4);}
+
+  /* LABELS */
+  .section-label{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin:32px 0 12px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border-hi);}
+  .sub-section{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--sand-dim);border-top:1px solid var(--border);padding-top:10px;margin:14px 0 10px;}
+
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal-dim);padding:16px 20px;margin-bottom:2px;animation:fadeUp 0.3s both;}
+  .card:hover{border-color:var(--border-hi);border-left-color:var(--teal);}
+  .card.blue{border-left-color:rgba(74,122,170,0.5);}
+  .card.blue:hover{border-left-color:var(--blue);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .card-name{font-family:'Oswald',sans-serif;font-size:19px;color:var(--white);text-transform:uppercase;letter-spacing:0.04em;line-height:1;font-weight:600;}
+  .card-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal-dim);padding:2px 8px;align-self:center;white-space:nowrap;}
+  .card-badge.blue{color:var(--blue);border-color:rgba(74,122,170,0.4);}
+  .card-badge.amber{color:var(--amber);border-color:rgba(200,144,64,0.4);}
+  .card-role{font-size:11px;color:var(--sand-dim);font-style:italic;margin-bottom:14px;line-height:1.7;}
+
+  /* KNOBS */
+  .knob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin-bottom:10px;}
+  .knob{background:var(--deep);border:1px solid var(--border);padding:9px 11px;}
+  .knob-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--sand-dim);margin-bottom:3px;}
+  .knob-val{font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:0.04em;color:var(--teal);line-height:1;text-transform:uppercase;font-weight:600;}
+  .knob-sub{font-size:9px;color:var(--sand-dim);margin-top:3px;line-height:1.4;}
+  .knob.dim .knob-val{color:var(--sand-dim);}
+  .knob.off .knob-val{color:var(--red-lit);}
+  .knob.on .knob-val{color:var(--green-lit);}
+  .knob.amber .knob-val{color:var(--amber);}
+  .knob.blue .knob-val{color:var(--blue);}
+
+  /* CLOCK */
+  .clock-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .clock-knob{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:72px;}
+  .clock-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sand-dim);text-align:center;}
+  .clock-pos{font-family:'Oswald',sans-serif;font-size:12px;color:var(--teal);letter-spacing:0.04em;text-align:center;line-height:1;text-transform:uppercase;font-weight:600;}
+  .clock-sub{font-size:9px;color:var(--sand-dim);text-align:center;line-height:1.3;max-width:76px;}
+
+  /* TOGGLES */
+  .toggle-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+  .toggle-item{background:var(--deep);border:1px solid var(--border);padding:7px 11px;flex:1;min-width:120px;}
+  .toggle-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--sand-dim);margin-bottom:2px;}
+  .toggle-state{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;}
+  .toggle-state.on{color:var(--green-lit);}
+  .toggle-state.off{color:var(--red-lit);}
+  .toggle-state.neutral{color:var(--sand-dim);}
+  .toggle-state.amber{color:var(--amber);}
+  .toggle-state.blue{color:var(--blue);}
+
+  /* TIP */
+  .tip{border:1px solid var(--border);border-left:2px solid var(--teal-dim);background:var(--teal-faint);padding:9px 13px;font-size:11px;color:var(--sand-dim);margin-top:10px;font-style:italic;line-height:1.7;}
+  .tip strong{color:var(--teal);font-style:normal;font-weight:400;}
+  .tip.amber{border-left-color:rgba(200,144,64,0.5);background:rgba(200,144,64,0.04);}
+  .tip.amber strong{color:var(--amber);}
+  .tip.blue{border-left-color:rgba(74,122,170,0.5);background:rgba(74,122,170,0.04);}
+  .tip.blue strong{color:var(--blue);}
+
+  /* CHAIN */
+  .chain-wrap{background:var(--card);border:1px solid var(--border);padding:14px 17px;margin-bottom:6px;}
+  .chain-flow{display:flex;align-items:center;flex-wrap:wrap;gap:2px;}
+  .chain-box{font-size:9px;letter-spacing:0.08em;padding:5px 9px;border:1px solid var(--border-hi);color:var(--sand-dim);background:var(--deep);white-space:nowrap;text-transform:uppercase;}
+  .chain-box.active{border-color:var(--teal-dim);color:var(--sand);background:var(--teal-faint);}
+  .chain-box.key{border-color:var(--teal);color:var(--teal);background:var(--teal-glow);}
+  .chain-box.amber{border-color:rgba(200,144,64,0.5);color:var(--amber);background:rgba(200,144,64,0.05);}
+  .chain-box.blue{border-color:rgba(74,122,170,0.5);color:var(--blue);background:rgba(74,122,170,0.05);}
+  .chain-arrow{color:var(--border-hi);font-size:10px;padding:0 2px;}
+  .chain-note{font-size:10px;color:var(--sand-dim);font-style:italic;margin-top:7px;}
+  .chain-note.amber{color:var(--amber);}
+
+  /* SLOT STACK */
+  .slot-stack{display:grid;grid-template-columns:1fr;gap:2px;margin-bottom:10px;}
+  .slot{background:var(--deep);border:1px solid var(--border);padding:10px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;}
+  .slot-id{font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--sand-dim);white-space:nowrap;padding-top:2px;}
+  .slot-id.active{color:var(--teal);}
+  .slot-id.amber{color:var(--amber);}
+  .slot-id.blue{color:var(--blue);}
+  .slot-content{}
+  .slot-name{font-family:'Oswald',sans-serif;font-size:14px;color:var(--white);text-transform:uppercase;font-weight:600;line-height:1;margin-bottom:3px;}
+  .slot-type{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--sand-dim);margin-bottom:4px;}
+  .slot-detail{font-size:10px;color:var(--sand-dim);font-style:italic;line-height:1.5;}
+  .slot-status{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;padding-top:2px;}
+  .slot-status.on{color:var(--green-lit);}
+  .slot-status.off{color:var(--red-lit);}
+  .slot-status.exp{color:var(--amber);}
+
+  /* PROFILE BOX */
+  .profile-box{background:var(--deep);border:1px solid var(--border);border-left:2px solid rgba(74,122,170,0.5);padding:11px 15px;margin-bottom:8px;}
+  .profile-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;}
+  .profile-name{font-family:'Oswald',sans-serif;font-size:15px;color:var(--white);text-transform:uppercase;font-weight:600;}
+  .profile-sub{font-size:10px;color:var(--sand-dim);margin-top:3px;line-height:1.5;}
+
+  /* PICKUP MAP */
+  .pickup-map{display:flex;gap:2px;margin:10px 0;}
+  .pickup-pos{flex:1;text-align:center;padding:8px 4px;background:var(--deep);border:1px solid var(--border);}
+  .pickup-pos.selected{border-color:var(--teal);background:var(--teal-glow);}
+  .pickup-pos.alt{border-color:rgba(200,144,64,0.4);background:rgba(200,144,64,0.05);}
+  .pickup-pos-label{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sand-dim);margin-bottom:3px;}
+  .pickup-pos-name{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;color:var(--sand-dim);}
+  .pickup-pos.selected .pickup-pos-name{color:var(--teal);}
+  .pickup-pos.alt .pickup-pos-name{color:var(--amber);}
+
+  /* PHILOSOPHY */
+  .philosophy{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);padding:16px 20px;margin-bottom:2px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .philosophy-col h4{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
+  .philosophy-col p{font-size:11px;color:var(--sand-dim);line-height:1.7;font-style:italic;}
+
+  .source-note{font-size:10px;color:var(--sand-dim);font-style:italic;padding:9px 13px;border:1px solid var(--border);background:var(--deep);margin-bottom:2px;}
+  .source-note strong{color:var(--teal);font-style:normal;font-weight:400;}
+
+  /* ADVANTAGE BANNER */
+  .advantage{background:var(--card);border:1px solid var(--border-hi);border-left:3px solid var(--teal);padding:12px 16px;margin-bottom:2px;}
+  .advantage-label{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);margin-bottom:5px;}
+  .advantage-text{font-size:11px;color:var(--sand-dim);font-style:italic;line-height:1.7;}
+  .advantage-text strong{color:var(--teal);font-style:normal;}
+
+  footer{border-top:1px solid var(--border-hi);padding-top:16px;margin-top:36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer div{font-size:9px;letter-spacing:0.12em;opacity:0.4;text-transform:uppercase;}
+  footer .f-right{color:var(--teal);}
+
+  @media(max-width:640px){
+    header{grid-template-columns:1fr;}.header-meta{text-align:left;}
+    .philosophy{grid-template-columns:1fr;}
+    .knob-grid{grid-template-columns:repeat(2,1fr);}
+    .slot{grid-template-columns:auto 1fr;}
+    .slot-status{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="eyebrow">Tone Reference · Bryce · Kemper Version</div>
+    <h1>KHRUANG<em>BIN</em></h1>
+    <div class="rig-tags">
+      <span class="rig-tag">Postmodern Stratocaster</span>
+      <span class="rig-tag blue">Kemper Player</span>
+      <span class="rig-tag blue">FR10 FRFR</span>
+      <span class="rig-tag amber">Expression Pedal Wah</span>
+      <span class="rig-tag">Level 3 · 6 Slots</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="album-tag">Artist</div>
+    <div class="album-name">Khruangbin<br>Houston, Texas</div>
+    <div class="header-detail">
+      Mark Speer · '70s Fender Strat (modified)<br>
+      Fender '68 Custom Deluxe Reverb<br>
+      Crybaby Wah (always on, cocked) → PH-3<br>
+      DS-1 → Dyna Comp → Holy Grail → El Capistan<br>
+      Flatwound strings · Worn round pick
+    </div>
+  </div>
+</header>
+
+<!-- ADVANTAGE BANNER -->
+<div class="advantage">
+  <div class="advantage-label">Kemper Advantage Over Clapp 15 Version</div>
+  <div class="advantage-text">The Kemper path solves the biggest limitation of the Clapp guide. <strong>The wah is now real</strong> — expression pedal controls a Kemper Cry Baby wah effect set to Speer's cocked sweet spot using Pedal Mode Off + Manual knob. The wah can also be swept live via the expression pedal for expressive passages. With six slots, all six signal chain elements (wah, phaser, drive, compressor, reverb, delay) can run simultaneously in the correct order. The Kemper's Fender Deluxe Reverb profile captures the amp character more accurately than the Clapp 15's Class A voicing. This is the more accurate of the two guides.</div>
+</div>
+
+<!-- SOURCE NOTE -->
+<div class="source-note"><strong>Source:</strong> Premier Guitar Rig Rundown confirmed: Crybaby Fasel Wah (always on, cocked) → Boss PH-3 (Rate noon, Depth 3 o'clock, Res noon, Stage 8) → Boss DS-1 (Dist zero, Tone zero, Level max) → MXR Dyna Comp Mini (Output max, Sensitivity min) → EHX Holy Grail spring reverb (noon–1 o'clock) → Strymon El Capistan tape delay. Speer plays a single '70s Strat with DiMarzio Cruiser pickups (middle accidentally out of phase), D'Addario Chrome flatwound strings, and a worn Dunlop Green Tortex pick.</div>
+
+<!-- TONE CHARACTER -->
+<div class="section-label">Tone Character</div>
+<div class="philosophy">
+  <div class="philosophy-col">
+    <h4>The Sound</h4>
+    <p>Smooth, mellow, deeply reverberant. The flatwounds remove pick attack. The cocked wah adds a nasal mid-peak — vocal, almost dying. The DS-1 at zero distortion is a tonal shaper only. Everything floats in tape echo and spring reverb. The compressor glues it all together and adds the subtle swell response.</p>
+  </div>
+  <div class="philosophy-col">
+    <h4>What to Aim For</h4>
+    <p>Thai funk, dub, psychedelic soul. Clean but never clinical. Notes should melt rather than attack. The cocked wah gives single notes a vocal, nasal quality that no amount of EQ perfectly replicates — with the expression pedal, you finally have it. Play very lightly and let the chain do the work.</p>
+  </div>
+</div>
+
+<!-- GUITAR -->
+<div class="section-label">Guitar · Postmodern Stratocaster</div>
+<div class="card" style="border-left-color:var(--teal)">
+  <div class="card-header">
+    <div class="card-name">Postmodern Stratocaster</div>
+    <div class="card-badge">Position 4 · Neck + Middle · Primary</div>
+  </div>
+  <div class="card-role">Speer's Strat middle pickup is accidentally wired out of phase — creating a hollow, phase-cancelled Peter Green tone on positions 2 and 4. The Postmodern Strat has standard wiring so no out-of-phase effect is available, but positions 4 (neck + middle) and 2 (bridge + middle) give the closest in-between quack character. Position 4 is the primary position. Tone controls rolled back further than feels natural — the wah compensates for the absence of out-of-phase by providing its own mid-frequency character. Unmarked dials — clock positions.</div>
+
+  <div class="pickup-map">
+    <div class="pickup-pos selected">
+      <div class="pickup-pos-label">Pos 5 — Leads</div>
+      <div class="pickup-pos-name">Neck</div>
+    </div>
+    <div class="pickup-pos selected">
+      <div class="pickup-pos-label">Pos 4 ← Primary</div>
+      <div class="pickup-pos-name">Neck + Mid</div>
+    </div>
+    <div class="pickup-pos">
+      <div class="pickup-pos-label">Pos 3</div>
+      <div class="pickup-pos-name">Middle</div>
+    </div>
+    <div class="pickup-pos alt">
+      <div class="pickup-pos-label">Pos 2 — Brighter</div>
+      <div class="pickup-pos-name">Bridge + Mid</div>
+    </div>
+    <div class="pickup-pos">
+      <div class="pickup-pos-label">Pos 1</div>
+      <div class="pickup-pos-name">Bridge</div>
+    </div>
+  </div>
+
+  <div class="clock-grid">
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--teal-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" transform="rotate(90 28 28)"/></svg>
+      <div class="clock-label">Volume</div>
+      <div class="clock-pos">5 O'CLK</div>
+      <div class="clock-sub">Fully open</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--teal-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" transform="rotate(-60 28 28)"/></svg>
+      <div class="clock-label">Neck Tone</div>
+      <div class="clock-pos">10 O'CLK</div>
+      <div class="clock-sub">Rolled — smooth the single coil</div>
+    </div>
+    <div class="clock-knob">
+      <svg viewBox="0 0 56 56" width="56" height="56"><circle cx="28" cy="28" r="24" fill="var(--deep)" stroke="var(--border-hi)" stroke-width="1.5"/><circle cx="28" cy="28" r="2" fill="var(--teal-dim)"/><line x1="28" y1="28" x2="28" y2="8" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 28 28)"/></svg>
+      <div class="clock-label">Mid/Bridge Tone</div>
+      <div class="clock-pos">9 O'CLK</div>
+      <div class="clock-sub">Further rolled</div>
+    </div>
+  </div>
+  <div class="tip"><strong>Flatwounds strongly recommended:</strong> D'Addario Chrome flatwounds (.010–.046) on the Postmodern Strat fundamentally change the attack, sustain, and high-frequency character in a way that no EQ can replicate. With roundwounds the attack is too aggressive and the high end too bright even with tone controls rolled back. If you commit to this tone regularly, string the Strat with Chromes.</div>
+</div>
+
+<!-- KEMPER PROFILE -->
+<div class="section-label">Kemper Profile · Fender Deluxe Reverb</div>
+<div class="card blue">
+  <div class="card-header">
+    <div class="card-name">Profile Selection</div>
+    <div class="card-badge blue">Rig Manager · Merged Profile</div>
+  </div>
+  <div class="card-role">Speer uses a Fender '68 Custom Deluxe Reverb live and a '65 Blackface Deluxe Reverb in the studio. The Kemper profile needs to capture the Fender Deluxe Reverb character: clean, slightly glassy, moderate headroom, responds to pick dynamics. Always use a merged profile for FR10 output — studio profiles include mic/room character that doubles up through FRFR.</div>
+
+  <div class="profile-box">
+    <div class="profile-label">🔵 Primary — Studio</div>
+    <div class="profile-name">Fender '65 Deluxe Reverb — Blackface</div>
+    <div class="profile-sub">Search Rig Manager: "Deluxe Reverb", "65 Deluxe", "blackface DR" · Clean channel · Merged profile · Most accurate to the studio recordings</div>
+  </div>
+  <div class="profile-box">
+    <div class="profile-label">🟡 Live Alternative</div>
+    <div class="profile-name">Fender '68 Custom Deluxe Reverb — Silverface</div>
+    <div class="profile-sub">Search: "68 Deluxe", "silverface", "Custom Deluxe" · Slightly more aggressive clean · Merged profile</div>
+  </div>
+
+  <div class="sub-section">Kemper Amp Section — Adjust After Loading Profile</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Gain</div><div class="knob-val">1–2</div><div class="knob-sub">Minimum — clean headroom, no breakup at all</div></div>
+    <div class="knob"><div class="knob-label">Bass</div><div class="knob-val">4–5</div><div class="knob-sub">Below flat — Fender Deluxe is naturally warm</div></div>
+    <div class="knob"><div class="knob-label">Middle</div><div class="knob-val">5</div><div class="knob-sub">Flat — wah shapes the mid frequency</div></div>
+    <div class="knob"><div class="knob-label">Treble</div><div class="knob-val">6–7</div><div class="knob-sub">Present — Fender clean needs clarity</div></div>
+    <div class="knob"><div class="knob-label">Presence</div><div class="knob-val">4–5</div><div class="knob-sub">Moderate — not harsh</div></div>
+    <div class="knob"><div class="knob-label">Volume</div><div class="knob-val">Unity</div><div class="knob-sub">Match other rigs — FR10 level set separately</div></div>
+  </div>
+  <div class="tip blue"><strong>FR10 output:</strong> Kemper monitor out → FR10 input. Cab simulation ON in Kemper. FR10 EQ set flat — let the profile and Kemper do all tonal shaping. Don't double-EQ through the FR10's own controls.</div>
+</div>
+
+<!-- SIX SLOT LAYOUT -->
+<div class="section-label">Kemper FX Slots · Full Chain · Level 3</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Six Slot Configuration</div>
+    <div class="card-badge">Stomp A–D · FX Loop → X · Delay · Reverb</div>
+  </div>
+  <div class="card-role">With six available slots, the complete Speer signal chain fits with nothing compromised. The wah runs in Stomp A — always engaged, expression pedal controlling sweep. Order mirrors Speer's actual chain as closely as the Kemper's architecture allows.</div>
+
+  <div class="slot-stack">
+
+    <div class="slot">
+      <div class="slot-id active">STOMP A</div>
+      <div class="slot-content">
+        <div class="slot-name">Cry Baby Wah</div>
+        <div class="slot-type">Wah Effect · Expression Pedal Controlled</div>
+        <div class="slot-detail">Kemper Cry Baby or Whammy Wah model. Pedal Mode: On (expression pedal sweeps). Manual knob set to Speer's cocked sweet spot (~40–50% of sweep = mid-forward nasal peak). Leave pedal in this position for the cocked sound. Sweep for expressive passages.</div>
+      </div>
+      <div class="slot-status exp">EXP PEDAL</div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-id active">STOMP B</div>
+      <div class="slot-content">
+        <div class="slot-name">Phaser</div>
+        <div class="slot-type">Boss PH-3 Substitute · Always On</div>
+        <div class="slot-detail">Kemper Phaser or Vintage Phaser type. Rate very slow, depth subtle. This is the Boss PH-3 role — slow, almost imperceptible sweep. If no phaser sounds right, use the Kemper Tremolo at very low depth as an alternative slow movement effect.</div>
+      </div>
+      <div class="slot-status on">ALWAYS ON</div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-id active">STOMP C</div>
+      <div class="slot-content">
+        <div class="slot-name">DS-1 Style Drive</div>
+        <div class="slot-type">Boss DS-1 Substitute · Tonal Shaper · Always On</div>
+        <div class="slot-detail">Kemper Vintage Drive or Transparent Drive. Gain near zero. Tone near zero (dark/rolled). Output/Level above unity. This is not a drive effect — it's a tonal shaper and buffer, replicating the DS-1 at zero distortion.</div>
+      </div>
+      <div class="slot-status on">ALWAYS ON</div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-id active">STOMP D</div>
+      <div class="slot-content">
+        <div class="slot-name">Dyna Comp Compressor</div>
+        <div class="slot-type">MXR Dyna Comp Substitute · Always On</div>
+        <div class="slot-detail">Kemper Compressor or Vintage Compressor. Output/Level high. Sensitivity/Attack very low — Speer keeps Sensitivity at minimum, Output cranked. The compressor glues the signal and adds the subtle swell response. Always on — essential to the tone.</div>
+      </div>
+      <div class="slot-status on">ALWAYS ON</div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-id active">DELAY</div>
+      <div class="slot-content">
+        <div class="slot-name">Tape Echo</div>
+        <div class="slot-type">Strymon El Capistan Substitute · Always On</div>
+        <div class="slot-detail">Kemper Legacy Delay or Tape Echo type. Quarter note timing ~400–450ms. Feedback 2–3 repeats. Mix prominent — the delay is a primary musical element, not background air. Expression pedal can morph Feedback for drone/swell effects if configured.</div>
+      </div>
+      <div class="slot-status on">ALWAYS ON</div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-id active">REVERB</div>
+      <div class="slot-content">
+        <div class="slot-name">Spring Reverb</div>
+        <div class="slot-type">EHX Holy Grail Substitute · Always On</div>
+        <div class="slot-detail">Kemper Spring Reverb or Natural Spring type. Mix medium-high — more present than other guides. Short decay, short predelay. Spring character with slight drip. Always on — baked into the Khruangbin sound.</div>
+      </div>
+      <div class="slot-status on">ALWAYS ON</div>
+    </div>
+
+  </div>
+
+  <div class="tip"><strong>Slot order note:</strong> The Kemper places Stomps A–D before the amp, and Delay/Reverb after. This puts the wah, phaser, drive, and compressor pre-amp — correct for Speer's actual chain. The Kemper's internal Delay and Reverb run post-amp in the same position as Speer's Holy Grail and El Capistan. The order is architecturally accurate.</div>
+</div>
+
+<!-- WAH SETUP IN DETAIL -->
+<div class="section-label">Wah Setup · Expression Pedal · Critical Settings</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Kemper Wah · Expression Pedal</div>
+    <div class="card-badge amber">Most Important Setting In This Guide</div>
+  </div>
+  <div class="card-role">This is the element that makes the Kemper version definitively better than the Clapp 15 version. Speer's wah is always engaged at a fixed cocked position — never swept during a song, never turned off. The expression pedal allows Bryce to reproduce this exactly: park it at the sweet spot and leave it there for the cocked tone, then sweep for expressive passages when desired.</div>
+
+  <div class="sub-section">Wah Effect Settings (in Stomp A)</div>
+  <div class="knob-grid">
+    <div class="knob amber"><div class="knob-label">Wah Model</div><div class="knob-val">Cry Baby / Fasel</div><div class="knob-sub">Kemper Cry Baby or Whammy Cry Baby model — closest to Speer's Dunlop Fasel unit</div></div>
+    <div class="knob amber"><div class="knob-label">Pedal Mode</div><div class="knob-val">On</div><div class="knob-sub">Expression pedal controls sweep — park pedal at sweet spot for cocked sound</div></div>
+    <div class="knob amber"><div class="knob-label">Wah Volume</div><div class="knob-val">0 dB</div><div class="knob-sub">No volume boost from wah — flat output</div></div>
+    <div class="knob amber"><div class="knob-label">Peak / Range</div><div class="knob-val">Medium</div><div class="knob-sub">Standard Cry Baby range — not extended</div></div>
+    <div class="knob amber"><div class="knob-label">Bypass</div><div class="knob-val">Always On</div><div class="knob-sub">Do not set bypass @ heel or toe — Speer never bypasses it</div></div>
+  </div>
+
+  <div class="sub-section">Expression Pedal Position for Cocked Wah</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Sweet Spot Position</div><div class="knob-val">~40–50%</div><div class="knob-sub">Roughly midway between heel and toe — slightly past neutral. Tune by ear: find the nasal, vocal mid-peak.</div></div>
+    <div class="knob"><div class="knob-label">Park Pedal Here</div><div class="knob-val">Leave It</div><div class="knob-sub">Once you find the spot, mark it with tape and don't move it during the song unless intentionally sweeping.</div></div>
+    <div class="knob"><div class="knob-label">Sweep Use</div><div class="knob-val">Expressive Only</div><div class="knob-sub">Sweep heel-to-toe for funky rhythm passages or melodic emphasis — not during standard phrases</div></div>
+  </div>
+
+  <div class="tip amber"><strong>Finding the sweet spot:</strong> Play a single note on the neck pickup and slowly rock the pedal from heel to toe. Listen for the nasal, vocal, almost-honky peak where the note takes on a singing quality. That's Speer's position. It'll be somewhere between 35–55% of the pedal's travel depending on your Kemper's wah calibration. Mark it with a small piece of gaffer tape on the pedal housing so you can reliably return to it.</div>
+</div>
+
+<!-- PHASER DETAIL -->
+<div class="section-label">Stomp B · Phaser Settings</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Kemper Phaser</div>
+    <div class="card-badge">Boss PH-3 Substitute · Very Subtle</div>
+  </div>
+  <div class="card-role">Speer runs a Boss PH-3 at Rate noon, Depth 3 o'clock, Res noon, Stage 8 (4-stage). A slow, relatively deep phaser — present but not obvious. In the Kemper, set a phaser type to slow rate with moderate depth. The PH-3's Stage 8 setting gives a 4-stage character.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Type</div><div class="knob-val">4-Stage Phaser</div><div class="knob-sub">Kemper Vintage Phaser or Phaser type — 4-stage character</div></div>
+    <div class="knob"><div class="knob-label">Rate</div><div class="knob-val">~0.5–0.7 Hz</div><div class="knob-sub">Slow sweep — almost imperceptible per note</div></div>
+    <div class="knob"><div class="knob-label">Depth</div><div class="knob-val">Medium-High</div><div class="knob-sub">More depth than you'd expect from how subtle it sounds</div></div>
+    <div class="knob"><div class="knob-label">Resonance / Feedback</div><div class="knob-val">Medium</div><div class="knob-sub">PH-3 Res at noon — not sharp/resonant</div></div>
+    <div class="knob"><div class="knob-label">Mix</div><div class="knob-val">40–50%</div><div class="knob-sub">Present but blended — always on</div></div>
+  </div>
+</div>
+
+<!-- DS-1 / DRIVE DETAIL -->
+<div class="section-label">Stomp C · Drive Settings</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Drive / Tonal Shaper</div>
+    <div class="card-badge">DS-1 at Zero Distortion · Always On</div>
+  </div>
+  <div class="card-role">Speer runs a Boss DS-1 with Distortion fully CCW, Tone fully CCW, Level fully CW. At these settings the DS-1 is a tonal shaper and buffer — not a drive pedal. The rolled Tone darkens and tightens the signal. Use a Kemper drive type with near-zero gain and rolled tone. The Kemper's Green Screamer, Vintage Drive, or Transparent OD types work — the goal is zero grit with slight tonal darkening.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Type</div><div class="knob-val">Vintage Drive / Green Scream</div><div class="knob-sub">Any clean-capable drive type</div></div>
+    <div class="knob"><div class="knob-label">Gain / Distortion</div><div class="knob-val">0–1</div><div class="knob-sub">Minimum — no grit at all</div></div>
+    <div class="knob"><div class="knob-label">Tone</div><div class="knob-val">0–1</div><div class="knob-sub">Minimum / fully rolled — darkened signal</div></div>
+    <div class="knob"><div class="knob-label">Volume / Output</div><div class="knob-val">8–9</div><div class="knob-sub">Near maximum — level boost into the amp</div></div>
+    <div class="knob"><div class="knob-label">Purpose</div><div class="knob-val">Tonal Colour</div><div class="knob-sub">Adds subtle compression and slight darkening — audible only by bypassing it</div></div>
+  </div>
+</div>
+
+<!-- COMPRESSOR DETAIL -->
+<div class="section-label">Stomp D · Compressor Settings</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Dyna Comp Compressor</div>
+    <div class="card-badge">MXR Dyna Comp Substitute · Always On · Glue</div>
+  </div>
+  <div class="card-role">Speer's MXR Dyna Comp Mini runs with Output cranked and Sensitivity at minimum. The Dyna Comp at low sensitivity is a soft-knee compressor that adds subtle glue and sustain without obvious pumping. The Kemper's Vintage Compressor or Studio Comp work well. High output, low ratio/threshold sensitivity.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Type</div><div class="knob-val">Vintage Comp / Dyna Comp</div><div class="knob-sub">Kemper Vintage Compressor type preferred</div></div>
+    <div class="knob"><div class="knob-label">Sensitivity / Attack</div><div class="knob-val">0–2</div><div class="knob-sub">Very low — soft, transparent compression</div></div>
+    <div class="knob"><div class="knob-label">Output / Volume</div><div class="knob-val">8–9</div><div class="knob-sub">High — the Dyna Comp Output is cranked</div></div>
+    <div class="knob"><div class="knob-label">Squash / Ratio</div><div class="knob-val">Low-Medium</div><div class="knob-sub">Gentle ratio — no obvious pumping</div></div>
+    <div class="knob"><div class="knob-label">Always On</div><div class="knob-val">Yes</div><div class="knob-sub">Core to the tone — never bypassed</div></div>
+  </div>
+  <div class="tip"><strong>Compressor is essential:</strong> The Dyna Comp at low sensitivity and high output is doing two things — adding subtle sustain that lets notes bloom, and levelling the dynamic difference between the in-between Strat positions. Without it the tone feels thinner and more dynamic than the Khruangbin sound. Always on, always relatively transparent.</div>
+</div>
+
+<!-- DELAY DETAIL -->
+<div class="section-label">Delay Slot · Tape Echo Settings</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Tape Echo</div>
+    <div class="card-badge">El Capistan Substitute · Always On · Central to Sound</div>
+  </div>
+  <div class="card-role">The Strymon El Capistan is always on. Speer uses an expression pedal to control feedback in real time, letting notes drone and swell against their own repeats without a looper. The Kemper delay slot — use Legacy Delay or Tape Echo type. Mix is prominent, feedback 2–3 repeats, tape character with moderate wear. Quarter note timing.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Type</div><div class="knob-val">Tape Echo / Legacy</div><div class="knob-sub">Warm, organic repeats — not precision digital</div></div>
+    <div class="knob"><div class="knob-label">Time</div><div class="knob-val">~400–450ms</div><div class="knob-sub">Quarter note at ~135–150bpm — or tap to tempo</div></div>
+    <div class="knob"><div class="knob-label">Feedback</div><div class="knob-val">35–40%</div><div class="knob-sub">2–3 audible repeats — musical, not washing</div></div>
+    <div class="knob"><div class="knob-label">Mix</div><div class="knob-val">35–40%</div><div class="knob-sub">Prominent — delay is a primary musical element here</div></div>
+    <div class="knob"><div class="knob-label">Tape Saturation</div><div class="knob-val">Medium</div><div class="knob-sub">Warm repeats, slight degradation</div></div>
+    <div class="knob"><div class="knob-label">Modulation</div><div class="knob-val">Low</div><div class="knob-sub">Subtle tape flutter — alive, not chorus</div></div>
+  </div>
+  <div class="tip"><strong>Expression pedal on feedback:</strong> If you want to replicate Speer's El Capistan trick, assign the Kemper Delay feedback parameter to the Morph (expression pedal). At heel the feedback stays at 35%, at toe it can swell toward 80–90% for drone effects. Rock the pedal forward during sustained notes and the repeats multiply — release and it decays back. This is one of Speer's core live techniques.</div>
+</div>
+
+<!-- REVERB DETAIL -->
+<div class="section-label">Reverb Slot · Spring Reverb Settings</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-name">Spring Reverb</div>
+    <div class="card-badge">Holy Grail Substitute · Always On</div>
+  </div>
+  <div class="card-role">Speer's EHX Holy Grail is set to spring reverb mode at noon–1 o'clock. The Kemper Spring Reverb type is the direct match. Mix higher than other guides — the reverb is consistently present in Khruangbin's sound, more prominent than any of the Black Keys guides. Runs after the delay so the reverb tails bloom into the delay repeats.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Type</div><div class="knob-val">Spring Reverb</div><div class="knob-sub">Kemper Natural Spring or Spring Reverb type</div></div>
+    <div class="knob"><div class="knob-label">Decay / Time</div><div class="knob-val">Medium</div><div class="knob-sub">~1.5–2 sec — not a large hall</div></div>
+    <div class="knob"><div class="knob-label">Mix</div><div class="knob-val">35–45%</div><div class="knob-sub">Half wet — more prominent than other guides</div></div>
+    <div class="knob"><div class="knob-label">Predelay</div><div class="knob-val">Short</div><div class="knob-sub">Natural spring feel — minimal gap</div></div>
+    <div class="knob"><div class="knob-label">Bass EQ</div><div class="knob-val">Flat</div><div class="knob-sub">Preserve warmth</div></div>
+    <div class="knob"><div class="knob-label">Treble EQ</div><div class="knob-val">Slightly Cut</div><div class="knob-sub">Smooth the reverb tail — not bright spring</div></div>
+  </div>
+</div>
+
+<!-- TECHNIQUE -->
+<div class="section-label">Playing Notes</div>
+<div class="card" style="border-left-color:var(--teal)">
+  <div class="card-header">
+    <div class="card-name">Technique</div>
+    <div class="card-badge">Light Touch · Let the Chain Work</div>
+  </div>
+  <div class="card-role">Speer plays with a single worn-round pick at very light attack. The flatwounds, cocked wah, and compressor create the smooth tone — playing style is understated. The signal chain creates interest; you don't need to.</div>
+  <div class="knob-grid">
+    <div class="knob"><div class="knob-label">Pick Attack</div><div class="knob-val">Very Light</div><div class="knob-sub">Near finger-style lightness — compressor and wah amplify everything</div></div>
+    <div class="knob"><div class="knob-label">Pick Type</div><div class="knob-val">Light / Worn</div><div class="knob-sub">Round tip — Speer uses the same pick until it's nearly round</div></div>
+    <div class="knob"><div class="knob-label">Strings</div><div class="knob-val">Flatwounds</div><div class="knob-sub">D'Addario Chromes .010–.046 — transformative for this tone</div></div>
+    <div class="knob"><div class="knob-label">Phrasing</div><div class="knob-val">Sparse</div><div class="knob-sub">Play less — the delay fills the silence. One note into tape echo is more powerful than five notes.</div></div>
+    <div class="knob"><div class="knob-label">Wah Position</div><div class="knob-val">Park at Sweet Spot</div><div class="knob-sub">Leave the expression pedal at the cocked position — move only for intentional expression</div></div>
+    <div class="knob"><div class="knob-label">High Fret Melodies</div><div class="knob-val">Above 12th</div><div class="knob-sub">Speer frequently plays melodies above 12th fret for smooth, vocal single-note lines</div></div>
+  </div>
+  <div class="tip"><strong>The Kemper advantage in practice:</strong> With the real wah now available, the cocked position creates the nasal mid-peak that the EB-10 in the Clapp 15 version could only approximate. Set the expression pedal, park it, and feel the difference immediately — it's the most characteristic element of Speer's sound and it's now fully in the chain. The compressor and tape delay do the rest.</div>
+</div>
+
+<footer>
+  <div>Khruangbin · Mark Speer · Postmodern Stratocaster · Kemper Player · FR10</div>
+  <div class="f-right">Expression Pedal Wah · 6 FX Slots · Level 3</div>
+</footer>
+
+</div>
+</body>
+</html>
