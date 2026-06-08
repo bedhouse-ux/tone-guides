@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khruangbin — Tone Guide · Clapp 15</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --deep: #0f0e0c;
+    --surface: #141310;
+    --card: #1a1917;
+    --border: #2a2824;
+    --border-dim: #1f1e1b;
+    --cream: #e8e2d4;
+    --warm: #c8b89a;
+    --amber: #b8943c;
+    --amber-dim: #8a6e2c;
+    --smoke: #6a6560;
+    --muted: #4a4540;
+    --accent: #c4a24a;
+    --teal: #4a8a7c;
+    --teal-dim: #2e5a50;
+    --teal-bright: #6ab8a4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .page-wrap { max-width: 860px; margin: 0 auto; padding: 0 32px 80px; }
+
+  /* ── HERO ── */
+  .hero { padding: 72px 0 48px; }
+
+  .hero-eyebrow {
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--teal-bright); margin-bottom: 20px;
+    opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 84px);
+    font-weight: 300; font-style: italic;
+    line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--cream); margin-bottom: 8px;
+    opacity: 0; animation: fadeUp 0.8s 0.35s ease forwards;
+  }
+
+  .hero-artist {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 2vw, 18px); font-weight: 300;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--smoke); margin-bottom: 36px;
+    opacity: 0; animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+
+  .hero-rule {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, var(--teal) 0%, var(--border) 60%, transparent 100%);
+    opacity: 0; animation: fadeUp 0.8s 0.65s ease forwards;
+  }
+
+  .hero-meta {
+    display: flex; gap: 40px; margin-top: 20px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s ease forwards;
+  }
+
+  .hero-meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .hero-meta-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+  .hero-meta-value { font-size: 12px; color: var(--warm); letter-spacing: 0.05em; }
+
+  /* ── GUITAR CARD ── */
+  .guitar-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+    padding: 28px 32px; margin: 48px 0 40px; position: relative;
+    opacity: 0; animation: fadeUp 0.8s 1.0s ease forwards;
+  }
+
+  .guitar-card::before {
+    content: 'PRIMARY INSTRUMENT'; position: absolute; top: -9px; left: 24px;
+    background: var(--card); padding: 0 8px;
+    font-size: 9px; letter-spacing: 0.3em; color: var(--teal-bright);
+  }
+
+  .guitar-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--cream); margin-bottom: 4px; }
+  .guitar-sub { font-size: 11px; color: var(--smoke); letter-spacing: 0.1em; margin-bottom: 18px; }
+
+  .guitar-rationale {
+    font-size: 12px; color: var(--warm); line-height: 1.8;
+    border-top: 1px solid var(--border-dim); padding-top: 16px;
+  }
+
+  .guitar-rationale strong { color: var(--teal-bright); font-weight: 700; }
+
+  .key-insight {
+    margin-top: 14px; padding: 12px 16px;
+    background: rgba(74,138,124,0.06); border: 1px solid var(--teal-dim);
+    font-size: 11px; color: var(--warm);
+  }
+
+  .key-insight span { color: var(--teal-bright); letter-spacing: 0.1em; font-size: 9px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  /* ── SECTIONS ── */
+  .section { margin-top: 52px; opacity: 0; animation: fadeUp 0.7s ease forwards; }
+
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+  .section-num { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--teal-bright); letter-spacing: 0.2em; min-width: 24px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cream); }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── SIGNAL CHAIN ── */
+  .signal-chain { display: flex; align-items: center; flex-wrap: wrap; padding: 24px 0; gap: 0; }
+
+  .chain-node { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 88px; }
+
+  .chain-box {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 10px 12px; text-align: center; font-size: 10px;
+    letter-spacing: 0.08em; color: var(--warm); line-height: 1.4; width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  .chain-box:hover { border-color: var(--teal); }
+  .chain-box.active { border-color: var(--teal); background: rgba(74,138,124,0.06); }
+  .chain-box.always-on { border-color: var(--teal-dim); border-style: dashed; }
+
+  .chain-box .chain-icon { font-size: 16px; display: block; margin-bottom: 4px; }
+  .chain-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .chain-arrow { color: var(--teal-dim); font-size: 14px; padding: 0 4px; margin-bottom: 22px; flex-shrink: 0; }
+
+  /* ── PARAM BLOCKS ── */
+  .param-block { background: var(--card); border: 1px solid var(--border); padding: 24px 28px; margin-bottom: 16px; }
+
+  .param-block-title {
+    font-family: 'Courier Prime', monospace; font-size: 10px;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal-bright);
+    margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-dim);
+  }
+
+  .param-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px solid var(--border-dim); gap: 20px;
+  }
+
+  .param-row:last-child { border-bottom: none; }
+  .param-name { font-size: 11px; color: var(--smoke); letter-spacing: 0.08em; min-width: 130px; }
+
+  .param-bar-wrap { flex: 1; height: 3px; background: var(--border); position: relative; max-width: 180px; }
+  .param-bar { height: 100%; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); position: relative; }
+  .param-bar::after { content: ''; position: absolute; right: -1px; top: -3px; width: 2px; height: 9px; background: var(--teal-bright); }
+
+  .param-val { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--teal-bright); font-weight: 300; min-width: 36px; text-align: right; }
+  .param-note { font-size: 10px; color: var(--muted); font-style: italic; min-width: 120px; text-align: right; }
+
+  /* ── SVG KNOB ── */
+  .knob-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 20px; padding: 8px 0; }
+  .knob-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .knob-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); text-align: center; }
+  .knob-value { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--teal-bright); font-weight: 300; }
+
+  /* ── EB-10 DIAGRAM ── */
+  .eb10-block { background: var(--card); border: 1px solid var(--border); padding: 24px 28px; margin-bottom: 16px; }
+
+  .eb10-title {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal-bright);
+    margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-dim);
+  }
+
+  .eb10-bands { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .eb10-band { display: flex; flex-direction: column; gap: 10px; }
+
+  .eb10-band-title {
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--smoke); text-align: center;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border-dim);
+  }
+
+  .eb10-toggle-row { display: flex; gap: 6px; justify-content: center; }
+
+  .eb10-toggle {
+    padding: 3px 10px; border: 1px solid var(--border); font-size: 9px;
+    letter-spacing: 0.1em; color: var(--muted); background: var(--surface);
+  }
+
+  .eb10-toggle.boost-on { border-color: var(--teal); color: var(--teal-bright); background: rgba(74,138,124,0.1); }
+  .eb10-toggle.cut-on { border-color: var(--amber); color: var(--accent); background: rgba(184,148,60,0.08); }
+
+  .eb10-dial {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+
+  .eb10-bar-wrap { width: 100%; height: 4px; background: var(--border); position: relative; }
+  .eb10-bar-fill { height: 100%; background: linear-gradient(90deg, var(--teal-dim), var(--teal-bright)); }
+  .eb10-bar-fill.cut { background: linear-gradient(90deg, var(--amber-dim), var(--accent)); }
+  .eb10-bar-fill.neutral { background: var(--muted); }
+
+  .eb10-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--teal-bright); font-weight: 300; }
+  .eb10-val.cut { color: var(--accent); }
+  .eb10-val.neutral { color: var(--muted); }
+
+  .eb10-role { font-size: 10px; color: var(--smoke); text-align: center; line-height: 1.5; font-style: italic; }
+
+  /* ── CALLOUTS ── */
+  .callout { border-left: 2px solid var(--teal); padding: 14px 20px; margin: 16px 0; background: rgba(74,138,124,0.04); }
+  .callout-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal-bright); margin-bottom: 6px; }
+  .callout p { font-size: 12px; color: var(--warm); line-height: 1.8; }
+  .callout p strong { color: var(--teal-bright); }
+
+  .callout.amber { border-left-color: var(--amber); background: rgba(184,148,60,0.04); }
+  .callout.amber .callout-label { color: var(--accent); }
+
+  /* ── SONG TABS ── */
+  .song-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 24px; flex-wrap: wrap; }
+
+  .song-tab {
+    padding: 10px 18px; font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted); cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: all 0.2s; background: none;
+    border-top: none; border-left: none; border-right: none;
+    font-family: 'Courier Prime', monospace;
+  }
+
+  .song-tab:hover { color: var(--warm); }
+  .song-tab.active { color: var(--teal-bright); border-bottom-color: var(--teal); }
+
+  .song-panel { display: none; }
+  .song-panel.active { display: block; }
+
+  /* ── PLAYING GRID ── */
+  .playing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .playing-item { padding: 16px 20px; background: var(--card); border: 1px solid var(--border-dim); }
+  .playing-item-title { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal-dim); margin-bottom: 8px; }
+  .playing-item-text { font-size: 12px; color: var(--warm); line-height: 1.8; }
+
+  /* ── PICKUP DIAGRAM ── */
+  .pickup-diagram {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 20px 24px; margin: 12px 0;
+    display: flex; align-items: center; gap: 24px;
+  }
+
+  .guitar-svg-wrap { flex-shrink: 0; }
+
+  .pickup-notes { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+
+  .pickup-row { display: flex; align-items: center; gap: 10px; }
+  .pickup-indicator { width: 8px; height: 8px; border: 1px solid var(--border); flex-shrink: 0; }
+  .pickup-indicator.active { background: var(--teal); border-color: var(--teal-bright); }
+  .pickup-text { font-size: 11px; color: var(--smoke); }
+  .pickup-text.active { color: var(--warm); }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border-dim);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-text { font-size: 10px; color: var(--muted); letter-spacing: 0.15em; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .s1 { animation-delay: 1.1s; }
+  .s2 { animation-delay: 1.25s; }
+  .s3 { animation-delay: 1.4s; }
+  .s4 { animation-delay: 1.55s; }
+  .s5 { animation-delay: 1.7s; }
+  .s6 { animation-delay: 1.85s; }
+
+  @media (max-width: 600px) {
+    .page-wrap { padding: 0 20px 60px; }
+    .playing-grid { grid-template-columns: 1fr; }
+    .eb10-bands { grid-template-columns: 1fr; }
+    .hero-meta { flex-wrap: wrap; gap: 20px; }
+    .param-note { display: none; }
+    .knob-grid { grid-template-columns: repeat(3, 1fr); }
+    .signal-chain { gap: 4px; }
+    .chain-node { min-width: 72px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Tone Guide No. 04</div>
+    <div class="hero-title">Khruangbin</div>
+    <div class="hero-artist">Con Todo El Mundo · Mordechai · 2018–2020</div>
+    <div class="hero-rule"></div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Rig</span>
+        <span class="hero-meta-value">Frost Clapp 15</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Guitarist</span>
+        <span class="hero-meta-value">Mark Speer</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Character</span>
+        <span class="hero-meta-value">Clean · Compressed · Parked Wah</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Wah Sub</span>
+        <span class="hero-meta-value">EB-10 Mid Band</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUITAR -->
+  <div class="guitar-card">
+    <div class="guitar-name">Yamaha SA2200</div>
+    <div class="guitar-sub">Neck Pickup · Volume 7–8 · Tone 6–7</div>
+    <div class="guitar-rationale">
+      Speer plays a <strong>Fender Stratocaster</strong> — single coil neck pickup, rolled-back tone, flatwound strings. The SA2200's neck humbucker is lower-output than most, with that semi-hollow body adding the warmth and slight air that a solidbody can't replicate. It's the closest instrument in the collection to that clean, slightly dark, compressed character. <strong>Roll the tone knob to 6–7</strong> — this is not a bright tone. The semi-hollow resonance also approximates the way flatwound strings soften the attack on a Strat.
+    </div>
+    <div class="key-insight">
+      <span>Key Setup Note</span>
+      Speer's wah is <strong>always on, parked</strong> — he finds a sweet spot and leaves it there, only sweeping when he wants an expressive effect. Without a wah pedal in this rig, the <strong>EB-10 mid band</strong> does the same job: a narrow boost around 800Hz–1kHz permanently engaged replicates the cocked upper-mid hump of a parked Cry Baby.
+    </div>
+  </div>
+
+  <!-- SIGNAL CHAIN -->
+  <div class="section s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Signal Chain</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="signal-chain">
+      <div class="chain-node">
+        <div class="chain-box active">
+          <span class="chain-icon">🎸</span>
+          SA2200<br><em style="font-size:9px;color:var(--smoke)">Neck · vol 7</em>
+        </div>
+        <span class="chain-label">Guitar</span>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">
+        <div class="chain-box always-on">
+          <span class="chain-icon">🌊</span>
+          Snow White<br><em style="font-size:9px;color:var(--smoke)">Autowah · low</em>
+        </div>
+        <span class="chain-label">Dynamic</span>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">
+        <div class="chain-box active">
+          <span class="chain-icon">📐</span>
+          EB-10<br><em style="font-size:9px;color:var(--smoke)">Mid boost</em>
+        </div>
+        <span class="chain-label">EQ / Wah Sub</span>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">
+        <div class="chain-box active">
+          <span class="chain-icon">🔊</span>
+          Clapp 15<br><em style="font-size:9px;color:var(--smoke)">EQ defeat ON</em>
+        </div>
+        <span class="chain-label">Amp</span>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">
+        <div class="chain-box active">
+          <span class="chain-icon">🌀</span>
+          Starlight<br><em style="font-size:9px;color:var(--smoke)">EP-III echo</em>
+        </div>
+        <span class="chain-label">FX Loop</span>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node">
+        <div class="chain-box active">
+          <span class="chain-icon">✨</span>
+          Golden Rev<br><em style="font-size:9px;color:var(--smoke)">Spring · low</em>
+        </div>
+        <span class="chain-label">FX Loop</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Clapp 15 — EQ Defeat ON · Bright OFF</div>
+      <p>Defeat the Clapp 15's onboard 3-band EQ — all tone shaping runs through the EB-10 in the effects loop. Bright switch <strong>OFF</strong>. The amp runs as a clean, transparent Class A platform. Volume at about 12 o'clock — enough to get the output transformer working but not breaking up.</p>
+    </div>
+  </div>
+
+  <!-- AMP -->
+  <div class="section s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Clapp 15 Settings</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="param-block">
+      <div class="param-block-title">Amp Controls — Speer uses Fender Deluxe Reverb (Blackface / Silverface)</div>
+      <div class="param-row">
+        <span class="param-name">Volume</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:55%"></div></div>
+        <span class="param-val">6.0</span>
+        <span class="param-note">~12 o'clock — clean headroom</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">EQ Defeat</span>
+        <div class="param-bar-wrap" style="max-width:none;flex:1"></div>
+        <span class="param-val" style="font-size:12px;font-family:'Courier Prime'">ON</span>
+        <span class="param-note">EB-10 does all shaping</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Bright Switch</span>
+        <div class="param-bar-wrap" style="max-width:none;flex:1"></div>
+        <span class="param-val" style="font-size:12px;font-family:'Courier Prime'">OFF</span>
+        <span class="param-note">This is not a bright tone</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Tremolo</span>
+        <div class="param-bar-wrap" style="max-width:none;flex:1"></div>
+        <span class="param-val" style="font-size:12px;font-family:'Courier Prime'">OFF</span>
+        <span class="param-note">Not in Khruangbin's character</span>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-label">Why this amp works</div>
+      <p>Speer's core amp is a Fender Deluxe Reverb — Class A-adjacent, single-ended character, clean but musical. The Clapp 15 at 9W Class A is the closest amp in the collection: same clean headroom philosophy, same harmonic signature. The Clapp's lack of a gain stage is actually an asset here — Khruangbin's tone has <strong>zero dirt</strong>. Any breakup destroys it.</p>
+    </div>
+  </div>
+
+  <!-- EB-10 -->
+  <div class="section s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">EB-10 — Wah Substitute + Shaping</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Core Idea</div>
+      <p>Speer's Cry Baby is <strong>always on and parked</strong> at around 60–70% toe — this creates a permanent upper-mid hump (~800Hz–1kHz) that is fundamental to his tone. The EB-10's Mid band, boosted moderately with a narrow Q, replicates this effect. It is not a filter sweep — it is a <strong>static tonal colour</strong> that should stay on for the entire set.</p>
+    </div>
+
+    <div class="eb10-block">
+      <div class="eb10-title">EB-10 Band Settings · All bands in effects loop · post-amp</div>
+      <div class="eb10-bands">
+
+        <!-- LOW -->
+        <div class="eb10-band">
+          <div class="eb10-band-title">Low Band</div>
+          <div class="eb10-toggle-row">
+            <div class="eb10-toggle">▲ BOOST</div>
+            <div class="eb10-toggle">▼ CUT</div>
+          </div>
+          <div class="eb10-dial">
+            <div class="eb10-bar-wrap"><div class="eb10-bar-fill neutral" style="width:0%"></div></div>
+            <div class="eb10-val neutral">0</div>
+          </div>
+          <div class="eb10-role">No low shaping — the SA2200 neck pickup has natural warmth. Adding bass here muddies the clean character.</div>
+        </div>
+
+        <!-- MID -->
+        <div class="eb10-band">
+          <div class="eb10-band-title">Mid Band — Wah Sub</div>
+          <div class="eb10-toggle-row">
+            <div class="eb10-toggle boost-on">▲ BOOST</div>
+            <div class="eb10-toggle">▼ CUT</div>
+          </div>
+          <div class="eb10-dial">
+            <div class="eb10-bar-wrap"><div class="eb10-bar-fill" style="width:42%"></div></div>
+            <div class="eb10-val">5</div>
+          </div>
+          <div class="eb10-role">The parked-wah substitute. Upper-mid hump at ~800Hz–1kHz — nasal, focused, present. This is always on. Start at 5, adjust by ear to taste.</div>
+        </div>
+
+        <!-- HIGH -->
+        <div class="eb10-band">
+          <div class="eb10-band-title">High Band</div>
+          <div class="eb10-toggle-row">
+            <div class="eb10-toggle">▲ BOOST</div>
+            <div class="eb10-toggle cut-on">▼ CUT</div>
+          </div>
+          <div class="eb10-dial">
+            <div class="eb10-bar-wrap"><div class="eb10-bar-fill cut" style="width:25%"></div></div>
+            <div class="eb10-val cut">3</div>
+          </div>
+          <div class="eb10-role">Gentle high cut — rolls off the top-end harshness of the humbucker. Approximates the warmth of Speer's single coil + tone-rolled-back setup.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">EB-10 Rule</div>
+      <p>Toggle sets direction (▲ boost / ▼ cut). Knob sets dB amount on a 0–12 scale. <strong>Knob at 0 = no effect regardless of toggle position</strong> — neither toggle should show selected when the knob is at 0.</p>
+    </div>
+  </div>
+
+  <!-- SNOW WHITE AUTOWAH -->
+  <div class="section s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Snow White Autowah</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="param-block">
+      <div class="param-block-title">Mad Professor Snow White Autowah · Very low sensitivity — near-passive</div>
+      <div class="param-row">
+        <span class="param-name">Sensitivity</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:18%"></div></div>
+        <span class="param-val">2.0</span>
+        <span class="param-note">Very low — barely triggered</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Range</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:40%"></div></div>
+        <span class="param-val">4.5</span>
+        <span class="param-note">Mid-focused sweep</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Attack</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:55%"></div></div>
+        <span class="param-val">6.0</span>
+        <span class="param-note">Slower — smooth envelope</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Volume</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:50%"></div></div>
+        <span class="param-val">5.0</span>
+        <span class="param-note">Unity — no boost</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">How to Use It</div>
+      <p>Speer uses his Cry Baby for expressive dynamic sweeps during solos — the Snow White covers this role. Keep sensitivity <strong>very low</strong> so it doesn't trigger on rhythm playing. It should only respond to deliberate hard picks or solo phrases. The static mid-hump from the EB-10 and the dynamic envelope of the Snow White together approximate both roles of the Cry Baby. For most of the set, the Snow White does nothing — it's just there for solo phrases when you want the filter to open.</p>
+    </div>
+  </div>
+
+  <!-- FX LOOP -->
+  <div class="section s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">Effects Loop — Delay &amp; Reverb</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="param-block">
+      <div class="param-block-title">UA Starlight — EP-III Tape Echo Mode · Speer uses Strymon El Capistan</div>
+      <div class="param-row">
+        <span class="param-name">Mode</span>
+        <div class="param-bar-wrap" style="max-width:none;flex:1"></div>
+        <span class="param-val" style="font-size:12px;font-family:'Courier Prime'">EP-III</span>
+        <span class="param-note">Echoplex tape echo character</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Time</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:38%"></div></div>
+        <span class="param-val">~340ms</span>
+        <span class="param-note">Dotted 8th feel — ambient, not rhythmic</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Feedback</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:32%"></div></div>
+        <span class="param-val">3.5</span>
+        <span class="param-note">3–4 repeats, dark decay</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Mix</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:30%"></div></div>
+        <span class="param-val">3.0</span>
+        <span class="param-note">Present but not dominant</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Wow / Flutter</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:45%"></div></div>
+        <span class="param-val">5.0</span>
+        <span class="param-note">Tape character — slightly woozy</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Tone (repeats)</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:35%"></div></div>
+        <span class="param-val">3.5</span>
+        <span class="param-note">Dark repeats — not crisp</span>
+      </div>
+    </div>
+
+    <div class="param-block">
+      <div class="param-block-title">UA Golden Reverberator — Spring mode · Subtle ambient wash</div>
+      <div class="param-row">
+        <span class="param-name">Mode</span>
+        <div class="param-bar-wrap" style="max-width:none;flex:1"></div>
+        <span class="param-val" style="font-size:12px;font-family:'Courier Prime'">Spring</span>
+        <span class="param-note">Fender reverb tank character</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Decay / Time</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:38%"></div></div>
+        <span class="param-val">4.0</span>
+        <span class="param-note">Medium short — room, not hall</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Mix</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:28%"></div></div>
+        <span class="param-val">3.0</span>
+        <span class="param-note">Low — space not wash</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Tone</span>
+        <div class="param-bar-wrap"><div class="param-bar" style="width:42%"></div></div>
+        <span class="param-val">4.5</span>
+        <span class="param-note">Slightly dark — vintage spring character</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Delay Before Reverb</div>
+      <p>Run the Starlight before the Golden Reverberator in the effects loop. Delay into reverb gives the repeats their own spatial wash — correct for this sound. Reverb into delay smears the reverb tail into a murky mess and loses the dub-influenced precision of Speer's echo.</p>
+    </div>
+  </div>
+
+  <!-- SONG NOTES -->
+  <div class="section s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">Playing Notes — By Track</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="song-tabs">
+      <button class="song-tab active" onclick="showSong('friday')">Friday Morning</button>
+      <button class="song-tab" onclick="showSong('august')">August 10</button>
+      <button class="song-tab" onclick="showSong('time')">Time (You and I)</button>
+      <button class="song-tab" onclick="showSong('general')">General</button>
+    </div>
+
+    <div class="song-panel active" id="song-friday">
+      <div class="playing-grid">
+        <div class="playing-item">
+          <div class="playing-item-title">Intro Riff</div>
+          <div class="playing-item-text">Single-note lines, neck pickup. Minimal attack — finger-pick or very soft plectrum. The EB-10 mid boost gives the notes that nasal, slightly hollow character without needing to do anything special with technique.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Chord voicings</div>
+          <div class="playing-item-text">Speer uses a lot of open-position and spread voicings — avoid dense barre chords. Let strings ring and decay naturally. The tape echo fills the space; don't over-play to compensate.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Dynamics</div>
+          <div class="playing-item-text">Everything is played quietly. The Clapp 15 at this volume setting will stay clean — any perceived warmth comes from the output transformer, not breakup. Resist the urge to dig in.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Delay interaction</div>
+          <div class="playing-item-text">Leave space for the Starlight repeats to breathe. Speer's phrasing is highly rhythmically spaced — he plays a phrase, lets the echo answer it, then plays again. Treat the delay as a second voice.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="song-panel" id="song-august">
+      <div class="playing-grid">
+        <div class="playing-item">
+          <div class="playing-item-title">Funk-influenced picking</div>
+          <div class="playing-item-text">More percussive attack than Friday Morning. The Snow White autowah at very low sensitivity may just start to breathe here — don't increase sensitivity, let it respond naturally to the harder attack.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Muted string patterns</div>
+          <div class="playing-item-text">Light right-hand palm muting on chord stabs. The SA2200's semi-hollow resonance adds natural sustain — don't need to let everything ring. Short muted stabs create the percussive character alongside the bass.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Reverb level</div>
+          <div class="playing-item-text">Drop the Golden Reverberator mix slightly for this track — the percussive style needs less room. Increase the Starlight feedback slightly (to 4.5) for a more prominent echo on the off-beats.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Register</div>
+          <div class="playing-item-text">Mid-neck position, strings 2–4. The upper-mid emphasis from the EB-10 is most noticeable here — if it feels too honky, reduce the mid boost from 5 to 4.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="song-panel" id="song-time">
+      <div class="playing-grid">
+        <div class="playing-item">
+          <div class="playing-item-title">Solo phrasing</div>
+          <div class="playing-item-text">Speer's solos are sparse, melodic, and highly vocal. Wide vibrato, slow bends. This is where the Snow White autowah comes into play — pick harder on sustained notes to trigger the envelope opening. Keep sensitivity low so it only activates on deliberate intent.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Delay time</div>
+          <div class="playing-item-text">Increase Starlight mix to 3.5–4.0 for solo sections — the echo becomes more prominent in the mix when playing melodic lines over a groove. Return to 3.0 for rhythm sections.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Pickup and volume</div>
+          <div class="playing-item-text">Keep SA2200 on neck pickup throughout. Guitar volume at 7 — rolling back slightly from 8 compresses the input to the Snow White and produces a more controlled envelope response.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Phrasing style</div>
+          <div class="playing-item-text">Think vocal melody, not guitar solo. Speer plays like he's singing. Long sustained notes, minimal fast runs. The EB-10 mid boost and tape echo together fill out the space a vocalist would occupy.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="song-panel" id="song-general">
+      <div class="playing-grid">
+        <div class="playing-item">
+          <div class="playing-item-title">The Parked Wah Mindset</div>
+          <div class="playing-item-text">Speer's entire tonal identity is built around a wah that never moves. The EB-10 mid boost is a permanent colour, not an effect to turn on for solos. Leave it on all the time. This is the sound.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Flatwound equivalent</div>
+          <div class="playing-item-text">Speer uses flatwound strings — smooth, reduced string noise, darker high-end. With the SA2200 and tone rolled back to 6–7, the character is close. Don't use a pick with heavy attack; fingerpicking or a very light plectrum gets closer.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">Volume control technique</div>
+          <div class="playing-item-text">Use the guitar's volume knob actively — roll back to 6 for clean rhythm comping, up to 8 for solo phrases. The Clapp 15 stays clean throughout; the SA2200 volume knob shapes dynamics, not the amp.</div>
+        </div>
+        <div class="playing-item">
+          <div class="playing-item-title">What not to do</div>
+          <div class="playing-item-text">No overdrive. No bright settings. No heavy picking. No fast runs. Khruangbin's guitar tone is defined entirely by restraint — in dynamics, in note choice, and in gain. Any dirt immediately kills the character.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-text">Tone Guide No. 04 · Khruangbin · SA2200 / Clapp 15</span>
+    <span class="footer-text">Frost Clapp 15 · EB-10 Wah Sub</span>
+  </div>
+
+</div>
+
+<script>
+  function showSong(id) {
+    document.querySelectorAll('.song-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.song-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('song-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.section').forEach(s => {
+    s.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    observer.observe(s);
+  });
+</script>
+</body>
+</html>
